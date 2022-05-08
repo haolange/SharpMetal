@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using static Apple.Metal.ObjectiveCRuntime;
 
@@ -8,6 +8,8 @@ namespace Apple.Metal
     public struct MTLCommandQueue
     {
         public readonly IntPtr NativePtr;
+
+        public MTLCommandQueue(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLCommandBuffer commandBuffer() => objc_msgSend<MTLCommandBuffer>(NativePtr, sel_commandBuffer);
 

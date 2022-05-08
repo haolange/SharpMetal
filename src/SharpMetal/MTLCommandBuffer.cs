@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using static Apple.Metal.ObjectiveCRuntime;
 
@@ -8,7 +8,9 @@ namespace Apple.Metal
     public struct MTLCommandBuffer
     {
         public readonly IntPtr NativePtr;
-        
+
+        public MTLCommandBuffer(in IntPtr ptr) => NativePtr = ptr;
+
         public MTLCommandBufferStatus status => (MTLCommandBufferStatus)uint_objc_msgSend(NativePtr, sel_status);
 
         public MTLBlitCommandEncoder blitCommandEncoder() => objc_msgSend<MTLBlitCommandEncoder>(NativePtr, sel_blitCommandEncoder);
