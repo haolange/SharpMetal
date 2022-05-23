@@ -6,6 +6,7 @@
 		<AssemblyName>Apple.Metal</AssemblyName>
 		<RootNamespace>Apple.Metal</RootNamespace>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<IntermediateOutputPath>../../../../Intermediate/ThirdParty/Apple/Metal/</IntermediateOutputPath>
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
