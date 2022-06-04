@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Apple.Metal
+namespace Apple.Metal.QuartzCore
 {
     internal unsafe class FixedUtf8String : IDisposable
     {
@@ -46,7 +46,7 @@ namespace Apple.Metal
             _handle.Free();
         }
 
-        public static implicit operator byte* (FixedUtf8String utf8String) => utf8String.StringPtr;
+        public static implicit operator byte*(FixedUtf8String utf8String) => utf8String.StringPtr;
         public static implicit operator IntPtr(FixedUtf8String utf8String) => new IntPtr(utf8String.StringPtr);
         public static implicit operator FixedUtf8String(string s) => new FixedUtf8String(s);
         public static implicit operator string(FixedUtf8String utf8String) => utf8String.GetString();
