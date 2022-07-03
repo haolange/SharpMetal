@@ -6,11 +6,7 @@ namespace Apple.Metal
 {
     public unsafe struct MTLDevice
     {
-        private const string MetalFramework = "/System/Library/Frameworks/Metal.framework/Metal";
-
         public readonly IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLDevice device) => device.NativePtr;
-        public MTLDevice(in IntPtr nativePtr) => NativePtr = nativePtr;
 
         public string name => string_objc_msgSend(NativePtr, sel_name);
         public MTLSize maxThreadsPerThreadgroup
@@ -27,6 +23,24 @@ namespace Apple.Metal
                 }
             }
         }
+        public Bool8 isDepth24Stencil8PixelFormatSupported => bool8_objc_msgSend(NativePtr, sel_isDepth24Stencil8PixelFormatSupported);
+
+        public MTLDevice(in IntPtr nativePtr)
+        {
+            NativePtr = nativePtr;
+        }
+
+        public MTLLibrary newLibraryWithData(in DispatchData data)
+        {
+            IntPtr library = IntPtr_objc_msgSend(NativePtr, sel_newLibraryWithData, data.NativePtr, out NSError error);
+
+            if (library == IntPtr.Zero)
+            {
+                throw new Exception("Unable to load Metal library: " + error.localizedDescription);
+            }
+
+            return new MTLLibrary(library);
+        }
 
         public MTLLibrary newLibraryWithSource(string source, in MTLCompileOptions options)
         {
@@ -42,18 +56,6 @@ namespace Apple.Metal
             if (library == IntPtr.Zero)
             {
                 throw new Exception("Shader compilation failed: " + error.localizedDescription);
-            }
-
-            return new MTLLibrary(library);
-        }
-
-        public MTLLibrary newLibraryWithData(in DispatchData data)
-        {
-            IntPtr library = IntPtr_objc_msgSend(NativePtr, sel_newLibraryWithData, data.NativePtr, out NSError error);
-
-            if (library == IntPtr.Zero)
-            {
-                throw new Exception("Unable to load Metal library: " + error.localizedDescription);
             }
 
             return new MTLLibrary(library);
@@ -89,14 +91,14 @@ namespace Apple.Metal
             return new MTLComputePipelineState(ret);
         }
 
-        public MTLCommandQueue newCommandQueue() => objc_msgSend<MTLCommandQueue>(NativePtr, sel_newCommandQueue);
+        public MTLCommandQueue newCommandQueue()
+        {
+            return objc_msgSend<MTLCommandQueue>(NativePtr, sel_newCommandQueue);
+        }
 
         public MTLBuffer newBuffer(in void* pointer, in UIntPtr length, in MTLResourceOptions options)
         {
-            IntPtr buffer = IntPtr_objc_msgSend(NativePtr, sel_newBufferWithBytes,
-                pointer,
-                length,
-                options);
+            IntPtr buffer = IntPtr_objc_msgSend(NativePtr, sel_newBufferWithBytes, pointer, length, options);
             return new MTLBuffer(buffer);
         }
 
@@ -107,28 +109,39 @@ namespace Apple.Metal
         }
 
         public MTLTexture newTextureWithDescriptor(in MTLTextureDescriptor descriptor)
-            => objc_msgSend<MTLTexture>(NativePtr, sel_newTextureWithDescriptor, descriptor.NativePtr);
+        {
+            return objc_msgSend<MTLTexture>(NativePtr, sel_newTextureWithDescriptor, descriptor.NativePtr);
+        }
 
         public MTLSamplerState newSamplerStateWithDescriptor(in MTLSamplerDescriptor descriptor)
-            => objc_msgSend<MTLSamplerState>(NativePtr, sel_newSamplerStateWithDescriptor, descriptor.NativePtr);
+        {
+            return objc_msgSend<MTLSamplerState>(NativePtr, sel_newSamplerStateWithDescriptor, descriptor.NativePtr);
+        }
 
         public MTLDepthStencilState newDepthStencilStateWithDescriptor(in MTLDepthStencilDescriptor descriptor)
-            => objc_msgSend<MTLDepthStencilState>(NativePtr, sel_newDepthStencilStateWithDescriptor, descriptor.NativePtr);
-
-        public Bool8 supportsTextureSampleCount(in UIntPtr sampleCount)
-            => bool8_objc_msgSend(NativePtr, sel_supportsTextureSampleCount, sampleCount);
+        {
+            return objc_msgSend<MTLDepthStencilState>(NativePtr, sel_newDepthStencilStateWithDescriptor, descriptor.NativePtr);
+        }
 
         public Bool8 supportsFeatureSet(in MTLFeatureSet featureSet)
-            => bool8_objc_msgSend(NativePtr, sel_supportsFeatureSet, (uint)featureSet);
+        {
+            return bool8_objc_msgSend(NativePtr, sel_supportsFeatureSet, (uint)featureSet);
+        }
 
-        public Bool8 isDepth24Stencil8PixelFormatSupported
-            => bool8_objc_msgSend(NativePtr, sel_isDepth24Stencil8PixelFormatSupported);
+        public Bool8 supportsTextureSampleCount(in UIntPtr sampleCount)
+        {
+            return bool8_objc_msgSend(NativePtr, sel_supportsTextureSampleCount, sampleCount);
+        }
 
-        [DllImport(MetalFramework)]
-        public static extern MTLDevice MTLCreateSystemDefaultDevice();
+        public static implicit operator IntPtr(in MTLDevice device) => device.NativePtr;
 
-        [DllImport(MetalFramework)]
+        private const string GMetalFrameworkName = "/System/Library/Frameworks/Metal.framework/Metal";
+
+        [DllImport(GMetalFrameworkName)]
         public static extern NSArray MTLCopyAllDevices();
+
+        [DllImport(GMetalFrameworkName)]
+        public static extern MTLDevice MTLCreateSystemDefaultDevice();
 
         private static readonly Selector sel_name = "name";
         private static readonly Selector sel_maxThreadsPerThreadgroup = "maxThreadsPerThreadgroup";
