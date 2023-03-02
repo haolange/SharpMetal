@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<TargetFramework>net7.0</TargetFramework>
+		<Platforms>x64;ARM64</Platforms>
+		<AssemblyName>Apple.Metal</AssemblyName>
+		<RootNamespace>Apple.Metal</RootNamespace>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<IntermediateOutputPath>../../../../Intermediate/ThirdParty/Apple/Metal/</IntermediateOutputPath>
+		<BaseOutputPath>$(ProjectDir)../../../../Binaries/ThirdParty/Apple/Metal/</BaseOutputPath>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<OutputPath>../../../../Binaries/ThirdParty/Apple/Metal/Win64/Debug/</OutputPath>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<OutputPath>../../../../Binaries/ThirdParty/Apple/Metal/Win64/Release/</OutputPath>
+		<Optimize>true</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+		<OutputPath>../../../../Binaries/ThirdParty/Apple/Metal/ARM64/Debug/</OutputPath>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+		<OutputPath>../../../../Binaries/ThirdParty/Apple/Metal/ARM64/Release/</OutputPath>
+		<Optimize>true</Optimize>
+	</PropertyGroup>
+</Project>
