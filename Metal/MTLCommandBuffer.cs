@@ -19,15 +19,27 @@ namespace Apple.Metal
 
         public MTLRenderCommandEncoder renderCommandEncoderWithDescriptor(in MTLRenderPassDescriptor desc) => new MTLRenderCommandEncoder(IntPtr_objc_msgSend(NativePtr, sel_renderCommandEncoderWithDescriptor, desc.NativePtr));
 
-        public void enqueue() { }
+        public void enqueue() 
+        { 
+
+        }
 
         public void commit() => objc_msgSend(NativePtr, sel_commit);
 
-        public void addScheduledHandler(in IntPtr block) { }
+        public void addScheduledHandler(in IntPtr block) 
+        { 
 
-        public void addScheduledHandler(MTLCommandBufferHandler block) { }
+        }
 
-        public void waitUntilScheduled() { }
+        public void addScheduledHandler(MTLCommandBufferHandler block) 
+        { 
+
+        }
+
+        public void waitUntilScheduled() 
+        { 
+            
+        }
 
         public void addCompletedHandler(in IntPtr block) => objc_msgSend(NativePtr, sel_addCompletedHandler, block);
 

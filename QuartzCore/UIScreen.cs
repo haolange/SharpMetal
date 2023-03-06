@@ -1,7 +1,7 @@
 using System;
 using static Apple.Metal.ObjectiveCRuntime;
 
-namespace Apple.Metal.QuartzCore
+namespace Apple.Metal
 {
     public unsafe struct UIScreen
     {

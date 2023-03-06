@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Apple.Metal.QuartzCore
+namespace Apple.Metal
 {
     internal unsafe class FixedUtf8String : IDisposable
     {

@@ -6,7 +6,11 @@ namespace Apple.Metal
 {
     public unsafe struct MTLDevice
     {
+        private const string MetalFramework = "/System/Library/Frameworks/Metal.framework/Metal";
+
         public readonly IntPtr NativePtr;
+        public static implicit operator IntPtr(in MTLDevice device) => device.NativePtr;
+        public MTLDevice(in IntPtr nativePtr) => NativePtr = nativePtr;
 
         public string name => string_objc_msgSend(NativePtr, sel_name);
         public MTLSize maxThreadsPerThreadgroup
@@ -23,24 +27,6 @@ namespace Apple.Metal
                 }
             }
         }
-        public Bool8 isDepth24Stencil8PixelFormatSupported => bool8_objc_msgSend(NativePtr, sel_isDepth24Stencil8PixelFormatSupported);
-
-        public MTLDevice(in IntPtr nativePtr)
-        {
-            NativePtr = nativePtr;
-        }
-
-        public MTLLibrary newLibraryWithData(in DispatchData data)
-        {
-            IntPtr library = IntPtr_objc_msgSend(NativePtr, sel_newLibraryWithData, data.NativePtr, out NSError error);
-
-            if (library == IntPtr.Zero)
-            {
-                throw new Exception("Unable to load Metal library: " + error.localizedDescription);
-            }
-
-            return new MTLLibrary(library);
-        }
 
         public MTLLibrary newLibraryWithSource(string source, in MTLCompileOptions options)
         {
@@ -56,6 +42,18 @@ namespace Apple.Metal
             if (library == IntPtr.Zero)
             {
                 throw new Exception("Shader compilation failed: " + error.localizedDescription);
+            }
+
+            return new MTLLibrary(library);
+        }
+
+        public MTLLibrary newLibraryWithData(in DispatchData data)
+        {
+            IntPtr library = IntPtr_objc_msgSend(NativePtr, sel_newLibraryWithData, data.NativePtr, out NSError error);
+
+            if (library == IntPtr.Zero)
+            {
+                throw new Exception("Unable to load Metal library: " + error.localizedDescription);
             }
 
             return new MTLLibrary(library);
@@ -91,14 +89,14 @@ namespace Apple.Metal
             return new MTLComputePipelineState(ret);
         }
 
-        public MTLCommandQueue newCommandQueue()
-        {
-            return objc_msgSend<MTLCommandQueue>(NativePtr, sel_newCommandQueue);
-        }
+        public MTLCommandQueue newCommandQueue() => objc_msgSend<MTLCommandQueue>(NativePtr, sel_newCommandQueue);
 
         public MTLBuffer newBuffer(in void* pointer, in UIntPtr length, in MTLResourceOptions options)
         {
-            IntPtr buffer = IntPtr_objc_msgSend(NativePtr, sel_newBufferWithBytes, pointer, length, options);
+            IntPtr buffer = IntPtr_objc_msgSend(NativePtr, sel_newBufferWithBytes,
+                pointer,
+                length,
+                options);
             return new MTLBuffer(buffer);
         }
 
@@ -109,39 +107,36 @@ namespace Apple.Metal
         }
 
         public MTLTexture newTextureWithDescriptor(in MTLTextureDescriptor descriptor)
-        {
-            return objc_msgSend<MTLTexture>(NativePtr, sel_newTextureWithDescriptor, descriptor.NativePtr);
-        }
+            => objc_msgSend<MTLTexture>(NativePtr, sel_newTextureWithDescriptor, descriptor.NativePtr);
 
         public MTLSamplerState newSamplerStateWithDescriptor(in MTLSamplerDescriptor descriptor)
-        {
-            return objc_msgSend<MTLSamplerState>(NativePtr, sel_newSamplerStateWithDescriptor, descriptor.NativePtr);
-        }
+            => objc_msgSend<MTLSamplerState>(NativePtr, sel_newSamplerStateWithDescriptor, descriptor.NativePtr);
 
         public MTLDepthStencilState newDepthStencilStateWithDescriptor(in MTLDepthStencilDescriptor descriptor)
-        {
-            return objc_msgSend<MTLDepthStencilState>(NativePtr, sel_newDepthStencilStateWithDescriptor, descriptor.NativePtr);
-        }
-
-        public Bool8 supportsFeatureSet(in MTLFeatureSet featureSet)
-        {
-            return bool8_objc_msgSend(NativePtr, sel_supportsFeatureSet, (uint)featureSet);
-        }
+            => objc_msgSend<MTLDepthStencilState>(NativePtr, sel_newDepthStencilStateWithDescriptor, descriptor.NativePtr);
 
         public Bool8 supportsTextureSampleCount(in UIntPtr sampleCount)
-        {
-            return bool8_objc_msgSend(NativePtr, sel_supportsTextureSampleCount, sampleCount);
-        }
+            => bool8_objc_msgSend(NativePtr, sel_supportsTextureSampleCount, sampleCount);
 
-        public static implicit operator IntPtr(in MTLDevice device) => device.NativePtr;
+        public Bool8 supportsFeatureSet(in MTLFeatureSet featureSet)
+            => bool8_objc_msgSend(NativePtr, sel_supportsFeatureSet, (uint)featureSet);
 
-        private const string GMetalFrameworkName = "/System/Library/Frameworks/Metal.framework/Metal";
+        public Bool8 supportsFamily(in MTLGPUFamily gpuFamily) => bool8_objc_msgSend(NativePtr, sel_supportsFamily, (uint)gpuFamily);
 
-        [DllImport(GMetalFrameworkName)]
-        public static extern NSArray MTLCopyAllDevices();
+        public Bool8 supportsRaytracing => bool8_objc_msgSend(NativePtr, sel_supportsRaytracing);
 
-        [DllImport(GMetalFrameworkName)]
+        public Bool8 supportsRaytracingFromRender => bool8_objc_msgSend(NativePtr, sel_supportsRaytracingFromRender);
+
+        public Bool8 supportsBCTextureCompression => bool8_objc_msgSend(NativePtr, sel_supportsBCTextureCompression);
+
+        public Bool8 isDepth24Stencil8PixelFormatSupported => bool8_objc_msgSend(NativePtr, sel_isDepth24Stencil8PixelFormatSupported);
+        public Bool8 areProgrammableSamplePositionsSupported => bool8_objc_msgSend(NativePtr, sel_areProgrammableSamplePositionsSupported);
+
+        [DllImport(MetalFramework)]
         public static extern MTLDevice MTLCreateSystemDefaultDevice();
+
+        [DllImport(MetalFramework)]
+        public static extern NSArray MTLCopyAllDevices();
 
         private static readonly Selector sel_name = "name";
         private static readonly Selector sel_maxThreadsPerThreadgroup = "maxThreadsPerThreadgroup";
@@ -157,6 +152,11 @@ namespace Apple.Metal
         private static readonly Selector sel_newDepthStencilStateWithDescriptor = "newDepthStencilStateWithDescriptor:";
         private static readonly Selector sel_supportsTextureSampleCount = "supportsTextureSampleCount:";
         private static readonly Selector sel_supportsFeatureSet = "supportsFeatureSet:";
+        private static readonly Selector sel_supportsFamily = "supportsFamily:";
+        private static readonly Selector sel_supportsRaytracing = "supportsRaytracing";
+        private static readonly Selector sel_supportsRaytracingFromRender = "supportsRaytracingFromRender";
+        private static readonly Selector sel_supportsBCTextureCompression = "supportsBCTextureCompression";
         private static readonly Selector sel_isDepth24Stencil8PixelFormatSupported = "isDepth24Stencil8PixelFormatSupported";
+        private static readonly Selector sel_areProgrammableSamplePositionsSupported = "areProgrammableSamplePositionsSupported";
     }
 }
