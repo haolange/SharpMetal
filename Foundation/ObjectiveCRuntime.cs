@@ -39,6 +39,12 @@ namespace Apple.Metal
         [DllImport(ObjCLibrary, EntryPoint = "objc_msgSend")]
         public static extern void objc_msgSend(IntPtr receiver, Selector selector, NSRange a);
         [DllImport(ObjCLibrary, EntryPoint = "objc_msgSend")]
+        public static extern void objc_msgSend(IntPtr receiver, Selector selector, MTLBuffer buffer, NSRange a, UIntPtr b);
+        [DllImport(ObjCLibrary, EntryPoint = "objc_msgSend")]
+        public static extern void objc_msgSend(IntPtr receiver, Selector selector, MTLBuffer buffer, NSRange a, UIntPtr b);
+        [DllImport(ObjCLibrary, EntryPoint = "objc_msgSend")]
+        public static extern void objc_msgSend(IntPtr receiver, Selector selector, MTLBuffer buffer, NSRange a, UIntPtr b);
+        [DllImport(ObjCLibrary, EntryPoint = "objc_msgSend")]
         public static extern void objc_msgSend(IntPtr receiver, Selector selector, UIntPtr a);
         [DllImport(ObjCLibrary, EntryPoint = "objc_msgSend")]
         public static extern void objc_msgSend(IntPtr receiver, Selector selector, MTLCommandBufferHandler a);
@@ -129,6 +135,46 @@ namespace Apple.Metal
             UIntPtr g,
             UIntPtr h,
             UIntPtr i);
+
+        [DllImport(ObjCLibrary, EntryPoint = "objc_msgSend")]
+        public static extern void objc_msgSend(
+            IntPtr receiver,
+            Selector selector,
+            MTLTexture sourceTexture,
+            MTLTexture destinationTexture);
+
+        [DllImport(ObjCLibrary, EntryPoint = "objc_msgSend")]
+        public static extern void objc_msgSend(
+            IntPtr receiver,
+            Selector selector,
+            MTLTexture sourceTexture,
+            UIntPtr sourceSlice,
+            UIntPtr sourceLevel,
+            MTLTexture destinationTexture,
+            UIntPtr destinationSlice,
+            UIntPtr destinationLevel,
+            UIntPtr sliceCount, 
+            UIntPtr levelCount);
+
+        [DllImport(ObjCLibrary, EntryPoint = "objc_msgSend")]
+        public static extern void objc_msgSend(
+            IntPtr receiver,
+            Selector selector,
+            MTLTexture sourceTexture,
+            MTLTexture destinationTexture);
+
+        [DllImport(ObjCLibrary, EntryPoint = "objc_msgSend")]
+        public static extern void objc_msgSend(
+            IntPtr receiver,
+            Selector selector,
+            MTLTexture sourceTexture,
+            UIntPtr sourceSlice,
+            UIntPtr sourceLevel,
+            MTLTexture destinationTexture,
+            UIntPtr destinationSlice,
+            UIntPtr destinationLevel,
+            UIntPtr sliceCount, 
+            UIntPtr levelCount);
 
         [DllImport(ObjCLibrary, EntryPoint = "objc_msgSend")]
         public static extern void objc_msgSend(
