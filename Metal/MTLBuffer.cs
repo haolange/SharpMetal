@@ -7,24 +7,34 @@ namespace Apple.Metal
     public unsafe struct MTLBuffer
     {
         public readonly IntPtr NativePtr;
-        public MTLBuffer(in IntPtr ptr) => NativePtr = ptr;
         public bool IsNull => NativePtr == IntPtr.Zero;
-
-        public void* contents() => ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_contents).ToPointer();
 
         public UIntPtr length => ObjectiveCRuntime.UIntPtr_objc_msgSend(NativePtr, sel_length);
 
+        public IntPtr contents() => ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_contents);
+
+        public MTLBuffer(in IntPtr ptr)
+        {
+            NativePtr = ptr;
+        }
+
         public void didModifyRange(in NSRange range)
-            => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_didModifyRange, range);
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_didModifyRange, range);
+        }
 
         public void addDebugMarker(in NSString marker, in NSRange range)
-            => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addDebugMarker, marker.NativePtr, range);
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addDebugMarker, marker.NativePtr, range);
+        }
 
         public void removeAllDebugMarkers()
-            => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_removeAllDebugMarkers);
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_removeAllDebugMarkers);
+        }
 
-        private static readonly Selector sel_contents = "contents";
         private static readonly Selector sel_length = "length";
+        private static readonly Selector sel_contents = "contents";
         private static readonly Selector sel_didModifyRange = "didModifyRange:";
         private static readonly Selector sel_addDebugMarker = "addDebugMarker:range:";
         private static readonly Selector sel_removeAllDebugMarkers = "removeAllDebugMarkers";
