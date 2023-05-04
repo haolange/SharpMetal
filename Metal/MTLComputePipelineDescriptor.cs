@@ -13,11 +13,10 @@ namespace Apple.Metal
             set => objc_msgSend(NativePtr, sel_setComputeFunction, value.NativePtr);
         }
 
-        public MTLPipelineBufferDescriptorArray buffers
-            => objc_msgSend<MTLPipelineBufferDescriptorArray>(NativePtr, sel_buffers);
+        public MTLPipelineBufferDescriptorArray buffers => objc_msgSend<MTLPipelineBufferDescriptorArray>(NativePtr, sel_buffers);
 
+        private static readonly Selector sel_buffers = "buffers";
         private static readonly Selector sel_computeFunction = "computeFunction";
         private static readonly Selector sel_setComputeFunction = "setComputeFunction:";
-        private static readonly Selector sel_buffers = "buffers";
     }
 }
