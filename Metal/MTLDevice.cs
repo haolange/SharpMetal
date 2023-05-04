@@ -22,18 +22,18 @@ namespace Apple.Metal
         }
         public uint maxThreadgroupMemoryLength => (uint)UIntPtr_objc_msgSend(NativePtr, sel_maxThreadgroupMemoryLength);
         public Bool8 supportsRaytracing => bool8_objc_msgSend(NativePtr, sel_supportsRaytracing);
-        public Bool8 supportsPrimitiveMotionBlur => bool8_objc_msgSend(NativePtr, sel_);
+        //public Bool8 supportsPrimitiveMotionBlur => bool8_objc_msgSend(NativePtr, sel_);
         public Bool8 supportsRaytracingFromRender => bool8_objc_msgSend(NativePtr, sel_supportsRaytracingFromRender);
-        public Bool8 supports32BitMSAA => bool8_objc_msgSend(NativePtr, sel_);
+        /*public Bool8 supports32BitMSAA => bool8_objc_msgSend(NativePtr, sel_);
         public Bool8 supportsPullModelInterpolation => bool8_objc_msgSend(NativePtr, sel_);
         public Bool8 supportsShaderBarycentricCoordinates => bool8_objc_msgSend(NativePtr, sel_);
-        public Bool8 supportsVertexAmplificationCount => bool8_objc_msgSend(NativePtr, sel_);
+        public Bool8 supportsVertexAmplificationCount => bool8_objc_msgSend(NativePtr, sel_);*/
         public Bool8 programmableSamplePositionsSupported => bool8_objc_msgSend(NativePtr, sel_areProgrammableSamplePositionsSupported);
-        public Bool8 rasterOrderGroupsSupported => bool8_objc_msgSend(NativePtr, sel_);
-        public Bool8 supports32BitFloatFiltering => bool8_objc_msgSend(NativePtr, sel_);
+        //public Bool8 rasterOrderGroupsSupported => bool8_objc_msgSend(NativePtr, sel_);
+        //public Bool8 supports32BitFloatFiltering => bool8_objc_msgSend(NativePtr, sel_);
         public Bool8 supportsBCTextureCompression => bool8_objc_msgSend(NativePtr, sel_supportsBCTextureCompression);
         public Bool8 depth24Stencil8PixelFormatSupported => bool8_objc_msgSend(NativePtr, sel_depth24Stencil8PixelFormatSupported);
-        public Bool8 supportsQueryTextureLOD => bool8_objc_msgSend(NativePtr, sel_);
+        /*public Bool8 supportsQueryTextureLOD => bool8_objc_msgSend(NativePtr, sel_);
         public Bool8 readWriteTextureSupport => bool8_objc_msgSend(NativePtr, sel_);
         public Bool8 supportsFunctionPointers => bool8_objc_msgSend(NativePtr, sel_);
         public Bool8 supportsFunctionPointersFromRender => bool8_objc_msgSend(NativePtr, sel_);
@@ -52,7 +52,7 @@ namespace Apple.Metal
         public Bool8 headless => bool8_objc_msgSend(NativePtr, sel_);
         public ulong peerGroupID => bool8_objc_msgSend(NativePtr, sel_);
         public ulong peerCount => bool8_objc_msgSend(NativePtr, sel_);
-        public ulong peerIndex => bool8_objc_msgSend(NativePtr, sel_);
+        public ulong peerIndex => bool8_objc_msgSend(NativePtr, sel_);*/
 
         public readonly IntPtr NativePtr;
 
