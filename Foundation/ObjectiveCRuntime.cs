@@ -224,6 +224,11 @@ namespace Apple.Metal
             IntPtr value = IntPtr_objc_msgSend(receiver, selector);
             return Unsafe.AsRef<T>(&value);
         }
+        public static T objc_msgSend<T>(IntPtr receiver, Selector selector, uint a) where T : struct
+        {
+            IntPtr value = IntPtr_objc_msgSend(receiver, selector, a);
+            return Unsafe.AsRef<T>(&value);
+        }
         public static T objc_msgSend<T>(IntPtr receiver, Selector selector, IntPtr a) where T : struct
         {
             IntPtr value = IntPtr_objc_msgSend(receiver, selector, a);

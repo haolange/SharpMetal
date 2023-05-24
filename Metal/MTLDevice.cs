@@ -1,11 +1,63 @@
 using System;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using static Apple.Metal.ObjectiveCRuntime;
 
 namespace Apple.Metal
 {
+    public enum MTLIOCompressionMethod : byte
+    {
+        IOCompressionMethodZlib = 0,
+        IOCompressionMethodLZFSE = 1,
+        IOCompressionMethodLZ4 = 2,
+        IOCompressionMethodLZMA = 3,
+        IOCompressionMethodLZBitmap = 4,
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MTLIOFileHandle
+    {
+        public readonly IntPtr NativePtr;
+
+        public MTLIOFileHandle(in IntPtr ptr) => NativePtr = ptr;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MTLIndirectCommandBufferDescriptor
+    {
+        public readonly IntPtr NativePtr;
+
+        public MTLIndirectCommandBufferDescriptor(in IntPtr ptr) => NativePtr = ptr;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MTLIndirectCommandBuffer
+    {
+        public readonly IntPtr NativePtr;
+
+        public MTLIndirectCommandBuffer(in IntPtr ptr) => NativePtr = ptr;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MTLRasterizationRateMapDescriptor
+    {
+        public readonly IntPtr NativePtr;
+
+        public MTLRasterizationRateMapDescriptor(in IntPtr ptr) => NativePtr = ptr;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MTLRasterizationRateMap
+    {
+        public readonly IntPtr NativePtr;
+
+        public MTLRasterizationRateMap(in IntPtr ptr) => NativePtr = ptr;
+    }
+
     public unsafe struct MTLDevice
     {
+        #region Device Inspection
         public MTLSize maxThreadsPerThreadgroup
         {
             get
@@ -53,9 +105,11 @@ namespace Apple.Metal
         public ulong peerGroupID => bool8_objc_msgSend(NativePtr, sel_);
         public ulong peerCount => bool8_objc_msgSend(NativePtr, sel_);
         public ulong peerIndex => bool8_objc_msgSend(NativePtr, sel_);*/
+        #endregion
 
         public readonly IntPtr NativePtr;
 
+        #region Device Inspection
         public MTLDevice(in IntPtr nativePtr) => NativePtr = nativePtr;
 
         public Bool8 supportsFamily(in MTLGPUFamily gpuFamily)
@@ -67,7 +121,107 @@ namespace Apple.Metal
         {
             return bool8_objc_msgSend(NativePtr, sel_supportsTextureSampleCount, sampleCount);
         }
+        #endregion
 
+        #region Work Subbmition
+        public MTLCommandQueue newCommandQueue()
+        {
+            return objc_msgSend<MTLCommandQueue>(NativePtr, sel_newCommandQueue);
+        }
+
+        public MTLCommandQueue newCommandQueueWithMaxCommandBufferCount(in UIntPtr count)
+        {
+            IntPtr commandQueue = IntPtr_objc_msgSend(NativePtr, sel_newCommandQueueWithMaxCommandBufferCount, count);
+            return Unsafe.AsRef<MTLCommandQueue>(&commandQueue);
+        }
+
+        public MTLCommandQueue newIOCommandQueueWithDescriptor(in UIntPtr count)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MTLIOFileHandle newIOHandleWithURL(in UIntPtr url)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MTLIOFileHandle newIOHandleWithURL(in UIntPtr url, in MTLIOCompressionMethod compressionMethod)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MTLIndirectCommandBuffer newIndirectCommandBufferWithDescriptor(in MTLIndirectCommandBufferDescriptor descriptor, in UIntPtr maxCount, in MTLResourceOptions options)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Pipeline State Creation
+        public MTLRenderPipelineState newRenderPipelineStateWithDescriptor(in MTLRenderPipelineDescriptor desc)
+        {
+            IntPtr ret = IntPtr_objc_msgSend(NativePtr, sel_newRenderPipelineStateWithDescriptor, desc.NativePtr, out NSError error);
+
+            if (error.NativePtr != IntPtr.Zero)
+            {
+                throw new Exception("Failed to create new MTLRenderPipelineState: " + error.localizedDescription);
+            }
+
+            return new MTLRenderPipelineState(ret);
+        }
+
+        public MTLComputePipelineState newComputePipelineStateWithDescriptor(in MTLComputePipelineDescriptor descriptor)
+        {
+            IntPtr ret = IntPtr_objc_msgSend(NativePtr, sel_newComputePipelineStateWithDescriptor, descriptor, 0, IntPtr.Zero, out NSError error);
+
+            if (error.NativePtr != IntPtr.Zero)
+            {
+                throw new Exception("Failed to create new MTLRenderPipelineState: " + error.localizedDescription);
+            }
+
+            return new MTLComputePipelineState(ret);
+        }
+
+        public MTLDepthStencilState newDepthStencilStateWithDescriptor(in MTLDepthStencilDescriptor descriptor)
+        {
+            return objc_msgSend<MTLDepthStencilState>(NativePtr, sel_newDepthStencilStateWithDescriptor, descriptor.NativePtr);
+        }
+
+        public bool supportsRasterizationRateMapWithLayerCount(in UIntPtr layerCount)
+        {
+            throw new NotImplementedException();
+        }
+
+        public MTLRasterizationRateMap newRasterizationRateMapWithDescriptor(in MTLRasterizationRateMapDescriptor descriptor)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Resource Creation
+        public MTLBuffer newBuffer(in void* pointer, in UIntPtr length, in MTLResourceOptions options)
+        {
+            IntPtr buffer = IntPtr_objc_msgSend(NativePtr, sel_newBufferWithBytes, pointer, length, options);
+            return Unsafe.AsRef<MTLBuffer>(&buffer);
+        }
+
+        public MTLBuffer newBufferWithLength(in UIntPtr length, in MTLResourceOptions options)
+        {
+            IntPtr buffer = IntPtr_objc_msgSend(NativePtr, sel_newBufferWithLength, length, options);
+            return Unsafe.AsRef<MTLBuffer>(&buffer);
+        }
+
+        public MTLTexture newTextureWithDescriptor(in MTLTextureDescriptor descriptor)
+        {
+            return objc_msgSend<MTLTexture>(NativePtr, sel_newTextureWithDescriptor, descriptor.NativePtr);
+        }
+
+        public MTLSamplerState newSamplerStateWithDescriptor(in MTLSamplerDescriptor descriptor)
+        {
+            return objc_msgSend<MTLSamplerState>(NativePtr, sel_newSamplerStateWithDescriptor, descriptor.NativePtr);
+        }
+        #endregion
+
+        #region Shader Library and Archive Creation
         public MTLLibrary newLibraryWithData(in DispatchData data)
         {
             IntPtr library = IntPtr_objc_msgSend(NativePtr, sel_newLibraryWithData, data.NativePtr, out NSError error);
@@ -95,74 +249,21 @@ namespace Apple.Metal
 
             return new MTLLibrary(library);
         }
+        #endregion
 
-        public MTLRenderPipelineState newRenderPipelineStateWithDescriptor(in MTLRenderPipelineDescriptor desc)
-        {
-            IntPtr ret = IntPtr_objc_msgSend(NativePtr, sel_newRenderPipelineStateWithDescriptor, desc.NativePtr, out NSError error);
-
-            if (error.NativePtr != IntPtr.Zero)
-            {
-                throw new Exception("Failed to create new MTLRenderPipelineState: " + error.localizedDescription);
-            }
-
-            return new MTLRenderPipelineState(ret);
-        }
-
-        public MTLComputePipelineState newComputePipelineStateWithDescriptor(in MTLComputePipelineDescriptor descriptor)
-        {
-            IntPtr ret = IntPtr_objc_msgSend(NativePtr, sel_newComputePipelineStateWithDescriptor, descriptor, 0, IntPtr.Zero, out NSError error);
-
-            if (error.NativePtr != IntPtr.Zero)
-            {
-                throw new Exception("Failed to create new MTLRenderPipelineState: " + error.localizedDescription);
-            }
-
-            return new MTLComputePipelineState(ret);
-        }
-
-        public MTLCommandQueue newCommandQueue()
-        {
-            return objc_msgSend<MTLCommandQueue>(NativePtr, sel_newCommandQueue);
-        }
-
-        public MTLBuffer newBuffer(in void* pointer, in UIntPtr length, in MTLResourceOptions options)
-        {
-            IntPtr buffer = IntPtr_objc_msgSend(NativePtr, sel_newBufferWithBytes,
-                pointer,
-                length,
-                options);
-            return new MTLBuffer(buffer);
-        }
-
-        public MTLBuffer newBufferWithLengthOptions(in UIntPtr length, in MTLResourceOptions options)
-        {
-            IntPtr buffer = IntPtr_objc_msgSend(NativePtr, sel_newBufferWithLength, length, options);
-            return new MTLBuffer(buffer);
-        }
-
-        public MTLTexture newTextureWithDescriptor(in MTLTextureDescriptor descriptor)
-        {
-            return objc_msgSend<MTLTexture>(NativePtr, sel_newTextureWithDescriptor, descriptor.NativePtr);
-        }
-
-        public MTLSamplerState newSamplerStateWithDescriptor(in MTLSamplerDescriptor descriptor)
-        {
-            return objc_msgSend<MTLSamplerState>(NativePtr, sel_newSamplerStateWithDescriptor, descriptor.NativePtr);
-        }
-
-        public MTLDepthStencilState newDepthStencilStateWithDescriptor(in MTLDepthStencilDescriptor descriptor)
-        {
-            return objc_msgSend<MTLDepthStencilState>(NativePtr, sel_newDepthStencilStateWithDescriptor, descriptor.NativePtr);
-        }
+        #region Global Functions
+        [DllImport("/System/Library/Frameworks/Metal.framework/Metal")]
+        public static extern NSArray CopyAllDevices();
 
         [DllImport("/System/Library/Frameworks/Metal.framework/Metal")]
-        public static extern NSArray MTLCopyAllDevices();
-
-        [DllImport("/System/Library/Frameworks/Metal.framework/Metal")]
-        public static extern MTLDevice MTLCreateSystemDefaultDevice();
+        public static extern MTLDevice CreateSystemDefaultDevice();
 
         public static implicit operator IntPtr(in MTLDevice device) => device.NativePtr;
+        #endregion
 
+        // selectors
+        #region Device Inspection
+        private static readonly Selector sel_name = "name";
         private static readonly Selector sel_supportsFamily = "supportsFamily:";
         private static readonly Selector sel_maxThreadsPerThreadgroup = "maxThreadsPerThreadgroup";
         private static readonly Selector sel_maxThreadgroupMemoryLength = "maxThreadgroupMemoryLength";
@@ -171,18 +272,26 @@ namespace Apple.Metal
         private static readonly Selector sel_areProgrammableSamplePositionsSupported = "areProgrammableSamplePositionsSupported";
         private static readonly Selector sel_supportsBCTextureCompression = "supportsBCTextureCompression";
         private static readonly Selector sel_depth24Stencil8PixelFormatSupported = "isDepth24Stencil8PixelFormatSupported";
-
-        private static readonly Selector sel_name = "name";
-        private static readonly Selector sel_supportsTextureSampleCount = "supportsTextureSampleCount:";
-        private static readonly Selector sel_newLibraryWithData = "newLibraryWithData:error:";
-        private static readonly Selector sel_newLibraryWithSource = "newLibraryWithSource:options:error:";
+        #endregion
+        #region Work Subbmition
+        private static readonly Selector sel_newCommandQueue = "newCommandQueue";
+        private static readonly Selector sel_newCommandQueueWithMaxCommandBufferCount = "newCommandQueueWithMaxCommandBufferCount:";
+        #endregion
+        #region Pipeline State Creation
         private static readonly Selector sel_newRenderPipelineStateWithDescriptor = "newRenderPipelineStateWithDescriptor:error:";
         private static readonly Selector sel_newComputePipelineStateWithDescriptor = "newComputePipelineStateWithDescriptor:options:reflection:error:";
-        private static readonly Selector sel_newCommandQueue = "newCommandQueue";
+        private static readonly Selector sel_newDepthStencilStateWithDescriptor = "newDepthStencilStateWithDescriptor:";
+        #endregion
+        #region Resource Creation
         private static readonly Selector sel_newBufferWithBytes = "newBufferWithBytes:length:options:";
         private static readonly Selector sel_newBufferWithLength = "newBufferWithLength:options:";
         private static readonly Selector sel_newTextureWithDescriptor = "newTextureWithDescriptor:";
+        private static readonly Selector sel_supportsTextureSampleCount = "supportsTextureSampleCount:";
         private static readonly Selector sel_newSamplerStateWithDescriptor = "newSamplerStateWithDescriptor:";
-        private static readonly Selector sel_newDepthStencilStateWithDescriptor = "newDepthStencilStateWithDescriptor:";
+        #endregion
+        #region Shader Library and Archive Creation
+        private static readonly Selector sel_newLibraryWithData = "newLibraryWithData:error:";
+        private static readonly Selector sel_newLibraryWithSource = "newLibraryWithSource:options:error:";
+        #endregion
     }
 }
