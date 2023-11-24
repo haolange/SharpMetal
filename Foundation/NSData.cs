@@ -4,7 +4,6 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    [SupportedOSPlatform("macos")]
     public partial class NSData
     {
         public IntPtr NativePtr;

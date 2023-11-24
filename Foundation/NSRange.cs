@@ -3,7 +3,6 @@ using System.Runtime.Versioning;
 
 namespace SharpMetal.Foundation
 {
-    [SupportedOSPlatform("macos")]
     [StructLayout(LayoutKind.Sequential)]
     public struct NSRange
     {

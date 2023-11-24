@@ -3,7 +3,6 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    [SupportedOSPlatform("macos")]
     public partial class NSValue
     {
         public IntPtr NativePtr;
@@ -60,7 +59,6 @@ namespace SharpMetal.Foundation
         private static readonly Selector sel_pointerValue = "pointerValue";
     }
 
-    [SupportedOSPlatform("macos")]
     public partial class NSNumber
     {
         public IntPtr NativePtr;

@@ -3,7 +3,6 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    [SupportedOSPlatform("macos")]
     public partial class NS_NS_EXPORT
     {
         public IntPtr NativePtr;
@@ -19,7 +18,6 @@ namespace SharpMetal.Foundation
 
     }
 
-    [SupportedOSPlatform("macos")]
     public partial class NSCopying
     {
         public IntPtr NativePtr;
@@ -33,7 +31,6 @@ namespace SharpMetal.Foundation
 
     }
 
-    [SupportedOSPlatform("macos")]
     public partial class NSSecureCoding
     {
         public IntPtr NativePtr;
@@ -46,7 +43,6 @@ namespace SharpMetal.Foundation
         }
     }
 
-    [SupportedOSPlatform("macos")]
     public partial class NSObject
     {
         public IntPtr NativePtr;

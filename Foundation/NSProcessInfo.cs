@@ -23,7 +23,6 @@ namespace SharpMetal.Foundation
         ActivityLatencyCritical = 0xFF00000000UL,
     }
 
-    [SupportedOSPlatform("macos")]
     public partial class NSProcessInfo
     {
         public IntPtr NativePtr;

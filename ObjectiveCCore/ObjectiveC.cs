@@ -3,7 +3,6 @@ using System.Runtime.Versioning;
 
 namespace SharpMetal.ObjectiveCCore
 {
-    [SupportedOSPlatform("macos")]
     public static partial class ObjectiveC
     {
         public const string ObjCRuntime = "/usr/lib/libobjc.A.dylib";

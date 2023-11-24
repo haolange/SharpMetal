@@ -43,7 +43,6 @@ namespace SharpMetal.Foundation
         RegularExpressionSearch = 1024,
     }
 
-    [SupportedOSPlatform("macos")]
     public partial class NSString
     {
         public IntPtr NativePtr;

@@ -2,7 +2,6 @@ using System.Runtime.Versioning;
 
 namespace SharpMetal.ObjectiveCCore
 {
-    [SupportedOSPlatform("macos")]
     public struct ObjectiveCClass
     {
         public readonly IntPtr NativePtr;

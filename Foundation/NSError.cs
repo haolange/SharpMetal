@@ -3,7 +3,6 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    [SupportedOSPlatform("macos")]
     public partial class NSError
     {
         public IntPtr NativePtr;

@@ -14,7 +14,6 @@ namespace SharpMetal.Metal
         ConcurrentDispatch = 32,
         ConcurrentDispatchThreads = 64,
     }
-
     
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLIndirectCommandBufferExecutionRange
@@ -22,7 +21,6 @@ namespace SharpMetal.Metal
         public uint location;
         public uint length;
     }
-
     
     public partial class MTLIndirectCommandBufferDescriptor
     {
@@ -109,7 +107,6 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_supportDynamicAttributeStride = "supportDynamicAttributeStride";
         private static readonly Selector sel_setSupportDynamicAttributeStride = "setSupportDynamicAttributeStride:";
     }
-
     
     public partial class MTLIndirectCommandBuffer : MTLResource
     {

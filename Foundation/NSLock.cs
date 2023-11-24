@@ -3,7 +3,6 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    [SupportedOSPlatform("macos")]
     public partial class NSLocking
     {
         public IntPtr NativePtr;
@@ -16,7 +15,6 @@ namespace SharpMetal.Foundation
         }
     }
 
-    [SupportedOSPlatform("macos")]
     public partial class NSCondition
     {
         public IntPtr NativePtr;

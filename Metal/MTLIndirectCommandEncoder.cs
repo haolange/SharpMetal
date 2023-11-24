@@ -72,7 +72,6 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_reset = "reset";
     }
 
-    
     public partial class MTLIndirectComputeCommand
     {
         public IntPtr NativePtr;

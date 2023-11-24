@@ -1,10 +1,9 @@
+using SharpMetal.Metal;
 using System.Runtime.Versioning;
 using SharpMetal.ObjectiveCCore;
-using SharpMetal.Metal;
 
 namespace SharpMetal.QuartzCore
 {
-    [SupportedOSPlatform("macos")]
     public partial class CAMetalLayer
     {
         public IntPtr NativePtr;

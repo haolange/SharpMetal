@@ -4,14 +4,12 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    [SupportedOSPlatform("macos")]
     [StructLayout(LayoutKind.Sequential)]
     public struct NSFastEnumerationState
     {
         public IntPtr itemsPtr;
     }
 
-    [SupportedOSPlatform("macos")]
     public partial class NSFastEnumeration
     {
         public IntPtr NativePtr;
@@ -31,7 +29,6 @@ namespace SharpMetal.Foundation
         private static readonly Selector sel_countByEnumeratingWithStateobjectscount = "countByEnumeratingWithState:objects:count:";
     }
 
-    [SupportedOSPlatform("macos")]
     public partial class NSEnumerator : NSFastEnumeration
     {
         public IntPtr NativePtr;

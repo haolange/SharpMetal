@@ -4,7 +4,6 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    [SupportedOSPlatform("macos")]
     public partial class NSAutoreleasePool : IDisposable
     {
         public IntPtr NativePtr;

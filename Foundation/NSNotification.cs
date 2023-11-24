@@ -3,7 +3,6 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    [SupportedOSPlatform("macos")]
     public partial class NSNotification
     {
         public IntPtr NativePtr;
@@ -26,7 +25,6 @@ namespace SharpMetal.Foundation
         private static readonly Selector sel_userInfo = "userInfo";
     }
 
-    [SupportedOSPlatform("macos")]
     public partial class NSNotificationCenter
     {
         public IntPtr NativePtr;
