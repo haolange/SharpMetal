@@ -1,42 +1,62 @@
-using System;
-using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
+using SharpMetal.ObjectiveCCore;
+using SharpMetal.Foundation;
 
-namespace Apple.Metal
+namespace SharpMetal.Metal
 {
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe struct MTLBuffer
+    
+    public partial class MTLBuffer : MTLResource
     {
-        public readonly IntPtr NativePtr;
-        public bool IsNull => NativePtr == IntPtr.Zero;
+        public IntPtr NativePtr;
+        public static implicit operator IntPtr(MTLBuffer obj) => obj.NativePtr;
+        public MTLBuffer(IntPtr ptr) : base(ptr) => NativePtr = ptr;
 
-        public UIntPtr length => ObjectiveCRuntime.UIntPtr_objc_msgSend(NativePtr, sel_length);
-
-        public IntPtr contents() => ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_contents);
-
-        public MTLBuffer(in IntPtr ptr)
+        protected MTLBuffer()
         {
-            NativePtr = ptr;
+            throw new NotImplementedException();
         }
 
-        public void didModifyRange(in NSRange range)
+        public ulong Length => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_length);
+
+        public IntPtr Contents => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_contents));
+
+        public MTLBuffer RemoteStorageBuffer => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_remoteStorageBuffer));
+
+        public ulong GpuAddress => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_gpuAddress);
+
+        public void DidModifyRange(NSRange range)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_didModifyRange, range);
         }
 
-        public void addDebugMarker(in NSString marker, in NSRange range)
+        public MTLTexture NewTexture(MTLTextureDescriptor descriptor, ulong offset, ulong bytesPerRow)
         {
-            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addDebugMarker, marker.NativePtr, range);
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newTextureWithDescriptoroffsetbytesPerRow, descriptor, offset, bytesPerRow));
         }
 
-        public void removeAllDebugMarkers()
+        public void AddDebugMarker(NSString marker, NSRange range)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addDebugMarkerrange, marker, range);
+        }
+
+        public void RemoveAllDebugMarkers()
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_removeAllDebugMarkers);
+        }
+
+        public MTLBuffer NewRemoteBufferViewForDevice(MTLDevice device)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newRemoteBufferViewForDevice, device));
         }
 
         private static readonly Selector sel_length = "length";
         private static readonly Selector sel_contents = "contents";
         private static readonly Selector sel_didModifyRange = "didModifyRange:";
-        private static readonly Selector sel_addDebugMarker = "addDebugMarker:range:";
+        private static readonly Selector sel_newTextureWithDescriptoroffsetbytesPerRow = "newTextureWithDescriptor:offset:bytesPerRow:";
+        private static readonly Selector sel_addDebugMarkerrange = "addDebugMarker:range:";
         private static readonly Selector sel_removeAllDebugMarkers = "removeAllDebugMarkers";
+        private static readonly Selector sel_remoteStorageBuffer = "remoteStorageBuffer";
+        private static readonly Selector sel_newRemoteBufferViewForDevice = "newRemoteBufferViewForDevice:";
+        private static readonly Selector sel_gpuAddress = "gpuAddress";
     }
 }

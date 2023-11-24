@@ -1,15 +1,26 @@
-﻿using System;
-using System.Runtime.InteropServices;
-using static Apple.Metal.ObjectiveCRuntime;
+using System.Runtime.Versioning;
+using SharpMetal.ObjectiveCCore;
+using SharpMetal.Metal;
 
-namespace Apple.Metal
+namespace SharpMetal.QuartzCore
 {
-    [StructLayout(LayoutKind.Sequential)]
-    public struct CAMetalDrawable
+    [SupportedOSPlatform("macos")]
+    public partial class CAMetalDrawable : MTLDrawable
     {
-        public readonly IntPtr NativePtr;
-        public CAMetalDrawable(in IntPtr ptr) => NativePtr = ptr;
-        public bool IsNull => NativePtr == IntPtr.Zero;
-        public MTLTexture texture => objc_msgSend<MTLTexture>(NativePtr, Selectors.texture);
+        public IntPtr NativePtr;
+        public static implicit operator IntPtr(CAMetalDrawable obj) => obj.NativePtr;
+        public CAMetalDrawable(IntPtr ptr) : base(ptr) => NativePtr = ptr;
+
+        protected CAMetalDrawable()
+        {
+            throw new NotImplementedException();
+        }
+
+        public CAMetalLayer Layer => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_layer));
+
+        public MTLTexture Texture => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_texture));
+
+        private static readonly Selector sel_layer = "layer";
+        private static readonly Selector sel_texture = "texture";
     }
 }

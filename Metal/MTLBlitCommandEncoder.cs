@@ -1,171 +1,178 @@
-using System;
-using static Apple.Metal.ObjectiveCRuntime;
+using System.Runtime.Versioning;
+using SharpMetal.ObjectiveCCore;
+using SharpMetal.Foundation;
 
-namespace Apple.Metal
+namespace SharpMetal.Metal
 {
-    public struct MTLBlitCommandEncoder
+    public enum MTLBlitOption : ulong
     {
-        public readonly IntPtr NativePtr;
-        public bool IsNull => NativePtr == IntPtr.Zero;
+        None = 0,
+        DepthFromDepthStencil = 1,
+        StencilFromDepthStencil = 2,
+        RowLinearPVRTC = 4,
+    }
 
-        public void copyFromBuffer(in MTLBuffer sourceBuffer, in UIntPtr sourceOffset, in MTLBuffer destinationBuffer, in UIntPtr destinationOffset, in UIntPtr size)
+    
+    public partial class MTLBlitCommandEncoder : MTLCommandEncoder
+    {
+        public IntPtr NativePtr;
+        public static implicit operator IntPtr(MTLBlitCommandEncoder obj) => obj.NativePtr;
+        public MTLBlitCommandEncoder(IntPtr ptr) : base(ptr) => NativePtr = ptr;
+
+        protected MTLBlitCommandEncoder()
         {
-            objc_msgSend(NativePtr, sel_copyFromBuffer0, sourceBuffer, sourceOffset, destinationBuffer, destinationOffset, size);
+            throw new NotImplementedException();
         }
 
-        public void copyFromBuffer(in MTLBuffer sourceBuffer, in UIntPtr sourceOffset, in UIntPtr sourceBytesPerRow, in UIntPtr sourceBytesPerImage, in MTLSize sourceSize, in MTLTexture destinationTexture, in UIntPtr destinationSlice, in UIntPtr destinationLevel, in MTLOrigin destinationOrigin)
+        public void SynchronizeResource(MTLResource resource)
         {
-            objc_msgSend(NativePtr, sel_copyFromBuffer1, sourceBuffer.NativePtr, sourceOffset, sourceBytesPerRow, sourceBytesPerImage, sourceSize, destinationTexture.NativePtr, destinationSlice, destinationLevel, destinationOrigin);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_synchronizeResource, resource);
         }
 
-        public void copyFromTexture(in MTLTexture sourceTexture, in MTLTexture destinationTexture)
+        public void SynchronizeTexture(MTLTexture texture, ulong slice, ulong level)
         {
-            objc_msgSend(NativePtr, sel_copyFromTexture0, sourceTexture, destinationTexture);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_synchronizeTextureslicelevel, texture, slice, level);
         }
 
-        public void copyFromTexture(in MTLTexture sourceTexture, in UIntPtr sourceSlice, in UIntPtr sourceLevel, in MTLTexture destinationTexture, in UIntPtr destinationSlice, in UIntPtr destinationLevel, in UIntPtr sliceCount, in UIntPtr levelCount)
+        public void CopyFromTexture(MTLTexture sourceTexture, ulong sourceSlice, ulong sourceLevel, MTLOrigin sourceOrigin, MTLSize sourceSize, MTLTexture destinationTexture, ulong destinationSlice, ulong destinationLevel, MTLOrigin destinationOrigin)
         {
-            objc_msgSend(NativePtr, sel_copyFromTexture1, sourceTexture, sourceSlice, sourceLevel, destinationTexture, destinationSlice, destinationLevel, sliceCount, levelCount);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_copyFromTexturesourceSlicesourceLevelsourceOriginsourceSizetoTexturedestinationSlicedestinationLeveldestinationOrigin, sourceTexture, sourceSlice, sourceLevel, sourceOrigin, sourceSize, destinationTexture, destinationSlice, destinationLevel, destinationOrigin);
         }
 
-        public void copyFromTexture(in MTLTexture sourceTexture, in UIntPtr sourceSlice, in UIntPtr sourceLevel, in MTLOrigin sourceOrigin, in MTLSize sourceSize, in MTLTexture destinationTexture, in UIntPtr destinationSlice, in UIntPtr destinationLevel, in MTLOrigin destinationOrigin)
+        public void CopyFromBuffer(MTLBuffer sourceBuffer, ulong sourceOffset, ulong sourceBytesPerRow, ulong sourceBytesPerImage, MTLSize sourceSize, MTLTexture destinationTexture, ulong destinationSlice, ulong destinationLevel, MTLOrigin destinationOrigin)
         {
-            objc_msgSend(NativePtr, sel_copyFromTexture2, sourceTexture, sourceSlice, sourceLevel, sourceOrigin, sourceSize, destinationTexture, destinationSlice, destinationLevel, destinationOrigin);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_copyFromBuffersourceOffsetsourceBytesPerRowsourceBytesPerImagesourceSizetoTexturedestinationSlicedestinationLeveldestinationOrigin, sourceBuffer, sourceOffset, sourceBytesPerRow, sourceBytesPerImage, sourceSize, destinationTexture, destinationSlice, destinationLevel, destinationOrigin);
         }
 
-        public void copyFromTexture(in MTLTexture sourceTexture, in UIntPtr sourceSlice, in UIntPtr sourceLevel, in MTLOrigin sourceOrigin, in MTLSize sourceSize, in MTLBuffer destinationBuffer, in UIntPtr destinationOffset, in UIntPtr destinationBytesPerRow, in UIntPtr destinationBytesPerImage)
+        public void CopyFromBuffer(MTLBuffer sourceBuffer, ulong sourceOffset, ulong sourceBytesPerRow, ulong sourceBytesPerImage, MTLSize sourceSize, MTLTexture destinationTexture, ulong destinationSlice, ulong destinationLevel, MTLOrigin destinationOrigin, MTLBlitOption options)
         {
-            objc_msgSend(NativePtr, sel_copyFromTexture3, sourceTexture, sourceSlice, sourceLevel, sourceOrigin, sourceSize, destinationBuffer, destinationOffset, destinationBytesPerRow, destinationBytesPerImage);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_copyFromBuffersourceOffsetsourceBytesPerRowsourceBytesPerImagesourceSizetoTexturedestinationSlicedestinationLeveldestinationOriginoptions, sourceBuffer, sourceOffset, sourceBytesPerRow, sourceBytesPerImage, sourceSize, destinationTexture, destinationSlice, destinationLevel, destinationOrigin, (ulong)options);
         }
 
-        public void fillBuffer(in MTLBuffer buffer, in NSRange range, in UIntPtr value)
+        public void CopyFromTexture(MTLTexture sourceTexture, ulong sourceSlice, ulong sourceLevel, MTLOrigin sourceOrigin, MTLSize sourceSize, MTLBuffer destinationBuffer, ulong destinationOffset, ulong destinationBytesPerRow, ulong destinationBytesPerImage)
         {
-            objc_msgSend(NativePtr, sel_fillBuffer, buffer, range, value);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_copyFromTexturesourceSlicesourceLevelsourceOriginsourceSizetoBufferdestinationOffsetdestinationBytesPerRowdestinationBytesPerImage, sourceTexture, sourceSlice, sourceLevel, sourceOrigin, sourceSize, destinationBuffer, destinationOffset, destinationBytesPerRow, destinationBytesPerImage);
         }
 
-        public void generateMipmapsForTexture(in MTLTexture texture)
+        public void CopyFromTexture(MTLTexture sourceTexture, ulong sourceSlice, ulong sourceLevel, MTLOrigin sourceOrigin, MTLSize sourceSize, MTLBuffer destinationBuffer, ulong destinationOffset, ulong destinationBytesPerRow, ulong destinationBytesPerImage, MTLBlitOption options)
         {
-            objc_msgSend(NativePtr, sel_generateMipmapsForTexture, texture.NativePtr);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_copyFromTexturesourceSlicesourceLevelsourceOriginsourceSizetoBufferdestinationOffsetdestinationBytesPerRowdestinationBytesPerImageoptions, sourceTexture, sourceSlice, sourceLevel, sourceOrigin, sourceSize, destinationBuffer, destinationOffset, destinationBytesPerRow, destinationBytesPerImage, (ulong)options);
         }
 
-        public void updateFence()
+        public void GenerateMipmaps(MTLTexture texture)
         {
-
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_generateMipmapsForTexture, texture);
         }
 
-        public void waitForFence()
+        public void FillBuffer(MTLBuffer buffer, NSRange range, byte value)
         {
-
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_fillBufferrangevalue, buffer, range, value);
         }
 
-        public void optimizeContentsForGPUAccess()
+        public void CopyFromTexture(MTLTexture sourceTexture, ulong sourceSlice, ulong sourceLevel, MTLTexture destinationTexture, ulong destinationSlice, ulong destinationLevel, ulong sliceCount, ulong levelCount)
         {
-
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_copyFromTexturesourceSlicesourceLeveltoTexturedestinationSlicedestinationLevelsliceCountlevelCount, sourceTexture, sourceSlice, sourceLevel, destinationTexture, destinationSlice, destinationLevel, sliceCount, levelCount);
         }
 
-        public void synchronizeResource(in IntPtr resource)
+        public void CopyFromTexture(MTLTexture sourceTexture, MTLTexture destinationTexture)
         {
-            objc_msgSend(NativePtr, sel_synchronizeResource, resource);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_copyFromTexturetoTexture, sourceTexture, destinationTexture);
         }
 
-        public void synchronizeTexture(in IntPtr resource, in UIntPtr slice, in UIntPtr level)
+        public void CopyFromBuffer(MTLBuffer sourceBuffer, ulong sourceOffset, MTLBuffer destinationBuffer, ulong destinationOffset, ulong size)
         {
-            objc_msgSend(NativePtr, sel_synchronizeTexture, resource, slice, level);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_copyFromBuffersourceOffsettoBufferdestinationOffsetsize, sourceBuffer, sourceOffset, destinationBuffer, destinationOffset, size);
         }
 
-        public void copyIndirectCommandBuffer()
+        public void UpdateFence(MTLFence fence)
         {
-            
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_updateFence, fence);
         }
 
-        public void optimizeIndirectCommandBuffer()
+        public void WaitForFence(MTLFence fence)
         {
-
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_waitForFence, fence);
         }
 
-        public void resetCommandsInBuffer()
+        public void GetTextureAccessCounters(MTLTexture texture, MTLRegion region, ulong mipLevel, ulong slice, bool resetCounters, MTLBuffer countersBuffer, ulong countersBufferOffset)
         {
-
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_getTextureAccessCountersregionmipLevelsliceresetCounterscountersBuffercountersBufferOffset, texture, region, mipLevel, slice, resetCounters, countersBuffer, countersBufferOffset);
         }
 
-        public void optimizeContentsForGPUAccess(in UIntPtr slice, in UIntPtr level)
+        public void ResetTextureAccessCounters(MTLTexture texture, MTLRegion region, ulong mipLevel, ulong slice)
         {
-
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_resetTextureAccessCountersregionmipLevelslice, texture, region, mipLevel, slice);
         }
 
-        public void optimizeContentsForCPUAccess()
+        public void OptimizeContentsForGPUAccess(MTLTexture texture)
         {
-
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_optimizeContentsForGPUAccess, texture);
         }
 
-        public void optimizeContentsForCPUAccess(in UIntPtr slice, in UIntPtr level)
+        public void OptimizeContentsForGPUAccess(MTLTexture texture, ulong slice, ulong level)
         {
-
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_optimizeContentsForGPUAccessslicelevel, texture, slice, level);
         }
 
-        public void sampleCountersInBuffer()
+        public void OptimizeContentsForCPUAccess(MTLTexture texture)
         {
-
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_optimizeContentsForCPUAccess, texture);
         }
 
-        public void resolveCounters()
+        public void OptimizeContentsForCPUAccess(MTLTexture texture, ulong slice, ulong level)
         {
-
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_optimizeContentsForCPUAccessslicelevel, texture, slice, level);
         }
 
-        public void getTextureAccessCounters()
+        public void ResetCommandsInBuffer(MTLIndirectCommandBuffer buffer, NSRange range)
         {
-
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_resetCommandsInBufferwithRange, buffer, range);
         }
 
-        public void resetTextureAccessCounters()
+        public void CopyIndirectCommandBuffer(MTLIndirectCommandBuffer source, NSRange sourceRange, MTLIndirectCommandBuffer destination, ulong destinationIndex)
         {
-
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_copyIndirectCommandBuffersourceRangedestinationdestinationIndex, source, sourceRange, destination, destinationIndex);
         }
 
-        public void endEncoding()
+        public void OptimizeIndirectCommandBuffer(MTLIndirectCommandBuffer indirectCommandBuffer, NSRange range)
         {
-            objc_msgSend(NativePtr, sel_endEncoding);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_optimizeIndirectCommandBufferwithRange, indirectCommandBuffer, range);
         }
 
-        public void insertDebugSignpost(in NSString @string)
+        public void SampleCountersInBuffer(MTLCounterSampleBuffer sampleBuffer, ulong sampleIndex, bool barrier)
         {
-            objc_msgSend(NativePtr, Selectors.insertDebugSignpost, @string.NativePtr);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_sampleCountersInBufferatSampleIndexwithBarrier, sampleBuffer, sampleIndex, barrier);
         }
 
-        public void pushDebugGroup(in NSString @string)
+        public void ResolveCounters(MTLCounterSampleBuffer sampleBuffer, NSRange range, MTLBuffer destinationBuffer, ulong destinationOffset)
         {
-            objc_msgSend(NativePtr, Selectors.pushDebugGroup, @string.NativePtr);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_resolveCountersinRangedestinationBufferdestinationOffset, sampleBuffer, range, destinationBuffer, destinationOffset);
         }
 
-        public void popDebugGroup()
-        {
-            objc_msgSend(NativePtr, Selectors.popDebugGroup);
-        }
-
-        private static readonly Selector sel_copyFromBuffer0 = "copyFromBuffer:sourceOffset:toBuffer:destinationOffset:size:";
-        private static readonly Selector sel_copyFromBuffer1 = "copyFromBuffer:sourceOffset:sourceBytesPerRow:sourceBytesPerImage:sourceSize:toTexture:destinationSlice:destinationLevel:destinationOrigin:";
-        private static readonly Selector sel_copyFromTexture0 = "copyFromTexture:toTexture:";
-        private static readonly Selector sel_copyFromTexture1 = "copyFromTexture:sourceSlice:sourceLevel:toTexture:destinationSlice:destinationLevel:sliceCount:levelCount:";
-        private static readonly Selector sel_copyFromTexture2 = "copyFromTexture:sourceSlice:sourceLevel:sourceOrigin:sourceSize:toTexture:destinationSlice:destinationLevel:destinationOrigin:";
-        private static readonly Selector sel_copyFromTexture3 = "copyFromTexture:sourceSlice:sourceLevel:sourceOrigin:sourceSize:toBuffer:destinationOffset:destinationBytesPerRow:destinationBytesPerImage:";
-        private static readonly Selector sel_fillBuffer = "fillBuffer:range:value:";
-        private static readonly Selector sel_generateMipmapsForTexture = "generateMipmapsForTexture:";
-        private static readonly Selector sel_copyIndirectCommandBuffer = "copyIndirectCommandBuffer:sourceRange:destination:destinationIndex:";
-        private static readonly Selector sel_optimizeIndirectCommandBuffer = "optimizeIndirectCommandBuffer:withRange:";
-        private static readonly Selector sel_resetCommandsInBuffer = "resetCommandsInBuffer:withRange:";
         private static readonly Selector sel_synchronizeResource = "synchronizeResource:";
-        private static readonly Selector sel_synchronizeTexture = "synchronizeTexture:slice:level:";
+        private static readonly Selector sel_synchronizeTextureslicelevel = "synchronizeTexture:slice:level:";
+        private static readonly Selector sel_copyFromTexturesourceSlicesourceLevelsourceOriginsourceSizetoTexturedestinationSlicedestinationLeveldestinationOrigin = "copyFromTexture:sourceSlice:sourceLevel:sourceOrigin:sourceSize:toTexture:destinationSlice:destinationLevel:destinationOrigin:";
+        private static readonly Selector sel_copyFromBuffersourceOffsetsourceBytesPerRowsourceBytesPerImagesourceSizetoTexturedestinationSlicedestinationLeveldestinationOrigin = "copyFromBuffer:sourceOffset:sourceBytesPerRow:sourceBytesPerImage:sourceSize:toTexture:destinationSlice:destinationLevel:destinationOrigin:";
+        private static readonly Selector sel_copyFromBuffersourceOffsetsourceBytesPerRowsourceBytesPerImagesourceSizetoTexturedestinationSlicedestinationLeveldestinationOriginoptions = "copyFromBuffer:sourceOffset:sourceBytesPerRow:sourceBytesPerImage:sourceSize:toTexture:destinationSlice:destinationLevel:destinationOrigin:options:";
+        private static readonly Selector sel_copyFromTexturesourceSlicesourceLevelsourceOriginsourceSizetoBufferdestinationOffsetdestinationBytesPerRowdestinationBytesPerImage = "copyFromTexture:sourceSlice:sourceLevel:sourceOrigin:sourceSize:toBuffer:destinationOffset:destinationBytesPerRow:destinationBytesPerImage:";
+        private static readonly Selector sel_copyFromTexturesourceSlicesourceLevelsourceOriginsourceSizetoBufferdestinationOffsetdestinationBytesPerRowdestinationBytesPerImageoptions = "copyFromTexture:sourceSlice:sourceLevel:sourceOrigin:sourceSize:toBuffer:destinationOffset:destinationBytesPerRow:destinationBytesPerImage:options:";
+        private static readonly Selector sel_generateMipmapsForTexture = "generateMipmapsForTexture:";
+        private static readonly Selector sel_fillBufferrangevalue = "fillBuffer:range:value:";
+        private static readonly Selector sel_copyFromTexturesourceSlicesourceLeveltoTexturedestinationSlicedestinationLevelsliceCountlevelCount = "copyFromTexture:sourceSlice:sourceLevel:toTexture:destinationSlice:destinationLevel:sliceCount:levelCount:";
+        private static readonly Selector sel_copyFromTexturetoTexture = "copyFromTexture:toTexture:";
+        private static readonly Selector sel_copyFromBuffersourceOffsettoBufferdestinationOffsetsize = "copyFromBuffer:sourceOffset:toBuffer:destinationOffset:size:";
         private static readonly Selector sel_updateFence = "updateFence:";
         private static readonly Selector sel_waitForFence = "waitForFence:";
-        private static readonly Selector sel_optimizeContentsForGPUAccess0 = "optimizeContentsForGPUAccess:";
-        private static readonly Selector sel_optimizeContentsForGPUAccess1 = "optimizeContentsForGPUAccess:slice:level:";
-        private static readonly Selector sel_optimizeContentsForCPUAccess0 = "optimizeContentsForCPUAccess:";
-        private static readonly Selector sel_optimizeContentsForCPUAccess1 = "optimizeContentsForCPUAccess:slice:level:";
-        private static readonly Selector sel_sampleCountersInBuffer = "sampleCountersInBuffer:atSampleIndex:withBarrier:";
-        private static readonly Selector sel_resolveCounters = "resolveCounters:inRange:destinationBuffer:destinationOffset:";
-        private static readonly Selector sel_getTextureAccessCounters = "getTextureAccessCounters:region:mipLevel:slice:resetCounters:countersBuffer:countersBufferOffset:";
-        private static readonly Selector sel_resetTextureAccessCounters = "resetTextureAccessCounters:region:mipLevel:slice:";
-        private static readonly Selector sel_endEncoding = "endEncoding";
+        private static readonly Selector sel_getTextureAccessCountersregionmipLevelsliceresetCounterscountersBuffercountersBufferOffset = "getTextureAccessCounters:region:mipLevel:slice:resetCounters:countersBuffer:countersBufferOffset:";
+        private static readonly Selector sel_resetTextureAccessCountersregionmipLevelslice = "resetTextureAccessCounters:region:mipLevel:slice:";
+        private static readonly Selector sel_optimizeContentsForGPUAccess = "optimizeContentsForGPUAccess:";
+        private static readonly Selector sel_optimizeContentsForGPUAccessslicelevel = "optimizeContentsForGPUAccess:slice:level:";
+        private static readonly Selector sel_optimizeContentsForCPUAccess = "optimizeContentsForCPUAccess:";
+        private static readonly Selector sel_optimizeContentsForCPUAccessslicelevel = "optimizeContentsForCPUAccess:slice:level:";
+        private static readonly Selector sel_resetCommandsInBufferwithRange = "resetCommandsInBuffer:withRange:";
+        private static readonly Selector sel_copyIndirectCommandBuffersourceRangedestinationdestinationIndex = "copyIndirectCommandBuffer:sourceRange:destination:destinationIndex:";
+        private static readonly Selector sel_optimizeIndirectCommandBufferwithRange = "optimizeIndirectCommandBuffer:withRange:";
+        private static readonly Selector sel_sampleCountersInBufferatSampleIndexwithBarrier = "sampleCountersInBuffer:atSampleIndex:withBarrier:";
+        private static readonly Selector sel_resolveCountersinRangedestinationBufferdestinationOffset = "resolveCounters:inRange:destinationBuffer:destinationOffset:";
     }
 }
