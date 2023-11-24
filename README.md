@@ -1,2 +1,2 @@
 # SharpMetal
-This repository contains low-level bindings for Metal.
+low level apple Metal graphics api bindings for dotnet.

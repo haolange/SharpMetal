@@ -1058,6 +1058,7 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMotionTransformCountBufferOffset, value);
         }
 
+        private static readonly Selector sel_descriptor = "descriptor";
         private static readonly Selector sel_instanceDescriptorBuffer = "instanceDescriptorBuffer";
         private static readonly Selector sel_setInstanceDescriptorBuffer = "setInstanceDescriptorBuffer:";
         private static readonly Selector sel_instanceDescriptorBufferOffset = "instanceDescriptorBufferOffset";
@@ -1082,7 +1083,6 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setMotionTransformCountBuffer = "setMotionTransformCountBuffer:";
         private static readonly Selector sel_motionTransformCountBufferOffset = "motionTransformCountBufferOffset";
         private static readonly Selector sel_setMotionTransformCountBufferOffset = "setMotionTransformCountBufferOffset:";
-        private static readonly Selector sel_descriptor = "descriptor";
     }
 
     
