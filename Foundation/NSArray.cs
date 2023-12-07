@@ -4,11 +4,11 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    public partial class NSArray
+    public struct NSArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSArray obj) => obj.NativePtr;
-        public NSArray(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in NSArray obj) => obj.NativePtr;
+        public NSArray(in IntPtr ptr) => NativePtr = ptr;
 
         public NSArray()
         {
@@ -32,22 +32,22 @@ namespace SharpMetal.Foundation
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSArray"), sel_arrayWithObject, pObject));
         }
 
-        public static NSArray Array(NSObject pObjects, ulong count)
+        public static NSArray Array(NSObject pObjects, in ulong count)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSArray"), sel_arrayWithObjectscount, pObjects, count));
         }
 
-        public NSArray Init(NSObject pObjects, ulong count)
+        public NSArray Init(NSObject pObjects, in ulong count)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithObjectscount, pObjects, count));
         }
 
-        public NSArray Init(IntPtr pCoder)
+        public NSArray Init(in IntPtr pCoder)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithCoder, pCoder));
         }
 
-        public IntPtr Object(ulong index)
+        public IntPtr Object(in ulong index)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectAtIndex, index));
         }

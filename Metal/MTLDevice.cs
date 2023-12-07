@@ -126,7 +126,6 @@ namespace SharpMetal.Metal
         AtTileDispatchBoundary = 3,
         AtBlitBoundary = 4,
     }
-
     
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLAccelerationStructureSizes
@@ -135,7 +134,6 @@ namespace SharpMetal.Metal
         public ulong buildScratchBufferSize;
         public ulong refitScratchBufferSize;
     }
-
     
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLSizeAndAlign
@@ -144,7 +142,6 @@ namespace SharpMetal.Metal
         public ulong align;
     }
 
-    
     public partial class MTLArgumentDescriptor
     {
         public IntPtr NativePtr;
@@ -208,7 +205,6 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setConstantBlockAlignment = "setConstantBlockAlignment:";
     }
 
-    
     public partial class MTLArchitecture
     {
         public IntPtr NativePtr;
@@ -226,17 +222,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_name = "name";
     }
 
-    
-    public partial class MTLDevice
+    public partial struct MTLDevice
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLDevice obj) => obj.NativePtr;
-        public MTLDevice(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLDevice()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLDevice device) => device.NativePtr;
+        public MTLDevice(in IntPtr ptr) => NativePtr = ptr;
 
         public bool IsHeadless => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isHeadless);
 
@@ -330,10 +320,20 @@ namespace SharpMetal.Metal
         public ulong MaximumConcurrentCompilationTaskCount => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_maximumConcurrentCompilationTaskCount);
 
         [LibraryImport(ObjectiveC.MetalFramework)]
-        public static partial IntPtr MTLCreateSystemDefaultDevice();
+        private static partial IntPtr MTLCreateSystemDefaultDevice();
+
+        public static MTLDevice CreateSystemDefaultDevice()
+        {
+            return new MTLDevice(MTLCreateSystemDefaultDevice());
+        }
 
         [LibraryImport(ObjectiveC.MetalFramework)]
-        public static partial IntPtr MTLCopyAllDevices();
+        private static partial IntPtr MTLCopyAllDevices();
+
+        public static NSArray CopyAllDevices()
+        {
+            return new NSArray(MTLCopyAllDevices());
+        }
 
         public MTLCommandQueue NewCommandQueue()
         {
