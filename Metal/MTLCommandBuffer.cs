@@ -1,7 +1,6 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
 using SharpMetal.QuartzCore;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
@@ -52,12 +51,11 @@ namespace SharpMetal.Metal
         Concurrent = 1,
     }
 
-    
-    public partial class MTLCommandBufferDescriptor
+    public partial struct MTLCommandBufferDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLCommandBufferDescriptor obj) => obj.NativePtr;
-        public MTLCommandBufferDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLCommandBufferDescriptor obj) => obj.NativePtr;
+        public MTLCommandBufferDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLCommandBufferDescriptor()
         {
@@ -84,16 +82,11 @@ namespace SharpMetal.Metal
     }
 
     
-    public partial class MTLCommandBufferEncoderInfo
+    public partial struct MTLCommandBufferEncoderInfo
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLCommandBufferEncoderInfo obj) => obj.NativePtr;
-        public MTLCommandBufferEncoderInfo(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLCommandBufferEncoderInfo()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLCommandBufferEncoderInfo obj) => obj.NativePtr;
+        public MTLCommandBufferEncoderInfo(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_label));
 
@@ -107,16 +100,11 @@ namespace SharpMetal.Metal
     }
 
     
-    public partial class MTLCommandBuffer
+    public partial struct MTLCommandBuffer
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLCommandBuffer obj) => obj.NativePtr;
-        public MTLCommandBuffer(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLCommandBuffer()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLCommandBuffer obj) => obj.NativePtr;
+        public MTLCommandBuffer(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLDevice Device => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_device));
 
@@ -156,17 +144,17 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_commit);
         }
 
-        public void PresentDrawable(CAMetalDrawable drawable)
+        public void PresentDrawable(in CAMetalDrawable drawable)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_presentDrawable, drawable);
         }
 
-        public void PresentDrawableAtTime(CAMetalDrawable drawable, IntPtr presentationTime)
+        public void PresentDrawableAtTime(in CAMetalDrawable drawable, in IntPtr presentationTime)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_presentDrawableatTime, drawable, presentationTime);
         }
 
-        public void PresentDrawableAfterMinimumDuration(CAMetalDrawable drawable, IntPtr duration)
+        public void PresentDrawableAfterMinimumDuration(in CAMetalDrawable drawable, in IntPtr duration)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_presentDrawableafterMinimumDuration, drawable, duration);
         }
@@ -181,17 +169,17 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_waitUntilCompleted);
         }
 
-        public MTLRenderCommandEncoder RenderCommandEncoder(MTLRenderPassDescriptor renderPassDescriptor)
+        public MTLRenderCommandEncoder RenderCommandEncoder(in MTLRenderPassDescriptor renderPassDescriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_renderCommandEncoderWithDescriptor, renderPassDescriptor));
         }
 
-        public MTLComputeCommandEncoder ComputeCommandEncoder(MTLComputePassDescriptor computePassDescriptor)
+        public MTLComputeCommandEncoder ComputeCommandEncoder(in MTLComputePassDescriptor computePassDescriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_computeCommandEncoderWithDescriptor, computePassDescriptor));
         }
 
-        public MTLBlitCommandEncoder BlitCommandEncoder(MTLBlitPassDescriptor blitPassDescriptor)
+        public MTLBlitCommandEncoder BlitCommandEncoder(in MTLBlitPassDescriptor blitPassDescriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_blitCommandEncoderWithDescriptor, blitPassDescriptor));
         }
@@ -206,27 +194,27 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_computeCommandEncoder));
         }
 
-        public MTLComputeCommandEncoder ComputeCommandEncoder(MTLDispatchType dispatchType)
+        public MTLComputeCommandEncoder ComputeCommandEncoder(in MTLDispatchType dispatchType)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_computeCommandEncoderWithDispatchType, (ulong)dispatchType));
         }
 
-        public void EncodeWait(MTLEvent mltEvent, ulong value)
+        public void EncodeWait(in MTLEvent mltEvent, in ulong value)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_encodeWaitForEventvalue, mltEvent, value);
         }
 
-        public void EncodeSignalEvent(MTLEvent mltEvent, ulong value)
+        public void EncodeSignalEvent(in MTLEvent mltEvent, in ulong value)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_encodeSignalEventvalue, mltEvent, value);
         }
 
-        public MTLParallelRenderCommandEncoder ParallelRenderCommandEncoder(MTLRenderPassDescriptor renderPassDescriptor)
+        public MTLParallelRenderCommandEncoder ParallelRenderCommandEncoder(in MTLRenderPassDescriptor renderPassDescriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_parallelRenderCommandEncoderWithDescriptor, renderPassDescriptor));
         }
 
-        public MTLResourceStateCommandEncoder ResourceStateCommandEncoder(MTLResourceStatePassDescriptor resourceStatePassDescriptor)
+        public MTLResourceStateCommandEncoder ResourceStateCommandEncoder(in MTLResourceStatePassDescriptor resourceStatePassDescriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_resourceStateCommandEncoderWithDescriptor, resourceStatePassDescriptor));
         }
@@ -236,7 +224,7 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_resourceStateCommandEncoderWithDescriptor));
         }
 
-        public MTLAccelerationStructureCommandEncoder AccelerationStructureCommandEncoder(MTLAccelerationStructurePassDescriptor descriptor)
+        public MTLAccelerationStructureCommandEncoder AccelerationStructureCommandEncoder(in MTLAccelerationStructurePassDescriptor descriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_accelerationStructureCommandEncoderWithDescriptor, descriptor));
         }
@@ -246,7 +234,7 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_accelerationStructureCommandEncoderWithDescriptor));
         }
 
-        public void PushDebugGroup(NSString nsString)
+        public void PushDebugGroup(in NSString nsString)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_pushDebugGroup, nsString);
         }

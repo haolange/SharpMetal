@@ -1,15 +1,13 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
-    
-    public partial class MTLComputePipelineReflection
+    public partial struct MTLComputePipelineReflection
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLComputePipelineReflection obj) => obj.NativePtr;
-        public MTLComputePipelineReflection(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLComputePipelineReflection obj) => obj.NativePtr;
+        public MTLComputePipelineReflection(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLComputePipelineReflection()
         {
@@ -25,12 +23,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_arguments = "arguments";
     }
 
-    
-    public partial class MTLComputePipelineDescriptor
+    public partial struct MTLComputePipelineDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLComputePipelineDescriptor obj) => obj.NativePtr;
-        public MTLComputePipelineDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLComputePipelineDescriptor obj) => obj.NativePtr;
+        public MTLComputePipelineDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLComputePipelineDescriptor()
         {
@@ -145,17 +142,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setMaxCallStackDepth = "setMaxCallStackDepth:";
     }
 
-    
-    public partial class MTLComputePipelineState
+    public partial struct MTLComputePipelineState
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLComputePipelineState obj) => obj.NativePtr;
-        public MTLComputePipelineState(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLComputePipelineState()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLComputePipelineState obj) => obj.NativePtr;
+        public MTLComputePipelineState(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_label));
 
@@ -171,27 +162,27 @@ namespace SharpMetal.Metal
 
         public MTLResourceID GpuResourceID => ObjectiveCRuntime.MTLResourceID_objc_msgSend(NativePtr, sel_gpuResourceID);
 
-        public ulong ImageblockMemoryLength(MTLSize imageblockDimensions)
+        public ulong ImageblockMemoryLength(in MTLSize imageblockDimensions)
         {
             return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_imageblockMemoryLengthForDimensions, imageblockDimensions);
         }
 
-        public MTLFunctionHandle FunctionHandle(MTLFunction function)
+        public MTLFunctionHandle FunctionHandle(in MTLFunction function)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_functionHandleWithFunction, function));
         }
 
-        public MTLComputePipelineState NewComputePipelineState(NSArray functions, ref NSError error)
+        public MTLComputePipelineState NewComputePipelineState(in NSArray functions, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newComputePipelineStateWithAdditionalBinaryFunctionserror, functions, ref error.NativePtr));
         }
 
-        public MTLVisibleFunctionTable NewVisibleFunctionTable(MTLVisibleFunctionTableDescriptor descriptor)
+        public MTLVisibleFunctionTable NewVisibleFunctionTable(in MTLVisibleFunctionTableDescriptor descriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newVisibleFunctionTableWithDescriptor, descriptor));
         }
 
-        public MTLIntersectionFunctionTable NewIntersectionFunctionTable(MTLIntersectionFunctionTableDescriptor descriptor)
+        public MTLIntersectionFunctionTable NewIntersectionFunctionTable(in MTLIntersectionFunctionTableDescriptor descriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newIntersectionFunctionTableWithDescriptor, descriptor));
         }

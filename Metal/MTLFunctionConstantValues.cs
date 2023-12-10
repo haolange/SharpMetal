@@ -1,15 +1,13 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
-    
-    public partial class MTLFunctionConstantValues
+    public partial struct MTLFunctionConstantValues
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLFunctionConstantValues obj) => obj.NativePtr;
-        public MTLFunctionConstantValues(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLFunctionConstantValues obj) => obj.NativePtr;
+        public MTLFunctionConstantValues(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLFunctionConstantValues()
         {
@@ -17,17 +15,17 @@ namespace SharpMetal.Metal
             NativePtr = cls.AllocInit();
         }
 
-        public void SetConstantValue(IntPtr value, MTLDataType type, ulong index)
+        public void SetConstantValue(in IntPtr value, in MTLDataType type, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setConstantValuetypeatIndex, value, (ulong)type, index);
         }
 
-        public void SetConstantValues(IntPtr values, MTLDataType type, NSRange range)
+        public void SetConstantValues(in IntPtr values, in MTLDataType type, in NSRange range)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setConstantValuestypewithRange, values, (ulong)type, range);
         }
 
-        public void SetConstantValue(IntPtr value, MTLDataType type, NSString name)
+        public void SetConstantValue(in IntPtr value, in MTLDataType type, in NSString name)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setConstantValuetypewithName, value, (ulong)type, name);
         }

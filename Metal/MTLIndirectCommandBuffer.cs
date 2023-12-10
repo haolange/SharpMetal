@@ -1,7 +1,6 @@
-using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
+using System.Runtime.InteropServices;
 
 namespace SharpMetal.Metal
 {
@@ -22,11 +21,11 @@ namespace SharpMetal.Metal
         public uint length;
     }
     
-    public partial class MTLIndirectCommandBufferDescriptor
+    public partial struct MTLIndirectCommandBufferDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLIndirectCommandBufferDescriptor obj) => obj.NativePtr;
-        public MTLIndirectCommandBufferDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLIndirectCommandBufferDescriptor obj) => obj.NativePtr;
+        public MTLIndirectCommandBufferDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLIndirectCommandBufferDescriptor()
         {
@@ -108,36 +107,82 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setSupportDynamicAttributeStride = "setSupportDynamicAttributeStride:";
     }
     
-    public partial class MTLIndirectCommandBuffer : MTLResource
+    public partial struct MTLIndirectCommandBuffer
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLIndirectCommandBuffer obj) => obj.NativePtr;
-        public MTLIndirectCommandBuffer(IntPtr ptr) : base(ptr) => NativePtr = ptr;
 
-        protected MTLIndirectCommandBuffer()
+        public static implicit operator IntPtr(in MTLIndirectCommandBuffer obj) => obj.NativePtr;
+        public static implicit operator MTLResource(in MTLIndirectCommandBuffer obj) => new MTLResource(obj.NativePtr);
+        public static implicit operator MTLIndirectCommandBuffer(in MTLResource obj) => new MTLIndirectCommandBuffer(obj.NativePtr);
+
+        public MTLIndirectCommandBuffer(in IntPtr ptr) => NativePtr = ptr;
+
+        public NSString Label
         {
-            throw new NotImplementedException();
+            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_label));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLabel, value);
         }
+
+        public MTLDevice Device => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_device));
+
+        public MTLCPUCacheMode CpuCacheMode => (MTLCPUCacheMode)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_cpuCacheMode);
+
+        public MTLStorageMode StorageMode => (MTLStorageMode)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_storageMode);
+
+        public MTLHazardTrackingMode HazardTrackingMode => (MTLHazardTrackingMode)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_hazardTrackingMode);
+
+        public MTLResourceOptions ResourceOptions => (MTLResourceOptions)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_resourceOptions);
+
+        public MTLHeap Heap => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_heap));
+
+        public ulong HeapOffset => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_heapOffset);
+
+        public ulong AllocatedSize => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_allocatedSize);
+
+        public bool IsAliasable => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isAliasable);
 
         public ulong Size => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_size);
 
         public MTLResourceID GpuResourceID => ObjectiveCRuntime.MTLResourceID_objc_msgSend(NativePtr, sel_gpuResourceID);
+
+        public MTLPurgeableState SetPurgeableState(in MTLPurgeableState state)
+        {
+            return (MTLPurgeableState)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_setPurgeableState, (ulong)state);
+        }
+
+        public void MakeAliasable()
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_makeAliasable);
+        }
 
         public void Reset(NSRange range)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_resetWithRange, range);
         }
 
-        public MTLIndirectRenderCommand IndirectRenderCommand(ulong commandIndex)
+        public MTLIndirectRenderCommand IndirectRenderCommand(in ulong commandIndex)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_indirectRenderCommandAtIndex, commandIndex));
         }
 
-        public MTLIndirectComputeCommand IndirectComputeCommand(ulong commandIndex)
+        public MTLIndirectComputeCommand IndirectComputeCommand(in ulong commandIndex)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_indirectComputeCommandAtIndex, commandIndex));
         }
 
+        private static readonly Selector sel_label = "label";
+        private static readonly Selector sel_setLabel = "setLabel:";
+        private static readonly Selector sel_device = "device";
+        private static readonly Selector sel_cpuCacheMode = "cpuCacheMode";
+        private static readonly Selector sel_storageMode = "storageMode";
+        private static readonly Selector sel_hazardTrackingMode = "hazardTrackingMode";
+        private static readonly Selector sel_resourceOptions = "resourceOptions";
+        private static readonly Selector sel_setPurgeableState = "setPurgeableState:";
+        private static readonly Selector sel_heap = "heap";
+        private static readonly Selector sel_heapOffset = "heapOffset";
+        private static readonly Selector sel_allocatedSize = "allocatedSize";
+        private static readonly Selector sel_makeAliasable = "makeAliasable";
+        private static readonly Selector sel_isAliasable = "isAliasable";
         private static readonly Selector sel_size = "size";
         private static readonly Selector sel_gpuResourceID = "gpuResourceID";
         private static readonly Selector sel_resetWithRange = "resetWithRange:";

@@ -1,7 +1,4 @@
 using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
-using SharpMetal.Foundation;
-using SharpMetal.QuartzCore;
 
 namespace SharpMetal.Metal
 {

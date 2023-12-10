@@ -1,6 +1,5 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
@@ -28,12 +27,11 @@ namespace SharpMetal.Metal
         DecrementWrap = 7,
     }
 
-    
-    public partial class MTLStencilDescriptor
+    public partial struct MTLStencilDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLStencilDescriptor obj) => obj.NativePtr;
-        public MTLStencilDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLStencilDescriptor obj) => obj.NativePtr;
+        public MTLStencilDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLStencilDescriptor()
         {
@@ -91,12 +89,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setWriteMask = "setWriteMask:";
     }
 
-    
-    public partial class MTLDepthStencilDescriptor
+    public partial struct MTLDepthStencilDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLDepthStencilDescriptor obj) => obj.NativePtr;
-        public MTLDepthStencilDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLDepthStencilDescriptor obj) => obj.NativePtr;
+        public MTLDepthStencilDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLDepthStencilDescriptor()
         {
@@ -134,7 +131,7 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLabel, value);
         }
 
-        public void SetDepthWriteEnabled(bool depthWriteEnabled)
+        public void SetDepthWriteEnabled(in bool depthWriteEnabled)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDepthWriteEnabled, depthWriteEnabled);
         }
@@ -151,17 +148,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setLabel = "setLabel:";
     }
 
-    
-    public partial class MTLDepthStencilState
+    public partial struct MTLDepthStencilState
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLDepthStencilState obj) => obj.NativePtr;
-        public MTLDepthStencilState(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLDepthStencilState()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLDepthStencilState obj) => obj.NativePtr;
+        public MTLDepthStencilState(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_label));
 

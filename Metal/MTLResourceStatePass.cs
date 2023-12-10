@@ -1,15 +1,12 @@
-using System.Runtime.Versioning;
 using SharpMetal.ObjectiveCCore;
-using SharpMetal.Foundation;
 
 namespace SharpMetal.Metal
 {
-    
-    public partial class MTLResourceStatePassSampleBufferAttachmentDescriptor
+    public partial struct MTLResourceStatePassSampleBufferAttachmentDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLResourceStatePassSampleBufferAttachmentDescriptor obj) => obj.NativePtr;
-        public MTLResourceStatePassSampleBufferAttachmentDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLResourceStatePassSampleBufferAttachmentDescriptor obj) => obj.NativePtr;
+        public MTLResourceStatePassSampleBufferAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLResourceStatePassSampleBufferAttachmentDescriptor()
         {
@@ -43,12 +40,23 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setEndOfEncoderSampleIndex = "setEndOfEncoderSampleIndex:";
     }
 
-    
-    public partial class MTLResourceStatePassSampleBufferAttachmentDescriptorArray
+    public partial struct MTLResourceStatePassSampleBufferAttachmentDescriptorArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLResourceStatePassSampleBufferAttachmentDescriptorArray obj) => obj.NativePtr;
-        public MTLResourceStatePassSampleBufferAttachmentDescriptorArray(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLResourceStatePassSampleBufferAttachmentDescriptorArray obj) => obj.NativePtr;
+        public MTLResourceStatePassSampleBufferAttachmentDescriptorArray(in IntPtr ptr) => NativePtr = ptr;
+
+        public MTLResourceStatePassSampleBufferAttachmentDescriptor this[uint index]
+        {
+            get
+            {
+                return Object(index);
+            }
+            set
+            {
+                SetObject(value, index);
+            }
+        }
 
         public MTLResourceStatePassSampleBufferAttachmentDescriptorArray()
         {
@@ -56,12 +64,12 @@ namespace SharpMetal.Metal
             NativePtr = cls.AllocInit();
         }
 
-        public MTLResourceStatePassSampleBufferAttachmentDescriptor Object(ulong attachmentIndex)
+        public MTLResourceStatePassSampleBufferAttachmentDescriptor Object(in ulong attachmentIndex)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectAtIndexedSubscript, attachmentIndex));
         }
 
-        public void SetObject(MTLResourceStatePassSampleBufferAttachmentDescriptor attachment, ulong attachmentIndex)
+        public void SetObject(in MTLResourceStatePassSampleBufferAttachmentDescriptor attachment, in ulong attachmentIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectatIndexedSubscript, attachment, attachmentIndex);
         }
@@ -71,11 +79,11 @@ namespace SharpMetal.Metal
     }
 
     
-    public partial class MTLResourceStatePassDescriptor
+    public partial struct MTLResourceStatePassDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLResourceStatePassDescriptor obj) => obj.NativePtr;
-        public MTLResourceStatePassDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLResourceStatePassDescriptor obj) => obj.NativePtr;
+        public MTLResourceStatePassDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLResourceStatePassDescriptor()
         {

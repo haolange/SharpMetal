@@ -4,70 +4,23 @@ using SharpMetal.ObjectiveCCore;
 namespace SharpMetal.MetalFX
 {
     
-    public partial class MTLTemporalScalerDescriptor
+    public partial struct MTLTemporalScalerDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLTemporalScalerDescriptor obj) => obj.NativePtr;
-        public MTLTemporalScalerDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLTemporalScalerDescriptor obj) => obj.NativePtr;
+        public MTLTemporalScalerDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLTemporalScalerDescriptor()
         {
             var cls = new ObjectiveCClass("MTLTemporalScalerDescriptor");
             NativePtr = cls.AllocInit();
         }
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
-    
-    public partial class MTLTemporalScaler
+    public partial struct MTLTemporalScaler
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLTemporalScaler obj) => obj.NativePtr;
-        public MTLTemporalScaler(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLTemporalScaler()
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        public static implicit operator IntPtr(in MTLTemporalScaler obj) => obj.NativePtr;
+        public MTLTemporalScaler(in IntPtr ptr) => NativePtr = ptr;
     }
 }

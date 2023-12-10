@@ -1,6 +1,5 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
@@ -12,11 +11,11 @@ namespace SharpMetal.Metal
     }
 
     
-    public partial class MTLHeapDescriptor
+    public partial struct MTLHeapDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLHeapDescriptor obj) => obj.NativePtr;
-        public MTLHeapDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLHeapDescriptor obj) => obj.NativePtr;
+        public MTLHeapDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLHeapDescriptor()
         {
@@ -82,17 +81,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setType = "setType:";
     }
 
-    
-    public partial class MTLHeap
+    public partial struct MTLHeap
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLHeap obj) => obj.NativePtr;
-        public MTLHeap(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLHeap()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLHeap obj) => obj.NativePtr;
+        public MTLHeap(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label
         {
@@ -118,52 +111,52 @@ namespace SharpMetal.Metal
 
         public MTLHeapType Type => (MTLHeapType)ObjectiveCRuntime.long_objc_msgSend(NativePtr, sel_type);
 
-        public ulong MaxAvailableSize(ulong alignment)
+        public ulong MaxAvailableSize(in ulong alignment)
         {
             return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_maxAvailableSizeWithAlignment, alignment);
         }
 
-        public MTLBuffer NewBuffer(ulong length, MTLResourceOptions options)
+        public MTLBuffer NewBuffer(in ulong length, in MTLResourceOptions options)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newBufferWithLengthoptions, length, (ulong)options));
         }
 
-        public MTLTexture NewTexture(MTLTextureDescriptor descriptor)
+        public MTLTexture NewTexture(in MTLTextureDescriptor descriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newTextureWithDescriptor, descriptor));
         }
 
-        public MTLPurgeableState SetPurgeableState(MTLPurgeableState state)
+        public MTLPurgeableState SetPurgeableState(in MTLPurgeableState state)
         {
             return (MTLPurgeableState)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_setPurgeableState, (ulong)state);
         }
 
-        public MTLBuffer NewBuffer(ulong length, MTLResourceOptions options, ulong offset)
+        public MTLBuffer NewBuffer(in ulong length, in MTLResourceOptions options, in ulong offset)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newBufferWithLengthoptionsoffset, length, (ulong)options, offset));
         }
 
-        public MTLTexture NewTexture(MTLTextureDescriptor descriptor, ulong offset)
+        public MTLTexture NewTexture(in MTLTextureDescriptor descriptor, in ulong offset)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newTextureWithDescriptoroffset, descriptor, offset));
         }
 
-        public MTLAccelerationStructure NewAccelerationStructure(ulong size)
+        public MTLAccelerationStructure NewAccelerationStructure(in ulong size)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newAccelerationStructureWithSize, size));
         }
 
-        public MTLAccelerationStructure NewAccelerationStructure(MTLAccelerationStructureDescriptor descriptor)
+        public MTLAccelerationStructure NewAccelerationStructure(in MTLAccelerationStructureDescriptor descriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newAccelerationStructureWithDescriptor, descriptor));
         }
 
-        public MTLAccelerationStructure NewAccelerationStructure(ulong size, ulong offset)
+        public MTLAccelerationStructure NewAccelerationStructure(in ulong size, in ulong offset)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newAccelerationStructureWithSizeoffset, size, offset));
         }
 
-        public MTLAccelerationStructure NewAccelerationStructure(MTLAccelerationStructureDescriptor descriptor, ulong offset)
+        public MTLAccelerationStructure NewAccelerationStructure(in MTLAccelerationStructureDescriptor descriptor, in ulong offset)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newAccelerationStructureWithDescriptoroffset, descriptor, offset));
         }

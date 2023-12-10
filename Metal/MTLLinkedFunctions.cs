@@ -1,15 +1,13 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
-    
-    public partial class MTLLinkedFunctions
+    public partial struct MTLLinkedFunctions
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLLinkedFunctions obj) => obj.NativePtr;
-        public MTLLinkedFunctions(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLLinkedFunctions obj) => obj.NativePtr;
+        public MTLLinkedFunctions(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLLinkedFunctions()
         {

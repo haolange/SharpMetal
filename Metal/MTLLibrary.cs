@@ -1,6 +1,5 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
@@ -63,12 +62,11 @@ namespace SharpMetal.Metal
         FileNotFound = 6,
     }
 
-    
-    public partial class MTLVertexAttribute
+    public partial struct MTLVertexAttribute
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLVertexAttribute obj) => obj.NativePtr;
-        public MTLVertexAttribute(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLVertexAttribute obj) => obj.NativePtr;
+        public MTLVertexAttribute(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLVertexAttribute()
         {
@@ -96,12 +94,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_isPatchControlPointData = "isPatchControlPointData";
     }
 
-    
-    public partial class MTLAttribute
+    public partial struct MTLAttribute
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLAttribute obj) => obj.NativePtr;
-        public MTLAttribute(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLAttribute obj) => obj.NativePtr;
+        public MTLAttribute(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLAttribute()
         {
@@ -129,12 +126,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_isPatchControlPointData = "isPatchControlPointData";
     }
 
-    
-    public partial class MTLFunctionConstant
+    public partial struct MTLFunctionConstant
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLFunctionConstant obj) => obj.NativePtr;
-        public MTLFunctionConstant(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLFunctionConstant obj) => obj.NativePtr;
+        public MTLFunctionConstant(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLFunctionConstant()
         {
@@ -156,17 +152,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_required = "required";
     }
 
-    
-    public partial class MTLFunction
+    public partial struct MTLFunction
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLFunction obj) => obj.NativePtr;
-        public MTLFunction(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLFunction()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLFunction obj) => obj.NativePtr;
+        public MTLFunction(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label
         {
@@ -192,12 +182,12 @@ namespace SharpMetal.Metal
 
         public MTLFunctionOptions Options => (MTLFunctionOptions)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_options);
 
-        public MTLArgumentEncoder NewArgumentEncoder(ulong bufferIndex)
+        public MTLArgumentEncoder NewArgumentEncoder(in ulong bufferIndex)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newArgumentEncoderWithBufferIndex, bufferIndex));
         }
 
-        public MTLArgumentEncoder NewArgumentEncoder(ulong bufferIndex, IntPtr reflection)
+        public MTLArgumentEncoder NewArgumentEncoder(in ulong bufferIndex, in IntPtr reflection)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newArgumentEncoderWithBufferIndexreflection, bufferIndex, reflection));
         }
@@ -217,12 +207,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_options = "options";
     }
 
-    
-    public partial class MTLCompileOptions
+    public partial struct MTLCompileOptions
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLCompileOptions obj) => obj.NativePtr;
-        public MTLCompileOptions(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLCompileOptions obj) => obj.NativePtr;
+        public MTLCompileOptions(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLCompileOptions()
         {
@@ -320,17 +309,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setMaxTotalThreadsPerThreadgroup = "setMaxTotalThreadsPerThreadgroup:";
     }
 
-    
-    public partial class MTLLibrary
+    public partial struct MTLLibrary
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLLibrary obj) => obj.NativePtr;
-        public MTLLibrary(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLLibrary()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLLibrary obj) => obj.NativePtr;
+        public MTLLibrary(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label
         {
@@ -346,22 +329,22 @@ namespace SharpMetal.Metal
 
         public NSString InstallName => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_installName));
 
-        public MTLFunction NewFunction(NSString functionName)
+        public MTLFunction NewFunction(in NSString functionName)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newFunctionWithName, functionName));
         }
 
-        public MTLFunction NewFunction(NSString name, MTLFunctionConstantValues constantValues, ref NSError error)
+        public MTLFunction NewFunction(in NSString name, in MTLFunctionConstantValues constantValues, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newFunctionWithNameconstantValueserror, name, constantValues, ref error.NativePtr));
         }
 
-        public MTLFunction NewFunction(MTLFunctionDescriptor descriptor, ref NSError error)
+        public MTLFunction NewFunction(in MTLFunctionDescriptor descriptor, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newFunctionWithDescriptorerror, descriptor, ref error.NativePtr));
         }
 
-        public MTLFunction NewIntersectionFunction(MTLIntersectionFunctionDescriptor descriptor, ref NSError error)
+        public MTLFunction NewIntersectionFunction(in MTLIntersectionFunctionDescriptor descriptor, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newIntersectionFunctionWithDescriptorerror, descriptor, ref error.NativePtr));
         }

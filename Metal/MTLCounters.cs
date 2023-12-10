@@ -1,7 +1,6 @@
-using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
+using System.Runtime.InteropServices;
 
 namespace SharpMetal.Metal
 {
@@ -12,13 +11,11 @@ namespace SharpMetal.Metal
         Internal = 2,
     }
 
-    
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLCounterResultTimestamp
     {
         public ulong timestamp;
     }
-
     
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLCounterResultStageUtilization
@@ -30,7 +27,6 @@ namespace SharpMetal.Metal
         public ulong fragmentCycles;
         public ulong renderTargetCycles;
     }
-
     
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLCounterResultStatistic
@@ -45,34 +41,22 @@ namespace SharpMetal.Metal
         public ulong computeKernelInvocations;
     }
 
-    
-    public partial class MTLCounter
+    public partial struct MTLCounter
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLCounter obj) => obj.NativePtr;
-        public MTLCounter(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLCounter()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLCounter obj) => obj.NativePtr;
+        public MTLCounter(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Name => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_name));
 
         private static readonly Selector sel_name = "name";
     }
 
-    
-    public partial class MTLCounterSet
+    public partial struct MTLCounterSet
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLCounterSet obj) => obj.NativePtr;
-        public MTLCounterSet(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLCounterSet()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLCounterSet obj) => obj.NativePtr;
+        public MTLCounterSet(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Name => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_name));
 
@@ -82,12 +66,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_counters = "counters";
     }
 
-    
-    public partial class MTLCounterSampleBufferDescriptor
+    public partial struct MTLCounterSampleBufferDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLCounterSampleBufferDescriptor obj) => obj.NativePtr;
-        public MTLCounterSampleBufferDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLCounterSampleBufferDescriptor obj) => obj.NativePtr;
+        public MTLCounterSampleBufferDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLCounterSampleBufferDescriptor()
         {
@@ -129,17 +112,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setSampleCount = "setSampleCount:";
     }
 
-    
-    public partial class MTLCounterSampleBuffer
+    public partial struct MTLCounterSampleBuffer
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLCounterSampleBuffer obj) => obj.NativePtr;
-        public MTLCounterSampleBuffer(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLCounterSampleBuffer()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLCounterSampleBuffer obj) => obj.NativePtr;
+        public MTLCounterSampleBuffer(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLDevice Device => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_device));
 

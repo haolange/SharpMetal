@@ -1,5 +1,3 @@
-using SharpMetal.Foundation;
-
 namespace SharpMetal.Metal
 {
     public enum MTLIOCompressionStatus : long
@@ -7,5 +5,4 @@ namespace SharpMetal.Metal
         Complete = 0,
         Error = 1,
     }
-
 }

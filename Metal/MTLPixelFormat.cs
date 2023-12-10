@@ -1,5 +1,3 @@
-using SharpMetal.Foundation;
-
 namespace SharpMetal.Metal
 {
     public enum MTLPixelFormat : ulong

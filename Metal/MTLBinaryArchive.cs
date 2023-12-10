@@ -1,6 +1,6 @@
 using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
@@ -13,12 +13,11 @@ namespace SharpMetal.Metal
         InternalError = 4,
     }
 
-    
-    public partial class MTLBinaryArchiveDescriptor
+    public partial struct MTLBinaryArchiveDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLBinaryArchiveDescriptor obj) => obj.NativePtr;
-        public MTLBinaryArchiveDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLBinaryArchiveDescriptor obj) => obj.NativePtr;
+        public MTLBinaryArchiveDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLBinaryArchiveDescriptor()
         {
@@ -36,17 +35,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setUrl = "setUrl:";
     }
 
-    
-    public partial class MTLBinaryArchive
+    public partial struct MTLBinaryArchive
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLBinaryArchive obj) => obj.NativePtr;
-        public MTLBinaryArchive(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLBinaryArchive()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLBinaryArchive obj) => obj.NativePtr;
+        public MTLBinaryArchive(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label
         {
@@ -56,27 +49,27 @@ namespace SharpMetal.Metal
 
         public MTLDevice Device => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_device));
 
-        public bool AddComputePipelineFunctions(MTLComputePipelineDescriptor descriptor, ref NSError error)
+        public bool AddComputePipelineFunctions(in MTLComputePipelineDescriptor descriptor, ref NSError error)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_addComputePipelineFunctionsWithDescriptorerror, descriptor, ref error.NativePtr);
         }
 
-        public bool AddRenderPipelineFunctions(MTLRenderPipelineDescriptor descriptor, ref NSError error)
+        public bool AddRenderPipelineFunctions(in MTLRenderPipelineDescriptor descriptor, ref NSError error)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_addRenderPipelineFunctionsWithDescriptorerror, descriptor, ref error.NativePtr);
         }
 
-        public bool AddTileRenderPipelineFunctions(MTLTileRenderPipelineDescriptor descriptor, ref NSError error)
+        public bool AddTileRenderPipelineFunctions(in MTLTileRenderPipelineDescriptor descriptor, ref NSError error)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_addTileRenderPipelineFunctionsWithDescriptorerror, descriptor, ref error.NativePtr);
         }
 
-        public bool SerializeToURL(NSURL url, ref NSError error)
+        public bool SerializeToURL(in NSURL url, ref NSError error)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_serializeToURLerror, url, ref error.NativePtr);
         }
 
-        public bool AddFunction(MTLFunctionDescriptor descriptor, MTLLibrary library, ref NSError error)
+        public bool AddFunction(in MTLFunctionDescriptor descriptor, in MTLLibrary library, ref NSError error)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_addFunctionWithDescriptorlibraryerror, descriptor, library, ref error.NativePtr);
         }

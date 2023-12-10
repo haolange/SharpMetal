@@ -18,11 +18,11 @@ namespace SharpMetal.Metal
     }
 
     
-    public partial class MTLCaptureDescriptor
+    public partial struct MTLCaptureDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLCaptureDescriptor obj) => obj.NativePtr;
-        public MTLCaptureDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLCaptureDescriptor obj) => obj.NativePtr;
+        public MTLCaptureDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLCaptureDescriptor()
         {
@@ -57,11 +57,11 @@ namespace SharpMetal.Metal
     }
 
     
-    public partial class MTLCaptureManager
+    public partial struct MTLCaptureManager
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLCaptureManager obj) => obj.NativePtr;
-        public MTLCaptureManager(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLCaptureManager obj) => obj.NativePtr;
+        public MTLCaptureManager(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLCaptureManager()
         {
@@ -82,37 +82,37 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("MTLCaptureManager"), sel_sharedCaptureManager));
         }
 
-        public MTLCaptureScope NewCaptureScope(MTLDevice device)
+        public MTLCaptureScope NewCaptureScope(in MTLDevice device)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newCaptureScopeWithDevice, device));
         }
 
-        public MTLCaptureScope NewCaptureScope(MTLCommandQueue commandQueue)
+        public MTLCaptureScope NewCaptureScope(in MTLCommandQueue commandQueue)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newCaptureScopeWithCommandQueue, commandQueue));
         }
 
-        public bool SupportsDestination(MTLCaptureDestination destination)
+        public bool SupportsDestination(in MTLCaptureDestination destination)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportsDestination, (long)destination);
         }
 
-        public bool StartCapture(MTLCaptureDescriptor descriptor, ref NSError error)
+        public bool StartCapture(in MTLCaptureDescriptor descriptor, ref NSError error)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_startCaptureWithDescriptorerror, descriptor, ref error.NativePtr);
         }
 
-        public void StartCapture(MTLDevice device)
+        public void StartCapture(in MTLDevice device)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_startCaptureWithDevice, device);
         }
 
-        public void StartCapture(MTLCommandQueue commandQueue)
+        public void StartCapture(in MTLCommandQueue commandQueue)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_startCaptureWithCommandQueue, commandQueue);
         }
 
-        public void StartCapture(MTLCaptureScope captureScope)
+        public void StartCapture(in MTLCaptureScope captureScope)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_startCaptureWithScope, captureScope);
         }

@@ -1,6 +1,5 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
@@ -17,12 +16,11 @@ namespace SharpMetal.Metal
         CurveData = 128,
     }
 
-    
-    public partial class MTLIntersectionFunctionTableDescriptor
+    public partial struct MTLIntersectionFunctionTableDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLIntersectionFunctionTableDescriptor obj) => obj.NativePtr;
-        public MTLIntersectionFunctionTableDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLIntersectionFunctionTableDescriptor obj) => obj.NativePtr;
+        public MTLIntersectionFunctionTableDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLIntersectionFunctionTableDescriptor()
         {
@@ -41,70 +39,115 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setFunctionCount = "setFunctionCount:";
     }
 
-    
-    public partial class MTLIntersectionFunctionTable : MTLResource
+    public partial struct MTLIntersectionFunctionTable
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLIntersectionFunctionTable obj) => obj.NativePtr;
-        public MTLIntersectionFunctionTable(IntPtr ptr) : base(ptr) => NativePtr = ptr;
 
-        protected MTLIntersectionFunctionTable()
+        public static implicit operator IntPtr(in MTLIntersectionFunctionTable obj) => obj.NativePtr;
+        public static implicit operator MTLResource(in MTLIntersectionFunctionTable obj) => new MTLResource(obj.NativePtr);
+        public static implicit operator MTLIntersectionFunctionTable(in MTLResource obj) => new MTLIntersectionFunctionTable(obj.NativePtr);
+
+        public MTLIntersectionFunctionTable(in IntPtr ptr) => NativePtr = ptr;
+
+        public NSString Label
         {
-            throw new NotImplementedException();
+            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_label));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLabel, value);
         }
+
+        public MTLDevice Device => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_device));
+
+        public MTLCPUCacheMode CpuCacheMode => (MTLCPUCacheMode)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_cpuCacheMode);
+
+        public MTLStorageMode StorageMode => (MTLStorageMode)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_storageMode);
+
+        public MTLHazardTrackingMode HazardTrackingMode => (MTLHazardTrackingMode)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_hazardTrackingMode);
+
+        public MTLResourceOptions ResourceOptions => (MTLResourceOptions)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_resourceOptions);
+
+        public MTLHeap Heap => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_heap));
+
+        public ulong HeapOffset => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_heapOffset);
+
+        public ulong AllocatedSize => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_allocatedSize);
+
+        public bool IsAliasable => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isAliasable);
 
         public MTLResourceID GpuResourceID => ObjectiveCRuntime.MTLResourceID_objc_msgSend(NativePtr, sel_gpuResourceID);
 
-        public void SetBuffer(MTLBuffer buffer, ulong offset, ulong index)
+        public MTLPurgeableState SetPurgeableState(in MTLPurgeableState state)
+        {
+            return (MTLPurgeableState)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_setPurgeableState, (ulong)state);
+        }
+
+        public void MakeAliasable()
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_makeAliasable);
+        }
+
+        public void SetBuffer(in MTLBuffer buffer, in ulong offset, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBufferoffsetatIndex, buffer, offset, index);
         }
 
-        public void SetBuffers(MTLBuffer[] buffers, ulong[] offsets, NSRange range)
+        public void SetBuffers(MTLBuffer[] buffers, ulong[] offsets, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetFunction(MTLFunctionHandle function, ulong index)
+        public void SetFunction(in MTLFunctionHandle function, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFunctionatIndex, function, index);
         }
 
-        public void SetFunctions(MTLFunctionHandle[] functions, NSRange range)
+        public void SetFunctions(MTLFunctionHandle[] functions, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetOpaqueTriangleIntersectionFunction(MTLIntersectionFunctionSignature signature, ulong index)
+        public void SetOpaqueTriangleIntersectionFunction(in MTLIntersectionFunctionSignature signature, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setOpaqueTriangleIntersectionFunctionWithSignatureatIndex, (ulong)signature, index);
         }
 
-        public void SetOpaqueTriangleIntersectionFunction(MTLIntersectionFunctionSignature signature, NSRange range)
+        public void SetOpaqueTriangleIntersectionFunction(in MTLIntersectionFunctionSignature signature, in NSRange range)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setOpaqueTriangleIntersectionFunctionWithSignaturewithRange, (ulong)signature, range);
         }
 
-        public void SetOpaqueCurveIntersectionFunction(MTLIntersectionFunctionSignature signature, ulong index)
+        public void SetOpaqueCurveIntersectionFunction(in MTLIntersectionFunctionSignature signature, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setOpaqueCurveIntersectionFunctionWithSignatureatIndex, (ulong)signature, index);
         }
 
-        public void SetOpaqueCurveIntersectionFunction(MTLIntersectionFunctionSignature signature, NSRange range)
+        public void SetOpaqueCurveIntersectionFunction(in MTLIntersectionFunctionSignature signature, in NSRange range)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setOpaqueCurveIntersectionFunctionWithSignaturewithRange, (ulong)signature, range);
         }
 
-        public void SetVisibleFunctionTable(MTLVisibleFunctionTable functionTable, ulong bufferIndex)
+        public void SetVisibleFunctionTable(in MTLVisibleFunctionTable functionTable, in ulong bufferIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVisibleFunctionTableatBufferIndex, functionTable, bufferIndex);
         }
 
-        public void SetVisibleFunctionTables(MTLVisibleFunctionTable[] functionTables, NSRange bufferRange)
+        public void SetVisibleFunctionTables(MTLVisibleFunctionTable[] functionTables, in NSRange bufferRange)
         {
             throw new NotImplementedException();
         }
 
+        private static readonly Selector sel_label = "label";
+        private static readonly Selector sel_setLabel = "setLabel:";
+        private static readonly Selector sel_device = "device";
+        private static readonly Selector sel_cpuCacheMode = "cpuCacheMode";
+        private static readonly Selector sel_storageMode = "storageMode";
+        private static readonly Selector sel_hazardTrackingMode = "hazardTrackingMode";
+        private static readonly Selector sel_resourceOptions = "resourceOptions";
+        private static readonly Selector sel_setPurgeableState = "setPurgeableState:";
+        private static readonly Selector sel_heap = "heap";
+        private static readonly Selector sel_heapOffset = "heapOffset";
+        private static readonly Selector sel_allocatedSize = "allocatedSize";
+        private static readonly Selector sel_makeAliasable = "makeAliasable";
+        private static readonly Selector sel_isAliasable = "isAliasable";
         private static readonly Selector sel_setBufferoffsetatIndex = "setBuffer:offset:atIndex:";
         private static readonly Selector sel_setBuffersoffsetswithRange = "setBuffers:offsets:withRange:";
         private static readonly Selector sel_gpuResourceID = "gpuResourceID";

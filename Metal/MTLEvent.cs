@@ -1,20 +1,13 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
-    
-    public partial class MTLEvent
+    public partial struct MTLEvent
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLEvent obj) => obj.NativePtr;
-        public MTLEvent(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLEvent()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLEvent obj) => obj.NativePtr;
+        public MTLEvent(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLDevice Device => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_device));
 
@@ -29,12 +22,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setLabel = "setLabel:";
     }
 
-    
-    public partial class MTLSharedEventListener
+    public partial struct MTLSharedEventListener
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLSharedEventListener obj) => obj.NativePtr;
-        public MTLSharedEventListener(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLSharedEventListener obj) => obj.NativePtr;
+        public MTLSharedEventListener(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLSharedEventListener()
         {
@@ -44,7 +36,7 @@ namespace SharpMetal.Metal
 
         public IntPtr DispatchQueue => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_dispatchQueue));
 
-        public MTLSharedEventListener Init(IntPtr dispatchQueue)
+        public MTLSharedEventListener Init(in IntPtr dispatchQueue)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithDispatchQueue, dispatchQueue));
         }
@@ -53,19 +45,24 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_dispatchQueue = "dispatchQueue";
     }
 
-    
-    public partial class MTLSharedEvent : MTLEvent
+    public partial struct MTLSharedEvent
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLSharedEvent obj) => obj.NativePtr;
-        public MTLSharedEvent(IntPtr ptr) : base(ptr) => NativePtr = ptr;
 
-        protected MTLSharedEvent()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLSharedEvent obj) => obj.NativePtr;
+        public static implicit operator MTLEvent(in MTLSharedEvent obj) => new MTLEvent(obj.NativePtr);
+        public static implicit operator MTLSharedEvent(in MTLEvent obj) => new MTLSharedEvent(obj.NativePtr);
 
+        public MTLSharedEvent(in IntPtr ptr) => NativePtr = ptr;
+
+        public MTLDevice Device => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_device));
         public MTLSharedEventHandle NewSharedEventHandle => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newSharedEventHandle));
+
+        public NSString Label
+        {
+            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_label));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLabel, value);
+        }
 
         public ulong SignaledValue
         {
@@ -78,18 +75,20 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_notifyListeneratValueblock, listener, value, block);
         }
 
+        private static readonly Selector sel_device = "device";
+        private static readonly Selector sel_label = "label";
+        private static readonly Selector sel_setLabel = "setLabel:";
         private static readonly Selector sel_notifyListeneratValueblock = "notifyListener:atValue:block:";
         private static readonly Selector sel_newSharedEventHandle = "newSharedEventHandle";
         private static readonly Selector sel_signaledValue = "signaledValue";
         private static readonly Selector sel_setSignaledValue = "setSignaledValue:";
     }
 
-    
-    public partial class MTLSharedEventHandle
+    public partial struct MTLSharedEventHandle
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLSharedEventHandle obj) => obj.NativePtr;
-        public MTLSharedEventHandle(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLSharedEventHandle obj) => obj.NativePtr;
+        public MTLSharedEventHandle(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLSharedEventHandle()
         {

@@ -1,6 +1,5 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
@@ -48,17 +47,11 @@ namespace SharpMetal.Metal
         ResourceHazardTrackingModeTracked = 512,
     }
 
-    
-    public partial class MTLResource
+    public partial struct MTLResource
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLResource obj) => obj.NativePtr;
-        public MTLResource(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLResource()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLResource obj) => obj.NativePtr;
+        public MTLResource(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label
         {
@@ -84,7 +77,7 @@ namespace SharpMetal.Metal
 
         public bool IsAliasable => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isAliasable);
 
-        public MTLPurgeableState SetPurgeableState(MTLPurgeableState state)
+        public MTLPurgeableState SetPurgeableState(in MTLPurgeableState state)
         {
             return (MTLPurgeableState)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_setPurgeableState, (ulong)state);
         }

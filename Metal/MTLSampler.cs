@@ -1,6 +1,5 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
@@ -35,11 +34,11 @@ namespace SharpMetal.Metal
     }
 
     
-    public partial class MTLSamplerDescriptor
+    public partial struct MTLSamplerDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLSamplerDescriptor obj) => obj.NativePtr;
-        public MTLSamplerDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLSamplerDescriptor obj) => obj.NativePtr;
+        public MTLSamplerDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLSamplerDescriptor()
         {
@@ -169,17 +168,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setLabel = "setLabel:";
     }
 
-    
-    public partial class MTLSamplerState
+    public partial struct MTLSamplerState
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLSamplerState obj) => obj.NativePtr;
-        public MTLSamplerState(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLSamplerState()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLSamplerState obj) => obj.NativePtr;
+        public MTLSamplerState(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_label));
 

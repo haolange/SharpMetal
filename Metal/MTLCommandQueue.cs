@@ -1,20 +1,14 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
     
-    public partial class MTLCommandQueue
+    public partial struct MTLCommandQueue
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLCommandQueue obj) => obj.NativePtr;
-        public MTLCommandQueue(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLCommandQueue()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLCommandQueue obj) => obj.NativePtr;
+        public MTLCommandQueue(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label
         {
@@ -26,7 +20,7 @@ namespace SharpMetal.Metal
 
         public MTLCommandBuffer CommandBufferWithUnretainedReferences => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_commandBufferWithUnretainedReferences));
 
-        public MTLCommandBuffer CommandBuffer(MTLCommandBufferDescriptor descriptor)
+        public MTLCommandBuffer CommandBuffer(in MTLCommandBufferDescriptor descriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_commandBufferWithDescriptor, descriptor));
         }

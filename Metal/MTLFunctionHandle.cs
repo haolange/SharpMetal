@@ -1,20 +1,13 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
-    
-    public partial class MTLFunctionHandle
+    public partial struct MTLFunctionHandle
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLFunctionHandle obj) => obj.NativePtr;
-        public MTLFunctionHandle(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLFunctionHandle()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLFunctionHandle obj) => obj.NativePtr;
+        public MTLFunctionHandle(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLFunctionType FunctionType => (MTLFunctionType)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_functionType);
 

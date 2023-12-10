@@ -1,15 +1,13 @@
-using System.Runtime.Versioning;
 using SharpMetal.ObjectiveCCore;
-using SharpMetal.Foundation;
 
 namespace SharpMetal.Metal
 {
     
-    public partial class MTLComputePassSampleBufferAttachmentDescriptor
+    public partial struct MTLComputePassSampleBufferAttachmentDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLComputePassSampleBufferAttachmentDescriptor obj) => obj.NativePtr;
-        public MTLComputePassSampleBufferAttachmentDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLComputePassSampleBufferAttachmentDescriptor obj) => obj.NativePtr;
+        public MTLComputePassSampleBufferAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLComputePassSampleBufferAttachmentDescriptor()
         {
@@ -44,11 +42,11 @@ namespace SharpMetal.Metal
     }
 
     
-    public partial class MTLComputePassSampleBufferAttachmentDescriptorArray
+    public partial struct MTLComputePassSampleBufferAttachmentDescriptorArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLComputePassSampleBufferAttachmentDescriptorArray obj) => obj.NativePtr;
-        public MTLComputePassSampleBufferAttachmentDescriptorArray(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLComputePassSampleBufferAttachmentDescriptorArray obj) => obj.NativePtr;
+        public MTLComputePassSampleBufferAttachmentDescriptorArray(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLComputePassSampleBufferAttachmentDescriptorArray()
         {
@@ -56,12 +54,12 @@ namespace SharpMetal.Metal
             NativePtr = cls.AllocInit();
         }
 
-        public MTLComputePassSampleBufferAttachmentDescriptor Object(ulong attachmentIndex)
+        public MTLComputePassSampleBufferAttachmentDescriptor Object(in ulong attachmentIndex)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectAtIndexedSubscript, attachmentIndex));
         }
 
-        public void SetObject(MTLComputePassSampleBufferAttachmentDescriptor attachment, ulong attachmentIndex)
+        public void SetObject(in MTLComputePassSampleBufferAttachmentDescriptor attachment, in ulong attachmentIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectatIndexedSubscript, attachment, attachmentIndex);
         }
@@ -71,11 +69,11 @@ namespace SharpMetal.Metal
     }
 
     
-    public partial class MTLComputePassDescriptor
+    public partial struct MTLComputePassDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLComputePassDescriptor obj) => obj.NativePtr;
-        public MTLComputePassDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLComputePassDescriptor obj) => obj.NativePtr;
+        public MTLComputePassDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLComputePassDescriptor()
         {

@@ -1,6 +1,5 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
@@ -82,12 +81,11 @@ namespace SharpMetal.Metal
         UInt32 = 2,
     }
 
-    
-    public partial class MTLRenderPipelineColorAttachmentDescriptor
+    public partial struct MTLRenderPipelineColorAttachmentDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLRenderPipelineColorAttachmentDescriptor obj) => obj.NativePtr;
-        public MTLRenderPipelineColorAttachmentDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLRenderPipelineColorAttachmentDescriptor obj) => obj.NativePtr;
+        public MTLRenderPipelineColorAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLRenderPipelineColorAttachmentDescriptor()
         {
@@ -145,7 +143,7 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setWriteMask, (ulong)value);
         }
 
-        public void SetBlendingEnabled(bool blendingEnabled)
+        public void SetBlendingEnabled(in bool blendingEnabled)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBlendingEnabled, blendingEnabled);
         }
@@ -170,12 +168,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setWriteMask = "setWriteMask:";
     }
 
-    
-    public partial class MTLRenderPipelineReflection
+    public partial struct MTLRenderPipelineReflection
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLRenderPipelineReflection obj) => obj.NativePtr;
-        public MTLRenderPipelineReflection(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLRenderPipelineReflection obj) => obj.NativePtr;
+        public MTLRenderPipelineReflection(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLRenderPipelineReflection()
         {
@@ -209,12 +206,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_tileArguments = "tileArguments";
     }
 
-    
-    public partial class MTLRenderPipelineDescriptor
+    public partial struct MTLRenderPipelineDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLRenderPipelineDescriptor obj) => obj.NativePtr;
-        public MTLRenderPipelineDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLRenderPipelineDescriptor obj) => obj.NativePtr;
+        public MTLRenderPipelineDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLRenderPipelineDescriptor()
         {
@@ -392,22 +388,22 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMaxFragmentCallStackDepth, value);
         }
 
-        public void SetAlphaToCoverageEnabled(bool alphaToCoverageEnabled)
+        public void SetAlphaToCoverageEnabled(in bool alphaToCoverageEnabled)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setAlphaToCoverageEnabled, alphaToCoverageEnabled);
         }
 
-        public void SetAlphaToOneEnabled(bool alphaToOneEnabled)
+        public void SetAlphaToOneEnabled(in bool alphaToOneEnabled)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setAlphaToOneEnabled, alphaToOneEnabled);
         }
 
-        public void SetRasterizationEnabled(bool rasterizationEnabled)
+        public void SetRasterizationEnabled(in bool rasterizationEnabled)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setRasterizationEnabled, rasterizationEnabled);
         }
 
-        public void SetTessellationFactorScaleEnabled(bool tessellationFactorScaleEnabled)
+        public void SetTessellationFactorScaleEnabled(in bool tessellationFactorScaleEnabled)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTessellationFactorScaleEnabled, tessellationFactorScaleEnabled);
         }
@@ -483,12 +479,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_reset = "reset";
     }
 
-    
-    public partial class MTLRenderPipelineFunctionsDescriptor
+    public partial struct MTLRenderPipelineFunctionsDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLRenderPipelineFunctionsDescriptor obj) => obj.NativePtr;
-        public MTLRenderPipelineFunctionsDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLRenderPipelineFunctionsDescriptor obj) => obj.NativePtr;
+        public MTLRenderPipelineFunctionsDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLRenderPipelineFunctionsDescriptor()
         {
@@ -522,17 +517,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setTileAdditionalBinaryFunctions = "setTileAdditionalBinaryFunctions:";
     }
 
-    
-    public partial class MTLRenderPipelineState
+    public partial struct MTLRenderPipelineState
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLRenderPipelineState obj) => obj.NativePtr;
-        public MTLRenderPipelineState(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLRenderPipelineState()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLRenderPipelineState obj) => obj.NativePtr;
+        public MTLRenderPipelineState(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_label));
 
@@ -558,27 +547,27 @@ namespace SharpMetal.Metal
 
         public MTLResourceID GpuResourceID => ObjectiveCRuntime.MTLResourceID_objc_msgSend(NativePtr, sel_gpuResourceID);
 
-        public ulong ImageblockMemoryLength(MTLSize imageblockDimensions)
+        public ulong ImageblockMemoryLength(in MTLSize imageblockDimensions)
         {
             return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_imageblockMemoryLengthForDimensions, imageblockDimensions);
         }
 
-        public MTLFunctionHandle FunctionHandle(MTLFunction function, MTLRenderStages stage)
+        public MTLFunctionHandle FunctionHandle(in MTLFunction function, in MTLRenderStages stage)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_functionHandleWithFunctionstage, function, (ulong)stage));
         }
 
-        public MTLVisibleFunctionTable NewVisibleFunctionTable(MTLVisibleFunctionTableDescriptor descriptor, MTLRenderStages stage)
+        public MTLVisibleFunctionTable NewVisibleFunctionTable(in MTLVisibleFunctionTableDescriptor descriptor, in MTLRenderStages stage)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newVisibleFunctionTableWithDescriptorstage, descriptor, (ulong)stage));
         }
 
-        public MTLIntersectionFunctionTable NewIntersectionFunctionTable(MTLIntersectionFunctionTableDescriptor descriptor, MTLRenderStages stage)
+        public MTLIntersectionFunctionTable NewIntersectionFunctionTable(in MTLIntersectionFunctionTableDescriptor descriptor, in MTLRenderStages stage)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newIntersectionFunctionTableWithDescriptorstage, descriptor, (ulong)stage));
         }
 
-        public MTLRenderPipelineState NewRenderPipelineState(MTLRenderPipelineFunctionsDescriptor additionalBinaryFunctions, ref NSError error)
+        public MTLRenderPipelineState NewRenderPipelineState(in MTLRenderPipelineFunctionsDescriptor additionalBinaryFunctions, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newRenderPipelineStateWithAdditionalBinaryFunctionserror, additionalBinaryFunctions, ref error.NativePtr));
         }
@@ -602,12 +591,23 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_newRenderPipelineStateWithAdditionalBinaryFunctionserror = "newRenderPipelineStateWithAdditionalBinaryFunctions:error:";
     }
 
-    
-    public partial class MTLRenderPipelineColorAttachmentDescriptorArray
+    public partial struct MTLRenderPipelineColorAttachmentDescriptorArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLRenderPipelineColorAttachmentDescriptorArray obj) => obj.NativePtr;
-        public MTLRenderPipelineColorAttachmentDescriptorArray(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLRenderPipelineColorAttachmentDescriptorArray obj) => obj.NativePtr;
+        public MTLRenderPipelineColorAttachmentDescriptorArray(in IntPtr ptr) => NativePtr = ptr;
+
+        public MTLRenderPipelineColorAttachmentDescriptor this[uint index]
+        {
+            get
+            {
+                return Object(index);
+            }
+            set
+            {
+                SetObject(value, index);
+            }
+        }
 
         public MTLRenderPipelineColorAttachmentDescriptorArray()
         {
@@ -615,12 +615,12 @@ namespace SharpMetal.Metal
             NativePtr = cls.AllocInit();
         }
 
-        public MTLRenderPipelineColorAttachmentDescriptor Object(ulong attachmentIndex)
+        public MTLRenderPipelineColorAttachmentDescriptor Object(in ulong attachmentIndex)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectAtIndexedSubscript, attachmentIndex));
         }
 
-        public void SetObject(MTLRenderPipelineColorAttachmentDescriptor attachment, ulong attachmentIndex)
+        public void SetObject(in MTLRenderPipelineColorAttachmentDescriptor attachment, in ulong attachmentIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectatIndexedSubscript, attachment, attachmentIndex);
         }
@@ -629,12 +629,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setObjectatIndexedSubscript = "setObject:atIndexedSubscript:";
     }
 
-    
-    public partial class MTLTileRenderPipelineColorAttachmentDescriptor
+    public partial struct MTLTileRenderPipelineColorAttachmentDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLTileRenderPipelineColorAttachmentDescriptor obj) => obj.NativePtr;
-        public MTLTileRenderPipelineColorAttachmentDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLTileRenderPipelineColorAttachmentDescriptor obj) => obj.NativePtr;
+        public MTLTileRenderPipelineColorAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLTileRenderPipelineColorAttachmentDescriptor()
         {
@@ -652,12 +651,23 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setPixelFormat = "setPixelFormat:";
     }
 
-    
-    public partial class MTLTileRenderPipelineColorAttachmentDescriptorArray
+    public partial struct MTLTileRenderPipelineColorAttachmentDescriptorArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLTileRenderPipelineColorAttachmentDescriptorArray obj) => obj.NativePtr;
-        public MTLTileRenderPipelineColorAttachmentDescriptorArray(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLTileRenderPipelineColorAttachmentDescriptorArray obj) => obj.NativePtr;
+        public MTLTileRenderPipelineColorAttachmentDescriptorArray(in IntPtr ptr) => NativePtr = ptr;
+
+        public MTLTileRenderPipelineColorAttachmentDescriptor this[uint index]
+        {
+            get
+            {
+                return Object(index);
+            }
+            set
+            {
+                SetObject(value, index);
+            }
+        }
 
         public MTLTileRenderPipelineColorAttachmentDescriptorArray()
         {
@@ -665,12 +675,12 @@ namespace SharpMetal.Metal
             NativePtr = cls.AllocInit();
         }
 
-        public MTLTileRenderPipelineColorAttachmentDescriptor Object(ulong attachmentIndex)
+        public MTLTileRenderPipelineColorAttachmentDescriptor Object(in ulong attachmentIndex)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectAtIndexedSubscript, attachmentIndex));
         }
 
-        public void SetObject(MTLTileRenderPipelineColorAttachmentDescriptor attachment, ulong attachmentIndex)
+        public void SetObject(in MTLTileRenderPipelineColorAttachmentDescriptor attachment, in ulong attachmentIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectatIndexedSubscript, attachment, attachmentIndex);
         }
@@ -678,13 +688,12 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_objectAtIndexedSubscript = "objectAtIndexedSubscript:";
         private static readonly Selector sel_setObjectatIndexedSubscript = "setObject:atIndexedSubscript:";
     }
-
     
-    public partial class MTLTileRenderPipelineDescriptor
+    public partial struct MTLTileRenderPipelineDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLTileRenderPipelineDescriptor obj) => obj.NativePtr;
-        public MTLTileRenderPipelineDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLTileRenderPipelineDescriptor obj) => obj.NativePtr;
+        public MTLTileRenderPipelineDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLTileRenderPipelineDescriptor()
         {
@@ -786,12 +795,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_reset = "reset";
     }
 
-    
-    public partial class MTLMeshRenderPipelineDescriptor
+    public partial struct MTLMeshRenderPipelineDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLMeshRenderPipelineDescriptor obj) => obj.NativePtr;
-        public MTLMeshRenderPipelineDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLMeshRenderPipelineDescriptor obj) => obj.NativePtr;
+        public MTLMeshRenderPipelineDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLMeshRenderPipelineDescriptor()
         {
@@ -915,17 +923,17 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentLinkedFunctions, value);
         }
 
-        public void SetAlphaToCoverageEnabled(bool alphaToCoverageEnabled)
+        public void SetAlphaToCoverageEnabled(in bool alphaToCoverageEnabled)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setAlphaToCoverageEnabled, alphaToCoverageEnabled);
         }
 
-        public void SetAlphaToOneEnabled(bool alphaToOneEnabled)
+        public void SetAlphaToOneEnabled(in bool alphaToOneEnabled)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setAlphaToOneEnabled, alphaToOneEnabled);
         }
 
-        public void SetRasterizationEnabled(bool rasterizationEnabled)
+        public void SetRasterizationEnabled(in bool rasterizationEnabled)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setRasterizationEnabled, rasterizationEnabled);
         }

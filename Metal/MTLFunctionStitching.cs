@@ -1,28 +1,24 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
-    
-    public partial class MTLFunctionStitchingAttribute
+    public partial struct MTLFunctionStitchingAttribute
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLFunctionStitchingAttribute obj) => obj.NativePtr;
-        public MTLFunctionStitchingAttribute(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLFunctionStitchingAttribute()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLFunctionStitchingAttribute obj) => obj.NativePtr;
+        public MTLFunctionStitchingAttribute(in IntPtr ptr) => NativePtr = ptr;
     }
 
-    
-    public partial class MTLFunctionStitchingAttributeAlwaysInline : MTLFunctionStitchingAttribute
+    public partial struct MTLFunctionStitchingAttributeAlwaysInline
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLFunctionStitchingAttributeAlwaysInline obj) => obj.NativePtr;
-        public MTLFunctionStitchingAttributeAlwaysInline(IntPtr ptr) : base(ptr) => NativePtr = ptr;
+
+        public static implicit operator IntPtr(in MTLFunctionStitchingAttributeAlwaysInline obj) => obj.NativePtr;
+        public static implicit operator MTLFunctionStitchingAttribute(in MTLFunctionStitchingAttributeAlwaysInline obj) => new MTLFunctionStitchingAttribute(obj.NativePtr);
+        public static implicit operator MTLFunctionStitchingAttributeAlwaysInline(in MTLFunctionStitchingAttribute obj) => new MTLFunctionStitchingAttributeAlwaysInline(obj.NativePtr);
+
+        public MTLFunctionStitchingAttributeAlwaysInline(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLFunctionStitchingAttributeAlwaysInline()
         {
@@ -31,25 +27,22 @@ namespace SharpMetal.Metal
         }
     }
 
-    
-    public partial class MTLFunctionStitchingNode
+    public partial struct MTLFunctionStitchingNode
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLFunctionStitchingNode obj) => obj.NativePtr;
-        public MTLFunctionStitchingNode(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLFunctionStitchingNode()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLFunctionStitchingNode obj) => obj.NativePtr;
+        public MTLFunctionStitchingNode(in IntPtr ptr) => NativePtr = ptr;
     }
 
-    
-    public partial class MTLFunctionStitchingInputNode : MTLFunctionStitchingNode
+    public partial struct MTLFunctionStitchingInputNode
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLFunctionStitchingInputNode obj) => obj.NativePtr;
-        public MTLFunctionStitchingInputNode(IntPtr ptr) : base(ptr) => NativePtr = ptr;
+
+        public static implicit operator IntPtr(in MTLFunctionStitchingInputNode obj) => obj.NativePtr;
+        public static implicit operator MTLFunctionStitchingNode(in MTLFunctionStitchingInputNode obj) => new MTLFunctionStitchingNode(obj.NativePtr);
+        public static implicit operator MTLFunctionStitchingInputNode(in MTLFunctionStitchingNode obj) => new MTLFunctionStitchingInputNode(obj.NativePtr);
+
+        public MTLFunctionStitchingInputNode(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLFunctionStitchingInputNode()
         {
@@ -63,7 +56,7 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setArgumentIndex, value);
         }
 
-        public MTLFunctionStitchingInputNode Init(ulong argument)
+        public MTLFunctionStitchingInputNode Init(in ulong argument)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithArgumentIndex, argument));
         }
@@ -73,12 +66,14 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_initWithArgumentIndex = "initWithArgumentIndex:";
     }
 
-    
-    public partial class MTLFunctionStitchingFunctionNode : MTLFunctionStitchingNode
+    public partial struct MTLFunctionStitchingFunctionNode
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLFunctionStitchingFunctionNode obj) => obj.NativePtr;
-        public MTLFunctionStitchingFunctionNode(IntPtr ptr) : base(ptr) => NativePtr = ptr;
+
+        public static implicit operator IntPtr(in MTLFunctionStitchingFunctionNode obj) => obj.NativePtr;
+        public static implicit operator MTLFunctionStitchingNode(in MTLFunctionStitchingFunctionNode obj) => new MTLFunctionStitchingNode(obj.NativePtr);
+        public static implicit operator MTLFunctionStitchingFunctionNode(in MTLFunctionStitchingNode obj) => new MTLFunctionStitchingFunctionNode(obj.NativePtr);
+        public MTLFunctionStitchingFunctionNode(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLFunctionStitchingFunctionNode()
         {
@@ -104,7 +99,7 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setControlDependencies, value);
         }
 
-        public MTLFunctionStitchingFunctionNode Init(NSString name, NSArray arguments, NSArray controlDependencies)
+        public MTLFunctionStitchingFunctionNode Init(in NSString name, in NSArray arguments, in NSArray controlDependencies)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithNameargumentscontrolDependencies, name, arguments, controlDependencies));
         }
@@ -118,12 +113,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_initWithNameargumentscontrolDependencies = "initWithName:arguments:controlDependencies:";
     }
 
-    
-    public partial class MTLFunctionStitchingGraph
+    public partial struct MTLFunctionStitchingGraph
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLFunctionStitchingGraph obj) => obj.NativePtr;
-        public MTLFunctionStitchingGraph(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLFunctionStitchingGraph obj) => obj.NativePtr;
+        public MTLFunctionStitchingGraph(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLFunctionStitchingGraph()
         {
@@ -155,7 +149,7 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setAttributes, value);
         }
 
-        public MTLFunctionStitchingGraph Init(NSString functionName, NSArray nodes, MTLFunctionStitchingFunctionNode outputNode, NSArray attributes)
+        public MTLFunctionStitchingGraph Init(in NSString functionName, in NSArray nodes, in MTLFunctionStitchingFunctionNode outputNode, in NSArray attributes)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithFunctionNamenodesoutputNodeattributes, functionName, nodes, outputNode, attributes));
         }
@@ -171,12 +165,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_initWithFunctionNamenodesoutputNodeattributes = "initWithFunctionName:nodes:outputNode:attributes:";
     }
 
-    
-    public partial class MTLStitchedLibraryDescriptor
+    public partial struct MTLStitchedLibraryDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLStitchedLibraryDescriptor obj) => obj.NativePtr;
-        public MTLStitchedLibraryDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLStitchedLibraryDescriptor obj) => obj.NativePtr;
+        public MTLStitchedLibraryDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLStitchedLibraryDescriptor()
         {

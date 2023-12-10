@@ -1,6 +1,4 @@
-using System.Runtime.Versioning;
 using SharpMetal.ObjectiveCCore;
-using SharpMetal.Foundation;
 
 namespace SharpMetal.Metal
 {
@@ -10,13 +8,12 @@ namespace SharpMetal.Metal
         Mutable = 1,
         Immutable = 2,
     }
-
     
-    public partial class MTLPipelineBufferDescriptor
+    public partial struct MTLPipelineBufferDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLPipelineBufferDescriptor obj) => obj.NativePtr;
-        public MTLPipelineBufferDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLPipelineBufferDescriptor obj) => obj.NativePtr;
+        public MTLPipelineBufferDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLPipelineBufferDescriptor()
         {
@@ -34,12 +31,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setMutability = "setMutability:";
     }
 
-    
-    public partial class MTLPipelineBufferDescriptorArray
+    public partial struct MTLPipelineBufferDescriptorArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLPipelineBufferDescriptorArray obj) => obj.NativePtr;
-        public MTLPipelineBufferDescriptorArray(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLPipelineBufferDescriptorArray obj) => obj.NativePtr;
+        public MTLPipelineBufferDescriptorArray(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLPipelineBufferDescriptorArray()
         {

@@ -1,9 +1,8 @@
 using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
 
 namespace SharpMetal.ObjectiveCCore
 {
-    public static partial class ObjectiveC
+    public static unsafe partial class ObjectiveC
     {
         public const string ObjCRuntime = "/usr/lib/libobjc.A.dylib";
         public const string MetalFramework = "/System/Library/Frameworks/Metal.framework/Metal";
@@ -15,68 +14,68 @@ namespace SharpMetal.ObjectiveCCore
         public static partial IntPtr objc_getClass(string name);
 
         [LibraryImport(ObjCRuntime)]
-        public static unsafe partial IntPtr objc_allocateClassPair(IntPtr superclass, char* name, int extraBytes);
+        public static unsafe partial IntPtr objc_allocateClassPair(in IntPtr superclass, char* name, int extraBytes);
 
         [LibraryImport(ObjCRuntime)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static unsafe partial bool class_addMethod(IntPtr cls, Selector selector, IntPtr imp, char* types);
+        public static unsafe partial bool class_addMethod(in IntPtr cls, Selector selector, IntPtr imp, char* types);
 
         [LibraryImport(ObjCRuntime)]
-        public static partial void objc_registerClassPair(IntPtr cls);
+        public static partial void objc_registerClassPair(in IntPtr cls);
 
         [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend")]
-        public static partial void objc_msgSend(IntPtr receiver, Selector selector);
+        public static partial void objc_msgSend(in IntPtr receiver, Selector selector);
 
         [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend")]
-        public static partial void objc_msgSend(IntPtr receiver, Selector selector, NSRect rect);
+        public static partial void objc_msgSend(in IntPtr receiver, Selector selector, NSRect rect);
 
         [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend")]
-        public static partial void objc_msgSend(IntPtr receiver, Selector selector, byte value);
+        public static partial void objc_msgSend(in IntPtr receiver, Selector selector, byte value);
 
         [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend")]
-        public static partial void objc_msgSend(IntPtr receiver, Selector selector, double value);
+        public static partial void objc_msgSend(in IntPtr receiver, Selector selector, double value);
 
         [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend")]
-        public static partial void objc_msgSend(IntPtr receiver, Selector selector, IntPtr ptr);
-
-        [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static unsafe partial bool bool_objc_msgSend(IntPtr receiver, Selector selector, char* buffer, ulong maxBufferCount, ulong encoding);
+        public static partial void objc_msgSend(in IntPtr receiver, Selector selector, IntPtr ptr);
 
         [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool bool_objc_msgSend(IntPtr receiver, Selector selector, long activationPolicy);
+        public static unsafe partial bool bool_objc_msgSend(in IntPtr receiver, Selector selector, char* buffer, ulong maxBufferCount, ulong encoding);
 
         [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend")]
-        public static partial void objc_msgSend(IntPtr receiver, Selector selector, ulong format, ulong index);
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static partial bool bool_objc_msgSend(in IntPtr receiver, Selector selector, long activationPolicy);
 
         [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend")]
-        public static partial void objc_msgSend(IntPtr receiver, Selector selector, NSRect rect, byte value);
+        public static partial void objc_msgSend(in IntPtr receiver, Selector selector, ulong format, ulong index);
 
         [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend")]
-        public static partial IntPtr IntPtr_objc_msgSend(IntPtr receiver, Selector selector, NSRect rect, IntPtr value);
+        public static partial void objc_msgSend(in IntPtr receiver, Selector selector, NSRect rect, byte value);
 
         [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend")]
-        public static partial void objc_msgSend(IntPtr receiver, Selector selector, [MarshalAs(UnmanagedType.Bool)] bool value);
+        public static partial IntPtr IntPtr_objc_msgSend(in IntPtr receiver, Selector selector, NSRect rect, IntPtr value);
 
         [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend")]
-        public static partial void objc_msgSend(IntPtr receiver, Selector selector, NSRect contentRect, ulong style, ulong backingStoreType, [MarshalAs(UnmanagedType.Bool)] bool flag);
+        public static partial void objc_msgSend(in IntPtr receiver, Selector selector, [MarshalAs(UnmanagedType.Bool)] bool value);
 
         [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend")]
-        public static partial IntPtr IntPtr_objc_msgSend(IntPtr receiver, Selector selector);
+        public static partial void objc_msgSend(in IntPtr receiver, Selector selector, NSRect contentRect, ulong style, ulong backingStoreType, [MarshalAs(UnmanagedType.Bool)] bool flag);
+
+        [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend")]
+        public static partial IntPtr IntPtr_objc_msgSend(in IntPtr receiver, Selector selector);
 
         [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend", StringMarshalling = StringMarshalling.Utf8)]
-        public static partial IntPtr IntPtr_objc_msgSend(IntPtr receiver, Selector selector, string param);
+        public static partial IntPtr IntPtr_objc_msgSend(in IntPtr receiver, Selector selector, string param);
 
         [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend", StringMarshalling = StringMarshalling.Utf8)]
-        public static partial string string_objc_msgSend(IntPtr receiver, Selector selector);
+        public static partial string string_objc_msgSend(in IntPtr receiver, Selector selector);
 
         [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static partial bool bool_objc_msgSend(IntPtr receiver, Selector selector);
+        public static partial bool bool_objc_msgSend(in IntPtr receiver, Selector selector);
 
         [LibraryImport(ObjCRuntime, EntryPoint = "objc_msgSend")]
-        public static partial ulong ulong_objc_msgSend(IntPtr receiver, Selector selector);
+        public static partial ulong ulong_objc_msgSend(in IntPtr receiver, Selector selector);
 
         public static void LinkMetal()
         {

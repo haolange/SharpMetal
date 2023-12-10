@@ -63,7 +63,7 @@ namespace SharpMetal.Foundation
     {
         public IntPtr NativePtr;
         public static implicit operator IntPtr(in NSNumber obj) => obj.NativePtr;
-        public NSNumber(IntPtr ptr) => NativePtr = ptr;
+        public NSNumber(in IntPtr ptr) => NativePtr = ptr;
 
         public NSNumber()
         {

@@ -1,7 +1,6 @@
-using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
+using System.Runtime.InteropServices;
 
 namespace SharpMetal.Metal
 {
@@ -55,7 +54,6 @@ namespace SharpMetal.Metal
         RenderStageMesh = 16,
     }
 
-    
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLScissorRect
     {
@@ -64,7 +62,6 @@ namespace SharpMetal.Metal
         public ulong width;
         public ulong height;
     }
-
     
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLViewport
@@ -76,7 +73,6 @@ namespace SharpMetal.Metal
         public double znear;
         public double zfar;
     }
-
     
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLDrawPrimitivesIndirectArguments
@@ -87,7 +83,6 @@ namespace SharpMetal.Metal
         public uint baseInstance;
     }
 
-    
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLDrawIndexedPrimitivesIndirectArguments
     {
@@ -97,7 +92,6 @@ namespace SharpMetal.Metal
         public int baseVertex;
         public uint baseInstance;
     }
-
     
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLVertexAmplificationViewMapping
@@ -106,7 +100,6 @@ namespace SharpMetal.Metal
         public uint renderTargetArrayIndexOffset;
     }
 
-    
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLDrawPatchIndirectArguments
     {
@@ -116,7 +109,6 @@ namespace SharpMetal.Metal
         public uint baseInstance;
     }
 
-    
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLQuadTessellationFactorsHalf
     {
@@ -124,7 +116,6 @@ namespace SharpMetal.Metal
         public ushort insideTessellationFactor;
     }
 
-    
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLTriangleTessellationFactorsHalf
     {
@@ -132,108 +123,134 @@ namespace SharpMetal.Metal
         public ushort insideTessellationFactor;
     }
 
-    
-    public partial class MTLRenderCommandEncoder : MTLCommandEncoder
+    public partial struct MTLRenderCommandEncoder
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLRenderCommandEncoder obj) => obj.NativePtr;
-        public MTLRenderCommandEncoder(IntPtr ptr) : base(ptr) => NativePtr = ptr;
 
-        protected MTLRenderCommandEncoder()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLRenderCommandEncoder obj) => obj.NativePtr;
+        public static implicit operator MTLCommandEncoder(in MTLRenderCommandEncoder obj) => new MTLCommandEncoder(obj.NativePtr);
+        public static implicit operator MTLRenderCommandEncoder(in MTLCommandEncoder obj) => new MTLRenderCommandEncoder(obj.NativePtr);
+
+        public MTLRenderCommandEncoder(in IntPtr ptr) => NativePtr = ptr;
+
+        public MTLDevice Device => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_device));
 
         public ulong TileWidth => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_tileWidth);
 
         public ulong TileHeight => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_tileHeight);
 
-        public void SetRenderPipelineState(MTLRenderPipelineState pipelineState)
+        public NSString Label
+        {
+            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_label));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLabel, value);
+        }
+
+        public void EndEncoding()
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_endEncoding);
+        }
+
+        public void InsertDebugSignpost(in NSString nsString)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_insertDebugSignpost, nsString);
+        }
+
+        public void PushDebugGroup(in NSString nsString)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_pushDebugGroup, nsString);
+        }
+
+        public void PopDebugGroup()
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_popDebugGroup);
+        }
+
+        public void SetRenderPipelineState(in MTLRenderPipelineState pipelineState)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setRenderPipelineState, pipelineState);
         }
 
-        public void SetVertexBytes(IntPtr bytes, ulong length, ulong index)
+        public void SetVertexBytes(in IntPtr bytes, in ulong length, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexByteslengthatIndex, bytes, length, index);
         }
 
-        public void SetVertexBuffer(MTLBuffer buffer, ulong offset, ulong index)
+        public void SetVertexBuffer(in MTLBuffer buffer, in ulong offset, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexBufferoffsetatIndex, buffer, offset, index);
         }
 
-        public void SetVertexBufferOffset(ulong offset, ulong index)
+        public void SetVertexBufferOffset(in ulong offset, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexBufferOffsetatIndex, offset, index);
         }
 
-        public void SetVertexBuffers(MTLBuffer[] buffers, ulong[] offsets, NSRange range)
+        public void SetVertexBuffers(MTLBuffer[] buffers, in ulong[] offsets, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetVertexBuffer(MTLBuffer buffer, ulong offset, ulong stride, ulong index)
+        public void SetVertexBuffer(in MTLBuffer buffer, in ulong offset, in ulong stride, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexBufferoffsetattributeStrideatIndex, buffer, offset, stride, index);
         }
 
-        public void SetVertexBuffers(MTLBuffer[] buffers, ulong offsets, ulong strides, NSRange range)
+        public void SetVertexBuffers(MTLBuffer[] buffers, in ulong offsets, in ulong strides, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetVertexBufferOffset(ulong offset, ulong stride, ulong index)
+        public void SetVertexBufferOffset(in ulong offset, in ulong stride, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexBufferOffsetattributeStrideatIndex, offset, stride, index);
         }
 
-        public void SetVertexBytes(IntPtr bytes, ulong length, ulong stride, ulong index)
+        public void SetVertexBytes(in IntPtr bytes, in ulong length, in ulong stride, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexByteslengthattributeStrideatIndex, bytes, length, stride, index);
         }
 
-        public void SetVertexTexture(MTLTexture texture, ulong index)
+        public void SetVertexTexture(in MTLTexture texture, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexTextureatIndex, texture, index);
         }
 
-        public void SetVertexTextures(MTLTexture[] textures, NSRange range)
+        public void SetVertexTextures(MTLTexture[] textures, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetVertexSamplerState(MTLSamplerState sampler, ulong index)
+        public void SetVertexSamplerState(in MTLSamplerState sampler, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexSamplerStateatIndex, sampler, index);
         }
 
-        public void SetVertexSamplerStates(MTLSamplerState[] samplers, NSRange range)
+        public void SetVertexSamplerStates(MTLSamplerState[] samplers, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetVertexSamplerState(MTLSamplerState sampler, float lodMinClamp, float lodMaxClamp, ulong index)
+        public void SetVertexSamplerState(in MTLSamplerState sampler, float lodMinClamp, float lodMaxClamp, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexSamplerStatelodMinClamplodMaxClampatIndex, sampler, lodMinClamp, lodMaxClamp, index);
         }
 
-        public void SetVertexSamplerStates(MTLSamplerState[] samplers, float[] lodMinClamps, float[] lodMaxClamps, NSRange range)
+        public void SetVertexSamplerStates(MTLSamplerState[] samplers, float[] lodMinClamps, float[] lodMaxClamps, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetVertexVisibleFunctionTable(MTLVisibleFunctionTable functionTable, ulong bufferIndex)
+        public void SetVertexVisibleFunctionTable(in MTLVisibleFunctionTable functionTable, in ulong bufferIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexVisibleFunctionTableatBufferIndex, functionTable, bufferIndex);
         }
 
-        public void SetVertexVisibleFunctionTables(MTLVisibleFunctionTable[] functionTables, NSRange range)
+        public void SetVertexVisibleFunctionTables(MTLVisibleFunctionTable[] functionTables, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetVertexIntersectionFunctionTable(MTLIntersectionFunctionTable intersectionFunctionTable, ulong bufferIndex)
+        public void SetVertexIntersectionFunctionTable(in MTLIntersectionFunctionTable intersectionFunctionTable, in ulong bufferIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexIntersectionFunctionTableatBufferIndex, intersectionFunctionTable, bufferIndex);
         }
@@ -243,182 +260,182 @@ namespace SharpMetal.Metal
             throw new NotImplementedException();
         }
 
-        public void SetVertexAccelerationStructure(MTLAccelerationStructure accelerationStructure, ulong bufferIndex)
+        public void SetVertexAccelerationStructure(in MTLAccelerationStructure accelerationStructure, in ulong bufferIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexAccelerationStructureatBufferIndex, accelerationStructure, bufferIndex);
         }
 
-        public void SetViewport(MTLViewport viewport)
+        public void SetViewport(in MTLViewport viewport)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setViewport, viewport);
         }
 
-        public void SetViewports(MTLViewport viewports, ulong count)
+        public void SetViewports(in MTLViewport viewports, in ulong count)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setViewportscount, viewports, count);
         }
 
-        public void SetFrontFacingWinding(MTLWinding frontFacingWinding)
+        public void SetFrontFacingWinding(in MTLWinding frontFacingWinding)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFrontFacingWinding, (ulong)frontFacingWinding);
         }
 
-        public void SetVertexAmplificationCount(ulong count, MTLVertexAmplificationViewMapping viewMappings)
+        public void SetVertexAmplificationCount(in ulong count, in MTLVertexAmplificationViewMapping viewMappings)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexAmplificationCountviewMappings, count, viewMappings);
         }
 
-        public void SetCullMode(MTLCullMode cullMode)
+        public void SetCullMode(in MTLCullMode cullMode)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setCullMode, (ulong)cullMode);
         }
 
-        public void SetDepthClipMode(MTLDepthClipMode depthClipMode)
+        public void SetDepthClipMode(in MTLDepthClipMode depthClipMode)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDepthClipMode, (ulong)depthClipMode);
         }
 
-        public void SetDepthBias(float depthBias, float slopeScale, float clamp)
+        public void SetDepthBias(in float depthBias, in float slopeScale, in float clamp)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDepthBiasslopeScaleclamp, depthBias, slopeScale, clamp);
         }
 
-        public void SetScissorRect(MTLScissorRect rect)
+        public void SetScissorRect(in MTLScissorRect rect)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setScissorRect, rect);
         }
 
-        public void SetScissorRects(MTLScissorRect scissorRects, ulong count)
+        public void SetScissorRects(in MTLScissorRect scissorRects, in ulong count)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setScissorRectscount, scissorRects, count);
         }
 
-        public void SetTriangleFillMode(MTLTriangleFillMode fillMode)
+        public void SetTriangleFillMode(in MTLTriangleFillMode fillMode)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTriangleFillMode, (ulong)fillMode);
         }
 
-        public void SetFragmentBytes(IntPtr bytes, ulong length, ulong index)
+        public void SetFragmentBytes(in IntPtr bytes, in ulong length, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentByteslengthatIndex, bytes, length, index);
         }
 
-        public void SetFragmentBuffer(MTLBuffer buffer, ulong offset, ulong index)
+        public void SetFragmentBuffer(in MTLBuffer buffer, in ulong offset, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentBufferoffsetatIndex, buffer, offset, index);
         }
 
-        public void SetFragmentBufferOffset(ulong offset, ulong index)
+        public void SetFragmentBufferOffset(ulong offset, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentBufferOffsetatIndex, offset, index);
         }
 
-        public void SetFragmentBuffers(MTLBuffer[] buffers, ulong[] offsets, NSRange range)
+        public void SetFragmentBuffers(MTLBuffer[] buffers, in ulong[] offsets, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetFragmentTexture(MTLTexture texture, ulong index)
+        public void SetFragmentTexture(in MTLTexture texture, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentTextureatIndex, texture, index);
         }
 
-        public void SetFragmentTextures(MTLTexture[] textures, NSRange range)
+        public void SetFragmentTextures(MTLTexture[] textures, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetFragmentSamplerState(MTLSamplerState sampler, ulong index)
+        public void SetFragmentSamplerState(in MTLSamplerState sampler, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentSamplerStateatIndex, sampler, index);
         }
 
-        public void SetFragmentSamplerStates(MTLSamplerState[] samplers, NSRange range)
+        public void SetFragmentSamplerStates(MTLSamplerState[] samplers, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetFragmentSamplerState(MTLSamplerState sampler, float lodMinClamp, float lodMaxClamp, ulong index)
+        public void SetFragmentSamplerState(in MTLSamplerState sampler, float lodMinClamp, float lodMaxClamp, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentSamplerStatelodMinClamplodMaxClampatIndex, sampler, lodMinClamp, lodMaxClamp, index);
         }
 
-        public void SetFragmentSamplerStates(MTLSamplerState[] samplers, float[] lodMinClamps, float[] lodMaxClamps, NSRange range)
+        public void SetFragmentSamplerStates(MTLSamplerState[] samplers, float[] lodMinClamps, float[] lodMaxClamps, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetFragmentVisibleFunctionTable(MTLVisibleFunctionTable functionTable, ulong bufferIndex)
+        public void SetFragmentVisibleFunctionTable(in MTLVisibleFunctionTable functionTable, in ulong bufferIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentVisibleFunctionTableatBufferIndex, functionTable, bufferIndex);
         }
 
-        public void SetFragmentVisibleFunctionTables(MTLVisibleFunctionTable[] functionTables, NSRange range)
+        public void SetFragmentVisibleFunctionTables(MTLVisibleFunctionTable[] functionTables, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetFragmentIntersectionFunctionTable(MTLIntersectionFunctionTable intersectionFunctionTable, ulong bufferIndex)
+        public void SetFragmentIntersectionFunctionTable(in MTLIntersectionFunctionTable intersectionFunctionTable, in ulong bufferIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentIntersectionFunctionTableatBufferIndex, intersectionFunctionTable, bufferIndex);
         }
 
-        public void SetFragmentIntersectionFunctionTables(MTLIntersectionFunctionTable[] intersectionFunctionTables, NSRange range)
+        public void SetFragmentIntersectionFunctionTables(MTLIntersectionFunctionTable[] intersectionFunctionTables, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetFragmentAccelerationStructure(MTLAccelerationStructure accelerationStructure, ulong bufferIndex)
+        public void SetFragmentAccelerationStructure(in MTLAccelerationStructure accelerationStructure, in ulong bufferIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentAccelerationStructureatBufferIndex, accelerationStructure, bufferIndex);
         }
 
-        public void SetBlendColor(float red, float green, float blue, float alpha)
+        public void SetBlendColor(in float red, in float green, in float blue, in float alpha)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBlendColorRedgreenbluealpha, red, green, blue, alpha);
         }
 
-        public void SetDepthStencilState(MTLDepthStencilState depthStencilState)
+        public void SetDepthStencilState(in MTLDepthStencilState depthStencilState)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDepthStencilState, depthStencilState);
         }
 
-        public void SetStencilReferenceValue(uint referenceValue)
+        public void SetStencilReferenceValue(in uint referenceValue)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStencilReferenceValue, referenceValue);
         }
 
-        public void SetStencilReferenceValues(uint frontReferenceValue, uint backReferenceValue)
+        public void SetStencilReferenceValues(in uint frontReferenceValue, in uint backReferenceValue)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStencilFrontReferenceValuebackReferenceValue, frontReferenceValue, backReferenceValue);
         }
 
-        public void SetVisibilityResultMode(MTLVisibilityResultMode mode, ulong offset)
+        public void SetVisibilityResultMode(in MTLVisibilityResultMode mode, in ulong offset)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVisibilityResultModeoffset, (ulong)mode, offset);
         }
 
-        public void SetColorStoreAction(MTLStoreAction storeAction, ulong colorAttachmentIndex)
+        public void SetColorStoreAction(in MTLStoreAction storeAction, in ulong colorAttachmentIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setColorStoreActionatIndex, (ulong)storeAction, colorAttachmentIndex);
         }
 
-        public void SetDepthStoreAction(MTLStoreAction storeAction)
+        public void SetDepthStoreAction(in MTLStoreAction storeAction)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDepthStoreAction, (ulong)storeAction);
         }
 
-        public void SetStencilStoreAction(MTLStoreAction storeAction)
+        public void SetStencilStoreAction(in MTLStoreAction storeAction)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStencilStoreAction, (ulong)storeAction);
         }
 
-        public void SetColorStoreActionOptions(MTLStoreActionOptions storeActionOptions, ulong colorAttachmentIndex)
+        public void SetColorStoreActionOptions(in MTLStoreActionOptions storeActionOptions, in ulong colorAttachmentIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setColorStoreActionOptionsatIndex, (ulong)storeActionOptions, colorAttachmentIndex);
         }
 
-        public void SetDepthStoreActionOptions(MTLStoreActionOptions storeActionOptions)
+        public void SetDepthStoreActionOptions(in MTLStoreActionOptions storeActionOptions)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDepthStoreActionOptions, (ulong)storeActionOptions);
         }
@@ -428,162 +445,162 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStencilStoreActionOptions, (ulong)storeActionOptions);
         }
 
-        public void SetObjectBytes(IntPtr bytes, ulong length, ulong index)
+        public void SetObjectBytes(in IntPtr bytes, in ulong length, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectByteslengthatIndex, bytes, length, index);
         }
 
-        public void SetObjectBuffer(MTLBuffer buffer, ulong offset, ulong index)
+        public void SetObjectBuffer(in MTLBuffer buffer, in ulong offset, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectBufferoffsetatIndex, buffer, offset, index);
         }
 
-        public void SetObjectBufferOffset(ulong offset, ulong index)
+        public void SetObjectBufferOffset(ulong offset, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectBufferOffsetatIndex, offset, index);
         }
 
-        public void SetObjectBuffers(MTLBuffer[] buffers, ulong offsets, NSRange range)
+        public void SetObjectBuffers(MTLBuffer[] buffers, in ulong offsets, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetObjectTexture(MTLTexture texture, ulong index)
+        public void SetObjectTexture(in MTLTexture texture, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectTextureatIndex, texture, index);
         }
 
-        public void SetObjectTextures(MTLTexture[] textures, NSRange range)
+        public void SetObjectTextures(MTLTexture[] textures, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetObjectSamplerState(MTLSamplerState sampler, ulong index)
+        public void SetObjectSamplerState(in MTLSamplerState sampler, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectSamplerStateatIndex, sampler, index);
         }
 
-        public void SetObjectSamplerStates(MTLSamplerState[] samplers, NSRange range)
+        public void SetObjectSamplerStates(MTLSamplerState[] samplers, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetObjectSamplerState(MTLSamplerState sampler, float lodMinClamp, float lodMaxClamp, ulong index)
+        public void SetObjectSamplerState(in MTLSamplerState sampler, float lodMinClamp, float lodMaxClamp, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectSamplerStatelodMinClamplodMaxClampatIndex, sampler, lodMinClamp, lodMaxClamp, index);
         }
 
-        public void SetObjectSamplerStates(MTLSamplerState[] samplers, float lodMinClamps, float lodMaxClamps, NSRange range)
+        public void SetObjectSamplerStates(MTLSamplerState[] samplers, float lodMinClamps, float lodMaxClamps, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetObjectThreadgroupMemoryLength(ulong length, ulong index)
+        public void SetObjectThreadgroupMemoryLength(ulong length, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectThreadgroupMemoryLengthatIndex, length, index);
         }
 
-        public void SetMeshBytes(IntPtr bytes, ulong length, ulong index)
+        public void SetMeshBytes(in IntPtr bytes, in ulong length, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMeshByteslengthatIndex, bytes, length, index);
         }
 
-        public void SetMeshBuffer(MTLBuffer buffer, ulong offset, ulong index)
+        public void SetMeshBuffer(in MTLBuffer buffer, in ulong offset, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMeshBufferoffsetatIndex, buffer, offset, index);
         }
 
-        public void SetMeshBufferOffset(ulong offset, ulong index)
+        public void SetMeshBufferOffset(in ulong offset, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMeshBufferOffsetatIndex, offset, index);
         }
 
-        public void SetMeshBuffers(MTLBuffer[] buffers, ulong offsets, NSRange range)
+        public void SetMeshBuffers(MTLBuffer[] buffers, in ulong offsets, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetMeshTexture(MTLTexture texture, ulong index)
+        public void SetMeshTexture(in MTLTexture texture, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMeshTextureatIndex, texture, index);
         }
 
-        public void SetMeshTextures(MTLTexture[] textures, NSRange range)
+        public void SetMeshTextures(MTLTexture[] textures, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetMeshSamplerState(MTLSamplerState sampler, ulong index)
+        public void SetMeshSamplerState(in MTLSamplerState sampler, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMeshSamplerStateatIndex, sampler, index);
         }
 
-        public void SetMeshSamplerStates(MTLSamplerState[] samplers, NSRange range)
+        public void SetMeshSamplerStates(MTLSamplerState[] samplers, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetMeshSamplerState(MTLSamplerState sampler, float lodMinClamp, float lodMaxClamp, ulong index)
+        public void SetMeshSamplerState(in MTLSamplerState sampler, float lodMinClamp, float lodMaxClamp, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMeshSamplerStatelodMinClamplodMaxClampatIndex, sampler, lodMinClamp, lodMaxClamp, index);
         }
 
-        public void SetMeshSamplerStates(MTLSamplerState[] samplers, float lodMinClamps, float lodMaxClamps, NSRange range)
+        public void SetMeshSamplerStates(MTLSamplerState[] samplers, float lodMinClamps, float lodMaxClamps, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void DrawMeshThreadgroups(MTLSize threadgroupsPerGrid, MTLSize threadsPerObjectThreadgroup, MTLSize threadsPerMeshThreadgroup)
+        public void DrawMeshThreadgroups(in MTLSize threadgroupsPerGrid, in MTLSize threadsPerObjectThreadgroup, in MTLSize threadsPerMeshThreadgroup)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawMeshThreadgroupsthreadsPerObjectThreadgroupthreadsPerMeshThreadgroup, threadgroupsPerGrid, threadsPerObjectThreadgroup, threadsPerMeshThreadgroup);
         }
 
-        public void DrawMeshThreads(MTLSize threadsPerGrid, MTLSize threadsPerObjectThreadgroup, MTLSize threadsPerMeshThreadgroup)
+        public void DrawMeshThreads(in MTLSize threadsPerGrid, in MTLSize threadsPerObjectThreadgroup, in MTLSize threadsPerMeshThreadgroup)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawMeshThreadsthreadsPerObjectThreadgroupthreadsPerMeshThreadgroup, threadsPerGrid, threadsPerObjectThreadgroup, threadsPerMeshThreadgroup);
         }
 
-        public void DrawMeshThreadgroups(MTLBuffer indirectBuffer, ulong indirectBufferOffset, MTLSize threadsPerObjectThreadgroup, MTLSize threadsPerMeshThreadgroup)
+        public void DrawMeshThreadgroups(in MTLBuffer indirectBuffer, in ulong indirectBufferOffset, in MTLSize threadsPerObjectThreadgroup, in MTLSize threadsPerMeshThreadgroup)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawMeshThreadgroupsWithIndirectBufferindirectBufferOffsetthreadsPerObjectThreadgroupthreadsPerMeshThreadgroup, indirectBuffer, indirectBufferOffset, threadsPerObjectThreadgroup, threadsPerMeshThreadgroup);
         }
 
-        public void DrawPrimitives(MTLPrimitiveType primitiveType, ulong vertexStart, ulong vertexCount, ulong instanceCount)
+        public void DrawPrimitives(in MTLPrimitiveType primitiveType, in ulong vertexStart, in ulong vertexCount, in ulong instanceCount)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawPrimitivesvertexStartvertexCountinstanceCount, (ulong)primitiveType, vertexStart, vertexCount, instanceCount);
         }
 
-        public void DrawPrimitives(MTLPrimitiveType primitiveType, ulong vertexStart, ulong vertexCount)
+        public void DrawPrimitives(in MTLPrimitiveType primitiveType, in ulong vertexStart, in ulong vertexCount)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawPrimitivesvertexStartvertexCount, (ulong)primitiveType, vertexStart, vertexCount);
         }
 
-        public void DrawIndexedPrimitives(MTLPrimitiveType primitiveType, ulong indexCount, MTLIndexType indexType, MTLBuffer indexBuffer, ulong indexBufferOffset, ulong instanceCount)
+        public void DrawIndexedPrimitives(in MTLPrimitiveType primitiveType, in ulong indexCount, in MTLIndexType indexType, in MTLBuffer indexBuffer, in ulong indexBufferOffset, in ulong instanceCount)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawIndexedPrimitivesindexCountindexTypeindexBufferindexBufferOffsetinstanceCount, (ulong)primitiveType, indexCount, (ulong)indexType, indexBuffer, indexBufferOffset, instanceCount);
         }
 
-        public void DrawIndexedPrimitives(MTLPrimitiveType primitiveType, ulong indexCount, MTLIndexType indexType, MTLBuffer indexBuffer, ulong indexBufferOffset)
+        public void DrawIndexedPrimitives(in MTLPrimitiveType primitiveType, in ulong indexCount, in MTLIndexType indexType, in MTLBuffer indexBuffer, in ulong indexBufferOffset)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawIndexedPrimitivesindexCountindexTypeindexBufferindexBufferOffset, (ulong)primitiveType, indexCount, (ulong)indexType, indexBuffer, indexBufferOffset);
         }
 
-        public void DrawPrimitives(MTLPrimitiveType primitiveType, ulong vertexStart, ulong vertexCount, ulong instanceCount, ulong baseInstance)
+        public void DrawPrimitives(in MTLPrimitiveType primitiveType, in ulong vertexStart, in ulong vertexCount, in ulong instanceCount, in ulong baseInstance)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawPrimitivesvertexStartvertexCountinstanceCountbaseInstance, (ulong)primitiveType, vertexStart, vertexCount, instanceCount, baseInstance);
         }
 
-        public void DrawIndexedPrimitives(MTLPrimitiveType primitiveType, ulong indexCount, MTLIndexType indexType, MTLBuffer indexBuffer, ulong indexBufferOffset, ulong instanceCount, long baseVertex, ulong baseInstance)
+        public void DrawIndexedPrimitives(in MTLPrimitiveType primitiveType, in ulong indexCount, in MTLIndexType indexType, in MTLBuffer indexBuffer, in ulong indexBufferOffset, in ulong instanceCount, long baseVertex, in ulong baseInstance)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawIndexedPrimitivesindexCountindexTypeindexBufferindexBufferOffsetinstanceCountbaseVertexbaseInstance, (ulong)primitiveType, indexCount, (ulong)indexType, indexBuffer, indexBufferOffset, instanceCount, baseVertex, baseInstance);
         }
 
-        public void DrawPrimitives(MTLPrimitiveType primitiveType, MTLBuffer indirectBuffer, ulong indirectBufferOffset)
+        public void DrawPrimitives(in MTLPrimitiveType primitiveType, in MTLBuffer indirectBuffer, in ulong indirectBufferOffset)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawPrimitivesindirectBufferindirectBufferOffset, (ulong)primitiveType, indirectBuffer, indirectBufferOffset);
         }
 
-        public void DrawIndexedPrimitives(MTLPrimitiveType primitiveType, MTLIndexType indexType, MTLBuffer indexBuffer, ulong indexBufferOffset, MTLBuffer indirectBuffer, ulong indirectBufferOffset)
+        public void DrawIndexedPrimitives(in MTLPrimitiveType primitiveType, in MTLIndexType indexType, in MTLBuffer indexBuffer, in ulong indexBufferOffset, in MTLBuffer indirectBuffer, in ulong indirectBufferOffset)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawIndexedPrimitivesindexTypeindexBufferindexBufferOffsetindirectBufferindirectBufferOffset, (ulong)primitiveType, (ulong)indexType, indexBuffer, indexBufferOffset, indirectBuffer, indirectBufferOffset);
         }
@@ -593,196 +610,203 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_textureBarrier);
         }
 
-        public void UpdateFence(MTLFence fence, MTLRenderStages stages)
+        public void UpdateFence(in MTLFence fence, in MTLRenderStages stages)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_updateFenceafterStages, fence, (ulong)stages);
         }
 
-        public void WaitForFence(MTLFence fence, MTLRenderStages stages)
+        public void WaitForFence(in MTLFence fence, in MTLRenderStages stages)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_waitForFencebeforeStages, fence, (ulong)stages);
         }
 
-        public void SetTessellationFactorBuffer(MTLBuffer buffer, ulong offset, ulong instanceStride)
+        public void SetTessellationFactorBuffer(in MTLBuffer buffer, in ulong offset, in ulong instanceStride)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTessellationFactorBufferoffsetinstanceStride, buffer, offset, instanceStride);
         }
 
-        public void SetTessellationFactorScale(float scale)
+        public void SetTessellationFactorScale(in float scale)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTessellationFactorScale, scale);
         }
 
-        public void DrawPatches(ulong numberOfPatchControlPoints, ulong patchStart, ulong patchCount, MTLBuffer patchIndexBuffer, ulong patchIndexBufferOffset, ulong instanceCount, ulong baseInstance)
+        public void DrawPatches(in ulong numberOfPatchControlPoints, in ulong patchStart, in ulong patchCount, in MTLBuffer patchIndexBuffer, in ulong patchIndexBufferOffset, in ulong instanceCount, in ulong baseInstance)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawPatchespatchStartpatchCountpatchIndexBufferpatchIndexBufferOffsetinstanceCountbaseInstance, numberOfPatchControlPoints, patchStart, patchCount, patchIndexBuffer, patchIndexBufferOffset, instanceCount, baseInstance);
         }
 
-        public void DrawPatches(ulong numberOfPatchControlPoints, MTLBuffer patchIndexBuffer, ulong patchIndexBufferOffset, MTLBuffer indirectBuffer, ulong indirectBufferOffset)
+        public void DrawPatches(in ulong numberOfPatchControlPoints, in MTLBuffer patchIndexBuffer, in ulong patchIndexBufferOffset, in MTLBuffer indirectBuffer, in ulong indirectBufferOffset)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawPatchespatchIndexBufferpatchIndexBufferOffsetindirectBufferindirectBufferOffset, numberOfPatchControlPoints, patchIndexBuffer, patchIndexBufferOffset, indirectBuffer, indirectBufferOffset);
         }
 
-        public void DrawIndexedPatches(ulong numberOfPatchControlPoints, ulong patchStart, ulong patchCount, MTLBuffer patchIndexBuffer, ulong patchIndexBufferOffset, MTLBuffer controlPointIndexBuffer, ulong controlPointIndexBufferOffset, ulong instanceCount, ulong baseInstance)
+        public void DrawIndexedPatches(in ulong numberOfPatchControlPoints, in ulong patchStart, in ulong patchCount, in MTLBuffer patchIndexBuffer, in ulong patchIndexBufferOffset, in MTLBuffer controlPointIndexBuffer, in ulong controlPointIndexBufferOffset, in ulong instanceCount, in ulong baseInstance)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawIndexedPatchespatchStartpatchCountpatchIndexBufferpatchIndexBufferOffsetcontrolPointIndexBuffercontrolPointIndexBufferOffsetinstanceCountbaseInstance, numberOfPatchControlPoints, patchStart, patchCount, patchIndexBuffer, patchIndexBufferOffset, controlPointIndexBuffer, controlPointIndexBufferOffset, instanceCount, baseInstance);
         }
 
-        public void DrawIndexedPatches(ulong numberOfPatchControlPoints, MTLBuffer patchIndexBuffer, ulong patchIndexBufferOffset, MTLBuffer controlPointIndexBuffer, ulong controlPointIndexBufferOffset, MTLBuffer indirectBuffer, ulong indirectBufferOffset)
+        public void DrawIndexedPatches(in ulong numberOfPatchControlPoints, in MTLBuffer patchIndexBuffer, in ulong patchIndexBufferOffset, in MTLBuffer controlPointIndexBuffer, in ulong controlPointIndexBufferOffset, in MTLBuffer indirectBuffer, in ulong indirectBufferOffset)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawIndexedPatchespatchIndexBufferpatchIndexBufferOffsetcontrolPointIndexBuffercontrolPointIndexBufferOffsetindirectBufferindirectBufferOffset, numberOfPatchControlPoints, patchIndexBuffer, patchIndexBufferOffset, controlPointIndexBuffer, controlPointIndexBufferOffset, indirectBuffer, indirectBufferOffset);
         }
 
-        public void SetTileBytes(IntPtr bytes, ulong length, ulong index)
+        public void SetTileBytes(in IntPtr bytes, in ulong length, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTileByteslengthatIndex, bytes, length, index);
         }
 
-        public void SetTileBuffer(MTLBuffer buffer, ulong offset, ulong index)
+        public void SetTileBuffer(in MTLBuffer buffer, in ulong offset, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTileBufferoffsetatIndex, buffer, offset, index);
         }
 
-        public void SetTileBufferOffset(ulong offset, ulong index)
+        public void SetTileBufferOffset(in ulong offset, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTileBufferOffsetatIndex, offset, index);
         }
 
-        public void SetTileBuffers(MTLBuffer[] buffers, ulong offsets, NSRange range)
+        public void SetTileBuffers(MTLBuffer[] buffers, in ulong offsets, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetTileTexture(MTLTexture texture, ulong index)
+        public void SetTileTexture(in MTLTexture texture, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTileTextureatIndex, texture, index);
         }
 
-        public void SetTileTextures(MTLTexture[] textures, NSRange range)
+        public void SetTileTextures(MTLTexture[] textures, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetTileSamplerState(MTLSamplerState sampler, ulong index)
+        public void SetTileSamplerState(in MTLSamplerState sampler, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTileSamplerStateatIndex, sampler, index);
         }
 
-        public void SetTileSamplerStates(MTLSamplerState[] samplers, NSRange range)
+        public void SetTileSamplerStates(MTLSamplerState[] samplers, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetTileSamplerState(MTLSamplerState sampler, float lodMinClamp, float lodMaxClamp, ulong index)
+        public void SetTileSamplerState(in MTLSamplerState sampler, in float lodMinClamp, in float lodMaxClamp, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTileSamplerStatelodMinClamplodMaxClampatIndex, sampler, lodMinClamp, lodMaxClamp, index);
         }
 
-        public void SetTileSamplerStates(MTLSamplerState[] samplers, float[] lodMinClamps, float[] lodMaxClamps, NSRange range)
+        public void SetTileSamplerStates(MTLSamplerState[] samplers, float[] lodMinClamps, float[] lodMaxClamps, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetTileVisibleFunctionTable(MTLVisibleFunctionTable functionTable, ulong bufferIndex)
+        public void SetTileVisibleFunctionTable(in MTLVisibleFunctionTable functionTable, in ulong bufferIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTileVisibleFunctionTableatBufferIndex, functionTable, bufferIndex);
         }
 
-        public void SetTileVisibleFunctionTables(MTLVisibleFunctionTable[] functionTables, NSRange range)
+        public void SetTileVisibleFunctionTables(MTLVisibleFunctionTable[] functionTables, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetTileIntersectionFunctionTable(MTLIntersectionFunctionTable intersectionFunctionTable, ulong bufferIndex)
+        public void SetTileIntersectionFunctionTable(in MTLIntersectionFunctionTable intersectionFunctionTable, in ulong bufferIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTileIntersectionFunctionTableatBufferIndex, intersectionFunctionTable, bufferIndex);
         }
 
-        public void SetTileIntersectionFunctionTables(MTLIntersectionFunctionTable[] intersectionFunctionTables, NSRange range)
+        public void SetTileIntersectionFunctionTables(MTLIntersectionFunctionTable[] intersectionFunctionTables, in NSRange range)
         {
             throw new NotImplementedException();
         }
 
-        public void SetTileAccelerationStructure(MTLAccelerationStructure accelerationStructure, ulong bufferIndex)
+        public void SetTileAccelerationStructure(in MTLAccelerationStructure accelerationStructure, in ulong bufferIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTileAccelerationStructureatBufferIndex, accelerationStructure, bufferIndex);
         }
 
-        public void DispatchThreadsPerTile(MTLSize threadsPerTile)
+        public void DispatchThreadsPerTile(in MTLSize threadsPerTile)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_dispatchThreadsPerTile, threadsPerTile);
         }
 
-        public void SetThreadgroupMemoryLength(ulong length, ulong offset, ulong index)
+        public void SetThreadgroupMemoryLength(in ulong length, in ulong offset, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setThreadgroupMemoryLengthoffsetatIndex, length, offset, index);
         }
 
-        public void UseResource(MTLResource resource, MTLResourceUsage usage)
+        public void UseResource(in MTLResource resource, in MTLResourceUsage usage)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useResourceusage, resource, (ulong)usage);
         }
 
-        public void UseResources(MTLResource[] resources, ulong count, MTLResourceUsage usage)
+        public void UseResources(MTLResource[] resources, in ulong count, in MTLResourceUsage usage)
         {
             throw new NotImplementedException();
         }
 
-        public void UseResource(MTLResource resource, MTLResourceUsage usage, MTLRenderStages stages)
+        public void UseResource(in MTLResource resource, in MTLResourceUsage usage, in MTLRenderStages stages)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useResourceusagestages, resource, (ulong)usage, (ulong)stages);
         }
 
-        public void UseResources(MTLResource[] resources, ulong count, MTLResourceUsage usage, MTLRenderStages stages)
+        public void UseResources(MTLResource[] resources, in ulong count, in MTLResourceUsage usage, in MTLRenderStages stages)
         {
             throw new NotImplementedException();
         }
 
-        public void UseHeap(MTLHeap heap)
+        public void UseHeap(in MTLHeap heap)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useHeap, heap);
         }
 
-        public void UseHeaps(MTLHeap[] heaps, ulong count)
+        public void UseHeaps(MTLHeap[] heaps, in ulong count)
         {
             throw new NotImplementedException();
         }
 
-        public void UseHeap(MTLHeap heap, MTLRenderStages stages)
+        public void UseHeap(in MTLHeap heap, in MTLRenderStages stages)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useHeapstages, heap, (ulong)stages);
         }
 
-        public void UseHeaps(MTLHeap[] heaps, ulong count, MTLRenderStages stages)
+        public void UseHeaps(MTLHeap[] heaps, in ulong count, in MTLRenderStages stages)
         {
             throw new NotImplementedException();
         }
 
-        public void ExecuteCommandsInBuffer(MTLIndirectCommandBuffer indirectCommandBuffer, NSRange executionRange)
+        public void ExecuteCommandsInBuffer(in MTLIndirectCommandBuffer indirectCommandBuffer, in NSRange executionRange)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_executeCommandsInBufferwithRange, indirectCommandBuffer, executionRange);
         }
 
-        public void ExecuteCommandsInBuffer(MTLIndirectCommandBuffer indirectCommandbuffer, MTLBuffer indirectRangeBuffer, ulong indirectBufferOffset)
+        public void ExecuteCommandsInBuffer(in MTLIndirectCommandBuffer indirectCommandbuffer, in MTLBuffer indirectRangeBuffer, in ulong indirectBufferOffset)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_executeCommandsInBufferindirectBufferindirectBufferOffset, indirectCommandbuffer, indirectRangeBuffer, indirectBufferOffset);
         }
 
-        public void MemoryBarrier(MTLBarrierScope scope, MTLRenderStages after, MTLRenderStages before)
+        public void MemoryBarrier(in MTLBarrierScope scope, in MTLRenderStages after, in MTLRenderStages before)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_memoryBarrierWithScopeafterStagesbeforeStages, (ulong)scope, (ulong)after, (ulong)before);
         }
 
-        public void MemoryBarrier(MTLResource[] resources, ulong count, MTLRenderStages after, MTLRenderStages before)
+        public void MemoryBarrier(MTLResource[] resources, in ulong count, in MTLRenderStages after, in MTLRenderStages before)
         {
             throw new NotImplementedException();
         }
 
-        public void SampleCountersInBuffer(MTLCounterSampleBuffer sampleBuffer, ulong sampleIndex, bool barrier)
+        public void SampleCountersInBuffer(in MTLCounterSampleBuffer sampleBuffer, in ulong sampleIndex, in bool barrier)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_sampleCountersInBufferatSampleIndexwithBarrier, sampleBuffer, sampleIndex, barrier);
         }
 
+        private static readonly Selector sel_device = "device";
+        private static readonly Selector sel_label = "label";
+        private static readonly Selector sel_setLabel = "setLabel:";
+        private static readonly Selector sel_endEncoding = "endEncoding";
+        private static readonly Selector sel_insertDebugSignpost = "insertDebugSignpost:";
+        private static readonly Selector sel_pushDebugGroup = "pushDebugGroup:";
+        private static readonly Selector sel_popDebugGroup = "popDebugGroup";
         private static readonly Selector sel_setRenderPipelineState = "setRenderPipelineState:";
         private static readonly Selector sel_setVertexByteslengthatIndex = "setVertexBytes:length:atIndex:";
         private static readonly Selector sel_setVertexBufferoffsetatIndex = "setVertexBuffer:offset:atIndex:";

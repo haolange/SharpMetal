@@ -1,6 +1,5 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
@@ -11,18 +10,12 @@ namespace SharpMetal.Metal
         Error = 2,
         Complete = 3,
     }
-
     
-    public partial class MTLIOCommandBuffer
+    public partial struct MTLIOCommandBuffer
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLIOCommandBuffer obj) => obj.NativePtr;
-        public MTLIOCommandBuffer(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLIOCommandBuffer()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLIOCommandBuffer obj) => obj.NativePtr;
+        public MTLIOCommandBuffer(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label
         {
@@ -34,22 +27,22 @@ namespace SharpMetal.Metal
 
         public NSError Error => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_error));
 
-        public void LoadBytes(IntPtr pointer, ulong size, IntPtr sourceHandle, ulong sourceHandleOffset)
+        public void LoadBytes(in IntPtr pointer, ulong size, in IntPtr sourceHandle, in ulong sourceHandleOffset)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_loadBytessizesourceHandlesourceHandleOffset, pointer, size, sourceHandle, sourceHandleOffset);
         }
 
-        public void LoadBuffer(MTLBuffer buffer, ulong offset, ulong size, IntPtr sourceHandle, ulong sourceHandleOffset)
+        public void LoadBuffer(in MTLBuffer buffer, in ulong offset, in ulong size, in IntPtr sourceHandle, in ulong sourceHandleOffset)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_loadBufferoffsetsizesourceHandlesourceHandleOffset, buffer, offset, size, sourceHandle, sourceHandleOffset);
         }
 
-        public void LoadTexture(MTLTexture texture, ulong slice, ulong level, MTLSize size, ulong sourceBytesPerRow, ulong sourceBytesPerImage, MTLOrigin destinationOrigin, IntPtr sourceHandle, ulong sourceHandleOffset)
+        public void LoadTexture(in MTLTexture texture, in ulong slice, in ulong level, in MTLSize size, in ulong sourceBytesPerRow, in ulong sourceBytesPerImage, in MTLOrigin destinationOrigin, in IntPtr sourceHandle, in ulong sourceHandleOffset)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_loadTextureslicelevelsizesourceBytesPerRowsourceBytesPerImagedestinationOriginsourceHandlesourceHandleOffset, texture, slice, level, size, sourceBytesPerRow, sourceBytesPerImage, destinationOrigin, sourceHandle, sourceHandleOffset);
         }
 
-        public void CopyStatusToBuffer(MTLBuffer buffer, ulong offset)
+        public void CopyStatusToBuffer(in MTLBuffer buffer, in ulong offset)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_copyStatusToBufferoffset, buffer, offset);
         }
@@ -74,7 +67,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addBarrier);
         }
 
-        public void PushDebugGroup(NSString nsString)
+        public void PushDebugGroup(in NSString nsString)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_pushDebugGroup, nsString);
         }
@@ -89,12 +82,12 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_enqueue);
         }
 
-        public void Wait(MTLSharedEvent mltEvent, ulong value)
+        public void Wait(in MTLSharedEvent mltEvent, in ulong value)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_waitForEventvalue, mltEvent, value);
         }
 
-        public void SignalEvent(MTLSharedEvent mltEvent, ulong value)
+        public void SignalEvent(in MTLSharedEvent mltEvent, in ulong value)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_signalEventvalue, mltEvent, value);
         }

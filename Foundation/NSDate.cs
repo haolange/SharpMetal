@@ -10,7 +10,7 @@ namespace SharpMetal.Foundation
         public static implicit operator IntPtr(in NSDate obj) => obj.NativePtr;
         public NSDate(in IntPtr ptr) => NativePtr = ptr;
 
-        public static NSDate DateWithTimeIntervalSinceNow(IntPtr secs)
+        public static NSDate DateWithTimeIntervalSinceNow(in IntPtr secs)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSDate"), sel_dateWithTimeIntervalSinceNow, secs));
         }

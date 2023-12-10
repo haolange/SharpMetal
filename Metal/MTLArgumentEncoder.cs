@@ -3,7 +3,6 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
-    
     public partial struct MTLArgumentEncoder
     {
         public IntPtr NativePtr;

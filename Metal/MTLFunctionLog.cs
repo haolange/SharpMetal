@@ -1,6 +1,5 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
@@ -9,7 +8,6 @@ namespace SharpMetal.Metal
         Validation = 0,
     }
 
-    
     public partial struct MTLLogContainer
     {
         public IntPtr NativePtr;
@@ -24,17 +22,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_countByEnumeratingWithStateobjectscount = "countByEnumeratingWithState:objects:count:";
     }
 
-    
-    public partial class MTLFunctionLogDebugLocation
+    public partial struct MTLFunctionLogDebugLocation
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLFunctionLogDebugLocation obj) => obj.NativePtr;
-        public MTLFunctionLogDebugLocation(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLFunctionLogDebugLocation()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLFunctionLogDebugLocation obj) => obj.NativePtr;
+        public MTLFunctionLogDebugLocation(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString FunctionName => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_functionName));
 
@@ -50,17 +42,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_column = "column";
     }
 
-    
-    public partial class MTLFunctionLog
+    public partial struct MTLFunctionLog
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLFunctionLog obj) => obj.NativePtr;
-        public MTLFunctionLog(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLFunctionLog()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLFunctionLog obj) => obj.NativePtr;
+        public MTLFunctionLog(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLFunctionLogType Type => (MTLFunctionLogType)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_type);
 

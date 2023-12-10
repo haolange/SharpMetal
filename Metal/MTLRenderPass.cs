@@ -1,7 +1,5 @@
-using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
 using SharpMetal.ObjectiveCCore;
-using SharpMetal.Foundation;
+using System.Runtime.InteropServices;
 
 namespace SharpMetal.Metal
 {
@@ -41,7 +39,6 @@ namespace SharpMetal.Metal
         Sample0 = 0,
         DepthResolvedSample = 1,
     }
-
     
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLClearColor
@@ -52,12 +49,11 @@ namespace SharpMetal.Metal
         public double alpha;
     }
 
-    
-    public partial class MTLRenderPassAttachmentDescriptor
+    public partial struct MTLRenderPassAttachmentDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLRenderPassAttachmentDescriptor obj) => obj.NativePtr;
-        public MTLRenderPassAttachmentDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLRenderPassAttachmentDescriptor obj) => obj.NativePtr;
+        public MTLRenderPassAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLRenderPassAttachmentDescriptor()
         {
@@ -155,17 +151,86 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setStoreActionOptions = "setStoreActionOptions:";
     }
 
-    
-    public partial class MTLRenderPassColorAttachmentDescriptor : MTLRenderPassAttachmentDescriptor
+    public partial struct MTLRenderPassColorAttachmentDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLRenderPassColorAttachmentDescriptor obj) => obj.NativePtr;
-        public MTLRenderPassColorAttachmentDescriptor(IntPtr ptr) : base(ptr) => NativePtr = ptr;
+
+        public static implicit operator IntPtr(in MTLRenderPassColorAttachmentDescriptor obj) => obj.NativePtr;
+        public static implicit operator MTLRenderPassAttachmentDescriptor(in MTLRenderPassColorAttachmentDescriptor obj) => new MTLRenderPassAttachmentDescriptor(obj.NativePtr);
+        public static implicit operator MTLRenderPassColorAttachmentDescriptor(in MTLRenderPassAttachmentDescriptor obj) => new MTLRenderPassColorAttachmentDescriptor(obj.NativePtr);
+
+        public MTLRenderPassColorAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLRenderPassColorAttachmentDescriptor()
         {
             var cls = new ObjectiveCClass("MTLRenderPassColorAttachmentDescriptor");
             NativePtr = cls.AllocInit();
+        }
+
+        public MTLTexture Texture
+        {
+            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_texture));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTexture, value);
+        }
+
+        public ulong Level
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_level);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLevel, value);
+        }
+
+        public ulong Slice
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_slice);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setSlice, value);
+        }
+
+        public ulong DepthPlane
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_depthPlane);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDepthPlane, value);
+        }
+
+        public MTLTexture ResolveTexture
+        {
+            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_resolveTexture));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setResolveTexture, value);
+        }
+
+        public ulong ResolveLevel
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_resolveLevel);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setResolveLevel, value);
+        }
+
+        public ulong ResolveSlice
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_resolveSlice);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setResolveSlice, value);
+        }
+
+        public ulong ResolveDepthPlane
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_resolveDepthPlane);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setResolveDepthPlane, value);
+        }
+
+        public MTLLoadAction LoadAction
+        {
+            get => (MTLLoadAction)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_loadAction);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLoadAction, (ulong)value);
+        }
+
+        public MTLStoreAction StoreAction
+        {
+            get => (MTLStoreAction)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_storeAction);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStoreAction, (ulong)value);
+        }
+
+        public MTLStoreActionOptions StoreActionOptions
+        {
+            get => (MTLStoreActionOptions)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_storeActionOptions);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStoreActionOptions, (ulong)value);
         }
 
         public MTLClearColor ClearColor
@@ -174,21 +239,112 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setClearColor, value);
         }
 
+        private static readonly Selector sel_texture = "texture";
+        private static readonly Selector sel_setTexture = "setTexture:";
+        private static readonly Selector sel_level = "level";
+        private static readonly Selector sel_setLevel = "setLevel:";
+        private static readonly Selector sel_slice = "slice";
+        private static readonly Selector sel_setSlice = "setSlice:";
+        private static readonly Selector sel_depthPlane = "depthPlane";
+        private static readonly Selector sel_setDepthPlane = "setDepthPlane:";
+        private static readonly Selector sel_resolveTexture = "resolveTexture";
+        private static readonly Selector sel_setResolveTexture = "setResolveTexture:";
+        private static readonly Selector sel_resolveLevel = "resolveLevel";
+        private static readonly Selector sel_setResolveLevel = "setResolveLevel:";
+        private static readonly Selector sel_resolveSlice = "resolveSlice";
+        private static readonly Selector sel_setResolveSlice = "setResolveSlice:";
+        private static readonly Selector sel_resolveDepthPlane = "resolveDepthPlane";
+        private static readonly Selector sel_setResolveDepthPlane = "setResolveDepthPlane:";
+        private static readonly Selector sel_loadAction = "loadAction";
+        private static readonly Selector sel_setLoadAction = "setLoadAction:";
+        private static readonly Selector sel_storeAction = "storeAction";
+        private static readonly Selector sel_setStoreAction = "setStoreAction:";
+        private static readonly Selector sel_storeActionOptions = "storeActionOptions";
+        private static readonly Selector sel_setStoreActionOptions = "setStoreActionOptions:";
         private static readonly Selector sel_clearColor = "clearColor";
         private static readonly Selector sel_setClearColor = "setClearColor:";
     }
 
-    
-    public partial class MTLRenderPassDepthAttachmentDescriptor : MTLRenderPassAttachmentDescriptor
+    public partial struct MTLRenderPassDepthAttachmentDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLRenderPassDepthAttachmentDescriptor obj) => obj.NativePtr;
-        public MTLRenderPassDepthAttachmentDescriptor(IntPtr ptr) : base(ptr) => NativePtr = ptr;
+
+        public static implicit operator IntPtr(in MTLRenderPassDepthAttachmentDescriptor obj) => obj.NativePtr;
+        public static implicit operator MTLRenderPassAttachmentDescriptor(in MTLRenderPassDepthAttachmentDescriptor obj) => new MTLRenderPassAttachmentDescriptor(obj.NativePtr);
+        public static implicit operator MTLRenderPassDepthAttachmentDescriptor(in MTLRenderPassAttachmentDescriptor obj) => new MTLRenderPassDepthAttachmentDescriptor(obj.NativePtr);
+
+        public MTLRenderPassDepthAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLRenderPassDepthAttachmentDescriptor()
         {
             var cls = new ObjectiveCClass("MTLRenderPassDepthAttachmentDescriptor");
             NativePtr = cls.AllocInit();
+        }
+
+        public MTLTexture Texture
+        {
+            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_texture));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTexture, value);
+        }
+
+        public ulong Level
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_level);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLevel, value);
+        }
+
+        public ulong Slice
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_slice);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setSlice, value);
+        }
+
+        public ulong DepthPlane
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_depthPlane);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDepthPlane, value);
+        }
+
+        public MTLTexture ResolveTexture
+        {
+            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_resolveTexture));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setResolveTexture, value);
+        }
+
+        public ulong ResolveLevel
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_resolveLevel);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setResolveLevel, value);
+        }
+
+        public ulong ResolveSlice
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_resolveSlice);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setResolveSlice, value);
+        }
+
+        public ulong ResolveDepthPlane
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_resolveDepthPlane);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setResolveDepthPlane, value);
+        }
+
+        public MTLLoadAction LoadAction
+        {
+            get => (MTLLoadAction)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_loadAction);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLoadAction, (ulong)value);
+        }
+
+        public MTLStoreAction StoreAction
+        {
+            get => (MTLStoreAction)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_storeAction);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStoreAction, (ulong)value);
+        }
+
+        public MTLStoreActionOptions StoreActionOptions
+        {
+            get => (MTLStoreActionOptions)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_storeActionOptions);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStoreActionOptions, (ulong)value);
         }
 
         public double ClearDepth
@@ -203,23 +359,114 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDepthResolveFilter, (ulong)value);
         }
 
+        private static readonly Selector sel_texture = "texture";
+        private static readonly Selector sel_setTexture = "setTexture:";
+        private static readonly Selector sel_level = "level";
+        private static readonly Selector sel_setLevel = "setLevel:";
+        private static readonly Selector sel_slice = "slice";
+        private static readonly Selector sel_setSlice = "setSlice:";
+        private static readonly Selector sel_depthPlane = "depthPlane";
+        private static readonly Selector sel_setDepthPlane = "setDepthPlane:";
+        private static readonly Selector sel_resolveTexture = "resolveTexture";
+        private static readonly Selector sel_setResolveTexture = "setResolveTexture:";
+        private static readonly Selector sel_resolveLevel = "resolveLevel";
+        private static readonly Selector sel_setResolveLevel = "setResolveLevel:";
+        private static readonly Selector sel_resolveSlice = "resolveSlice";
+        private static readonly Selector sel_setResolveSlice = "setResolveSlice:";
+        private static readonly Selector sel_resolveDepthPlane = "resolveDepthPlane";
+        private static readonly Selector sel_setResolveDepthPlane = "setResolveDepthPlane:";
+        private static readonly Selector sel_loadAction = "loadAction";
+        private static readonly Selector sel_setLoadAction = "setLoadAction:";
+        private static readonly Selector sel_storeAction = "storeAction";
+        private static readonly Selector sel_setStoreAction = "setStoreAction:";
+        private static readonly Selector sel_storeActionOptions = "storeActionOptions";
+        private static readonly Selector sel_setStoreActionOptions = "setStoreActionOptions:";
         private static readonly Selector sel_clearDepth = "clearDepth";
         private static readonly Selector sel_setClearDepth = "setClearDepth:";
         private static readonly Selector sel_depthResolveFilter = "depthResolveFilter";
         private static readonly Selector sel_setDepthResolveFilter = "setDepthResolveFilter:";
     }
 
-    
-    public partial class MTLRenderPassStencilAttachmentDescriptor : MTLRenderPassAttachmentDescriptor
+    public partial struct MTLRenderPassStencilAttachmentDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLRenderPassStencilAttachmentDescriptor obj) => obj.NativePtr;
-        public MTLRenderPassStencilAttachmentDescriptor(IntPtr ptr) : base(ptr) => NativePtr = ptr;
+
+        public static implicit operator IntPtr(in MTLRenderPassStencilAttachmentDescriptor obj) => obj.NativePtr;
+        public static implicit operator MTLRenderPassAttachmentDescriptor(in MTLRenderPassStencilAttachmentDescriptor obj) => new MTLRenderPassAttachmentDescriptor(obj.NativePtr);
+        public static implicit operator MTLRenderPassStencilAttachmentDescriptor(in MTLRenderPassAttachmentDescriptor obj) => new MTLRenderPassStencilAttachmentDescriptor(obj.NativePtr);
+
+        public MTLRenderPassStencilAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLRenderPassStencilAttachmentDescriptor()
         {
             var cls = new ObjectiveCClass("MTLRenderPassStencilAttachmentDescriptor");
             NativePtr = cls.AllocInit();
+        }
+
+        public MTLTexture Texture
+        {
+            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_texture));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTexture, value);
+        }
+
+        public ulong Level
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_level);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLevel, value);
+        }
+
+        public ulong Slice
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_slice);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setSlice, value);
+        }
+
+        public ulong DepthPlane
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_depthPlane);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDepthPlane, value);
+        }
+
+        public MTLTexture ResolveTexture
+        {
+            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_resolveTexture));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setResolveTexture, value);
+        }
+
+        public ulong ResolveLevel
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_resolveLevel);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setResolveLevel, value);
+        }
+
+        public ulong ResolveSlice
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_resolveSlice);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setResolveSlice, value);
+        }
+
+        public ulong ResolveDepthPlane
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_resolveDepthPlane);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setResolveDepthPlane, value);
+        }
+
+        public MTLLoadAction LoadAction
+        {
+            get => (MTLLoadAction)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_loadAction);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLoadAction, (ulong)value);
+        }
+
+        public MTLStoreAction StoreAction
+        {
+            get => (MTLStoreAction)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_storeAction);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStoreAction, (ulong)value);
+        }
+
+        public MTLStoreActionOptions StoreActionOptions
+        {
+            get => (MTLStoreActionOptions)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_storeActionOptions);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStoreActionOptions, (ulong)value);
         }
 
         public uint ClearStencil
@@ -234,18 +481,51 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStencilResolveFilter, (ulong)value);
         }
 
+        private static readonly Selector sel_texture = "texture";
+        private static readonly Selector sel_setTexture = "setTexture:";
+        private static readonly Selector sel_level = "level";
+        private static readonly Selector sel_setLevel = "setLevel:";
+        private static readonly Selector sel_slice = "slice";
+        private static readonly Selector sel_setSlice = "setSlice:";
+        private static readonly Selector sel_depthPlane = "depthPlane";
+        private static readonly Selector sel_setDepthPlane = "setDepthPlane:";
+        private static readonly Selector sel_resolveTexture = "resolveTexture";
+        private static readonly Selector sel_setResolveTexture = "setResolveTexture:";
+        private static readonly Selector sel_resolveLevel = "resolveLevel";
+        private static readonly Selector sel_setResolveLevel = "setResolveLevel:";
+        private static readonly Selector sel_resolveSlice = "resolveSlice";
+        private static readonly Selector sel_setResolveSlice = "setResolveSlice:";
+        private static readonly Selector sel_resolveDepthPlane = "resolveDepthPlane";
+        private static readonly Selector sel_setResolveDepthPlane = "setResolveDepthPlane:";
+        private static readonly Selector sel_loadAction = "loadAction";
+        private static readonly Selector sel_setLoadAction = "setLoadAction:";
+        private static readonly Selector sel_storeAction = "storeAction";
+        private static readonly Selector sel_setStoreAction = "setStoreAction:";
+        private static readonly Selector sel_storeActionOptions = "storeActionOptions";
+        private static readonly Selector sel_setStoreActionOptions = "setStoreActionOptions:";
         private static readonly Selector sel_clearStencil = "clearStencil";
         private static readonly Selector sel_setClearStencil = "setClearStencil:";
         private static readonly Selector sel_stencilResolveFilter = "stencilResolveFilter";
         private static readonly Selector sel_setStencilResolveFilter = "setStencilResolveFilter:";
     }
 
-    
-    public partial class MTLRenderPassColorAttachmentDescriptorArray
+    public partial struct MTLRenderPassColorAttachmentDescriptorArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLRenderPassColorAttachmentDescriptorArray obj) => obj.NativePtr;
-        public MTLRenderPassColorAttachmentDescriptorArray(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLRenderPassColorAttachmentDescriptorArray obj) => obj.NativePtr;
+        public MTLRenderPassColorAttachmentDescriptorArray(in IntPtr ptr) => NativePtr = ptr;
+
+        public MTLRenderPassColorAttachmentDescriptor this[uint index]
+        {
+            get
+            {
+                return Object(index);
+            }
+            set
+            {
+                SetObject(value, index);
+            }
+        }
 
         public MTLRenderPassColorAttachmentDescriptorArray()
         {
@@ -253,12 +533,12 @@ namespace SharpMetal.Metal
             NativePtr = cls.AllocInit();
         }
 
-        public MTLRenderPassColorAttachmentDescriptor Object(ulong attachmentIndex)
+        public MTLRenderPassColorAttachmentDescriptor Object(in ulong attachmentIndex)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectAtIndexedSubscript, attachmentIndex));
         }
 
-        public void SetObject(MTLRenderPassColorAttachmentDescriptor attachment, ulong attachmentIndex)
+        public void SetObject(in MTLRenderPassColorAttachmentDescriptor attachment, in ulong attachmentIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectatIndexedSubscript, attachment, attachmentIndex);
         }
@@ -267,12 +547,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setObjectatIndexedSubscript = "setObject:atIndexedSubscript:";
     }
 
-    
-    public partial class MTLRenderPassSampleBufferAttachmentDescriptor
+    public partial struct MTLRenderPassSampleBufferAttachmentDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLRenderPassSampleBufferAttachmentDescriptor obj) => obj.NativePtr;
-        public MTLRenderPassSampleBufferAttachmentDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLRenderPassSampleBufferAttachmentDescriptor obj) => obj.NativePtr;
+        public MTLRenderPassSampleBufferAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLRenderPassSampleBufferAttachmentDescriptor()
         {
@@ -322,12 +601,23 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setEndOfFragmentSampleIndex = "setEndOfFragmentSampleIndex:";
     }
 
-    
-    public partial class MTLRenderPassSampleBufferAttachmentDescriptorArray
+    public partial struct MTLRenderPassSampleBufferAttachmentDescriptorArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLRenderPassSampleBufferAttachmentDescriptorArray obj) => obj.NativePtr;
-        public MTLRenderPassSampleBufferAttachmentDescriptorArray(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLRenderPassSampleBufferAttachmentDescriptorArray obj) => obj.NativePtr;
+        public MTLRenderPassSampleBufferAttachmentDescriptorArray(in IntPtr ptr) => NativePtr = ptr;
+
+        public MTLRenderPassSampleBufferAttachmentDescriptor this[uint index]
+        {
+            get
+            {
+                return Object(index);
+            }
+            set
+            {
+                SetObject(value, index);
+            }
+        }
 
         public MTLRenderPassSampleBufferAttachmentDescriptorArray()
         {
@@ -335,7 +625,7 @@ namespace SharpMetal.Metal
             NativePtr = cls.AllocInit();
         }
 
-        public MTLRenderPassSampleBufferAttachmentDescriptor Object(ulong attachmentIndex)
+        public MTLRenderPassSampleBufferAttachmentDescriptor Object(in ulong attachmentIndex)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectAtIndexedSubscript, attachmentIndex));
         }
@@ -349,12 +639,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setObjectatIndexedSubscript = "setObject:atIndexedSubscript:";
     }
 
-    
-    public partial class MTLRenderPassDescriptor
+    public partial struct MTLRenderPassDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLRenderPassDescriptor obj) => obj.NativePtr;
-        public MTLRenderPassDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLRenderPassDescriptor obj) => obj.NativePtr;
+        public MTLRenderPassDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLRenderPassDescriptor()
         {
@@ -438,12 +727,12 @@ namespace SharpMetal.Metal
 
         public MTLRenderPassSampleBufferAttachmentDescriptorArray SampleBufferAttachments => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_sampleBufferAttachments));
 
-        public void SetSamplePositions(MTLSamplePosition positions, ulong count)
+        public void SetSamplePositions(in MTLSamplePosition positions, in ulong count)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setSamplePositionscount, positions, count);
         }
 
-        public ulong GetSamplePositions(MTLSamplePosition positions, ulong count)
+        public ulong GetSamplePositions(in MTLSamplePosition positions, in ulong count)
         {
             return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_getSamplePositionscount, positions, count);
         }

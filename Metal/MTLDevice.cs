@@ -1,7 +1,6 @@
-using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
+using System.Runtime.InteropServices;
 
 namespace SharpMetal.Metal
 {
@@ -142,11 +141,11 @@ namespace SharpMetal.Metal
         public ulong align;
     }
 
-    public partial class MTLArgumentDescriptor
+    public partial struct MTLArgumentDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLArgumentDescriptor obj) => obj.NativePtr;
-        public MTLArgumentDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLArgumentDescriptor obj) => obj.NativePtr;
+        public MTLArgumentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLArgumentDescriptor()
         {
@@ -205,11 +204,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setConstantBlockAlignment = "setConstantBlockAlignment:";
     }
 
-    public partial class MTLArchitecture
+    public partial struct MTLArchitecture
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLArchitecture obj) => obj.NativePtr;
-        public MTLArchitecture(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLArchitecture obj) => obj.NativePtr;
+        public MTLArchitecture(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLArchitecture()
         {
@@ -365,7 +364,7 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newBufferWithLengthoptions, length, (ulong)options));
         }
 
-        public MTLBuffer NewBuffer(IntPtr pointer, ulong length, MTLResourceOptions options)
+        public MTLBuffer NewBuffer(in IntPtr pointer, ulong length, MTLResourceOptions options)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newBufferWithByteslengthoptions, pointer, length, (ulong)options));
         }
@@ -420,7 +419,7 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newLibraryWithURLerror, url, ref error.NativePtr));
         }
 
-        public MTLLibrary NewLibrary(IntPtr data, ref NSError error)
+        public MTLLibrary NewLibrary(in IntPtr data, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newLibraryWithDataerror, data, ref error.NativePtr));
         }
@@ -535,7 +534,7 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newIOHandleWithURLerror, url, ref error.NativePtr));
         }
 
-        public IntPtr NewIOCommandQueue(IntPtr descriptor, ref NSError error)
+        public IntPtr NewIOCommandQueue(in IntPtr descriptor, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newIOCommandQueueWithDescriptorerror, descriptor, ref error.NativePtr));
         }

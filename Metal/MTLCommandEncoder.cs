@@ -1,6 +1,5 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
@@ -18,17 +17,11 @@ namespace SharpMetal.Metal
         RenderTargets = 4,
     }
 
-    
-    public partial class MTLCommandEncoder
+    public partial struct MTLCommandEncoder
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLCommandEncoder obj) => obj.NativePtr;
-        public MTLCommandEncoder(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLCommandEncoder()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLCommandEncoder obj) => obj.NativePtr;
+        public MTLCommandEncoder(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLDevice Device => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_device));
 
@@ -43,12 +36,12 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_endEncoding);
         }
 
-        public void InsertDebugSignpost(NSString nsString)
+        public void InsertDebugSignpost(in NSString nsString)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_insertDebugSignpost, nsString);
         }
 
-        public void PushDebugGroup(NSString nsString)
+        public void PushDebugGroup(in NSString nsString)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_pushDebugGroup, nsString);
         }

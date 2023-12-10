@@ -8,7 +8,7 @@ namespace SharpMetal.ObjectiveCCore
         private static unsafe partial IntPtr sel_getUid(string name);
 
         [LibraryImport("/usr/lib/libobjc.A.dylib")]
-        private static unsafe partial IntPtr sel_getName(IntPtr sel);
+        private static unsafe partial IntPtr sel_getName(in IntPtr sel);
 
         public readonly IntPtr SelPtr;
 
@@ -39,6 +39,6 @@ namespace SharpMetal.ObjectiveCCore
         }
 
         public static implicit operator Selector(string value) => new(value);
-        public static implicit operator IntPtr(Selector sel) => sel.SelPtr;
+        public static implicit operator IntPtr(in Selector sel) => sel.SelPtr;
     }
 }

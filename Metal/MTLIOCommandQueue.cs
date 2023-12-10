@@ -1,6 +1,5 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
@@ -22,18 +21,12 @@ namespace SharpMetal.Metal
         URLInvalid = 1,
         Internal = 2,
     }
-
     
-    public partial class MTLIOCommandQueue
+    public partial struct MTLIOCommandQueue
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLIOCommandQueue obj) => obj.NativePtr;
-        public MTLIOCommandQueue(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLIOCommandQueue()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLIOCommandQueue obj) => obj.NativePtr;
+        public MTLIOCommandQueue(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLIOCommandBuffer CommandBuffer => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_commandBuffer));
 
@@ -57,34 +50,22 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setLabel = "setLabel:";
     }
 
-    
-    public partial class MTLIOScratchBuffer
+    public partial struct MTLIOScratchBuffer
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLIOScratchBuffer obj) => obj.NativePtr;
-        public MTLIOScratchBuffer(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLIOScratchBuffer()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLIOScratchBuffer obj) => obj.NativePtr;
+        public MTLIOScratchBuffer(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLBuffer Buffer => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_buffer));
 
         private static readonly Selector sel_buffer = "buffer";
     }
 
-    
-    public partial class MTLIOScratchBufferAllocator
+    public partial struct MTLIOScratchBufferAllocator
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLIOScratchBufferAllocator obj) => obj.NativePtr;
-        public MTLIOScratchBufferAllocator(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLIOScratchBufferAllocator()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLIOScratchBufferAllocator obj) => obj.NativePtr;
+        public MTLIOScratchBufferAllocator(in IntPtr ptr) => NativePtr = ptr;
 
         public IntPtr NewScratchBuffer(ulong minimumSize)
         {
@@ -94,12 +75,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_newScratchBufferWithMinimumSize = "newScratchBufferWithMinimumSize:";
     }
 
-    
-    public partial class MTLIOCommandQueueDescriptor
+    public partial struct MTLIOCommandQueueDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLIOCommandQueueDescriptor obj) => obj.NativePtr;
-        public MTLIOCommandQueueDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLIOCommandQueueDescriptor obj) => obj.NativePtr;
+        public MTLIOCommandQueueDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLIOCommandQueueDescriptor()
         {
@@ -150,16 +130,11 @@ namespace SharpMetal.Metal
     }
 
     
-    public partial class MTLIOFileHandle
+    public partial struct MTLIOFileHandle
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLIOFileHandle obj) => obj.NativePtr;
-        public MTLIOFileHandle(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLIOFileHandle()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLIOFileHandle obj) => obj.NativePtr;
+        public MTLIOFileHandle(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label
         {

@@ -1,6 +1,4 @@
-using System.Runtime.Versioning;
 using SharpMetal.ObjectiveCCore;
-using SharpMetal.Foundation;
 
 namespace SharpMetal.Metal
 {
@@ -80,13 +78,12 @@ namespace SharpMetal.Metal
         ThreadPositionInGridXIndexed = 7,
         ThreadPositionInGridYIndexed = 8,
     }
-
-    
-    public partial class MTLBufferLayoutDescriptor
+ 
+    public partial struct MTLBufferLayoutDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLBufferLayoutDescriptor obj) => obj.NativePtr;
-        public MTLBufferLayoutDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLBufferLayoutDescriptor obj) => obj.NativePtr;
+        public MTLBufferLayoutDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLBufferLayoutDescriptor()
         {
@@ -120,12 +117,23 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setStepRate = "setStepRate:";
     }
 
-    
-    public partial class MTLBufferLayoutDescriptorArray
+    public partial struct MTLBufferLayoutDescriptorArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLBufferLayoutDescriptorArray obj) => obj.NativePtr;
-        public MTLBufferLayoutDescriptorArray(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLBufferLayoutDescriptorArray obj) => obj.NativePtr;
+        public MTLBufferLayoutDescriptorArray(in IntPtr ptr) => NativePtr = ptr;
+
+        public MTLBufferLayoutDescriptor this[uint index]
+        {
+            get
+            {
+                return Object(index);
+            }
+            set
+            {
+                SetObject(value, index);
+            }
+        }
 
         public MTLBufferLayoutDescriptorArray()
         {
@@ -133,12 +141,12 @@ namespace SharpMetal.Metal
             NativePtr = cls.AllocInit();
         }
 
-        public MTLBufferLayoutDescriptor Object(ulong index)
+        public MTLBufferLayoutDescriptor Object(in ulong index)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectAtIndexedSubscript, index));
         }
 
-        public void SetObject(MTLBufferLayoutDescriptor bufferDesc, ulong index)
+        public void SetObject(in MTLBufferLayoutDescriptor bufferDesc, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectatIndexedSubscript, bufferDesc, index);
         }
@@ -147,12 +155,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setObjectatIndexedSubscript = "setObject:atIndexedSubscript:";
     }
 
-    
-    public partial class MTLAttributeDescriptor
+    public partial struct MTLAttributeDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLAttributeDescriptor obj) => obj.NativePtr;
-        public MTLAttributeDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLAttributeDescriptor obj) => obj.NativePtr;
+        public MTLAttributeDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLAttributeDescriptor()
         {
@@ -186,12 +193,23 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setBufferIndex = "setBufferIndex:";
     }
 
-    
-    public partial class MTLAttributeDescriptorArray
+    public partial struct MTLAttributeDescriptorArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLAttributeDescriptorArray obj) => obj.NativePtr;
-        public MTLAttributeDescriptorArray(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLAttributeDescriptorArray obj) => obj.NativePtr;
+        public MTLAttributeDescriptorArray(in IntPtr ptr) => NativePtr = ptr;
+
+        public MTLAttributeDescriptor this[uint index]
+        {
+            get
+            {
+                return Object(index);
+            }
+            set
+            {
+                SetObject(value, index);
+            }
+        }
 
         public MTLAttributeDescriptorArray()
         {
@@ -199,12 +217,12 @@ namespace SharpMetal.Metal
             NativePtr = cls.AllocInit();
         }
 
-        public MTLAttributeDescriptor Object(ulong index)
+        public MTLAttributeDescriptor Object(in ulong index)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectAtIndexedSubscript, index));
         }
 
-        public void SetObject(MTLAttributeDescriptor attributeDesc, ulong index)
+        public void SetObject(in MTLAttributeDescriptor attributeDesc, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectatIndexedSubscript, attributeDesc, index);
         }
@@ -213,12 +231,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setObjectatIndexedSubscript = "setObject:atIndexedSubscript:";
     }
 
-    
-    public partial class MTLStageInputOutputDescriptor
+    public partial struct MTLStageInputOutputDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLStageInputOutputDescriptor obj) => obj.NativePtr;
-        public MTLStageInputOutputDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLStageInputOutputDescriptor obj) => obj.NativePtr;
+        public MTLStageInputOutputDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLStageInputOutputDescriptor()
         {

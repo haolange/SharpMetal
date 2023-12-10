@@ -1,20 +1,13 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
-    
-    public partial class MTLFence
+    public partial struct MTLFence
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLFence obj) => obj.NativePtr;
-        public MTLFence(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLFence()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLFence obj) => obj.NativePtr;
+        public MTLFence(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLDevice Device => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_device));
 

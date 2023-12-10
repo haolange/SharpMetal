@@ -1,6 +1,5 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
@@ -142,12 +141,11 @@ namespace SharpMetal.Metal
         ArgumentAccessWriteOnly = 2,
     }
 
-    
-    public partial class MTLType
+    public partial struct MTLType
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLType obj) => obj.NativePtr;
-        public MTLType(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLType obj) => obj.NativePtr;
+        public MTLType(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLType()
         {
@@ -160,12 +158,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_dataType = "dataType";
     }
 
-    
-    public partial class MTLStructMember
+    public partial struct MTLStructMember
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLStructMember obj) => obj.NativePtr;
-        public MTLStructMember(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLStructMember obj) => obj.NativePtr;
+        public MTLStructMember(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLStructMember()
         {
@@ -199,12 +196,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_argumentIndex = "argumentIndex";
     }
 
-    
-    public partial class MTLStructType
+    public partial struct MTLStructType
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLStructType obj) => obj.NativePtr;
-        public MTLStructType(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLStructType obj) => obj.NativePtr;
+        public MTLStructType(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLStructType()
         {
@@ -223,12 +219,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_memberByName = "memberByName:";
     }
 
-    
-    public partial class MTLArrayType
+    public partial struct MTLArrayType
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLArrayType obj) => obj.NativePtr;
-        public MTLArrayType(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLArrayType obj) => obj.NativePtr;
+        public MTLArrayType(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLArrayType()
         {
@@ -262,12 +257,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_elementPointerType = "elementPointerType";
     }
 
-    
-    public partial class MTLPointerType
+    public partial struct MTLPointerType
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLPointerType obj) => obj.NativePtr;
-        public MTLPointerType(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLPointerType obj) => obj.NativePtr;
+        public MTLPointerType(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLPointerType()
         {
@@ -297,13 +291,12 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_elementStructType = "elementStructType";
         private static readonly Selector sel_elementArrayType = "elementArrayType";
     }
-
     
-    public partial class MTLTextureReferenceType
+    public partial struct MTLTextureReferenceType
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLTextureReferenceType obj) => obj.NativePtr;
-        public MTLTextureReferenceType(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLTextureReferenceType obj) => obj.NativePtr;
+        public MTLTextureReferenceType(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLTextureReferenceType()
         {
@@ -325,12 +318,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_isDepthTexture = "isDepthTexture";
     }
 
-    
-    public partial class MTLArgument
+    public partial struct MTLArgument
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLArgument obj) => obj.NativePtr;
-        public MTLArgument(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLArgument obj) => obj.NativePtr;
+        public MTLArgument(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLArgument()
         {
@@ -388,17 +380,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_arrayLength = "arrayLength";
     }
 
-    
-    public partial class MTLBinding
+    public partial struct MTLBinding
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLBinding obj) => obj.NativePtr;
-        public MTLBinding(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLBinding()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLBinding obj) => obj.NativePtr;
+        public MTLBinding(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Name => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_name));
 
@@ -420,18 +406,27 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_isArgument = "isArgument";
     }
 
-    
-    public partial class MTLBufferBinding : MTLBinding
+    public partial struct MTLBufferBinding
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLBufferBinding obj) => obj.NativePtr;
-        public MTLBufferBinding(IntPtr ptr) : base(ptr) => NativePtr = ptr;
 
-        protected MTLBufferBinding()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLBufferBinding obj) => obj.NativePtr;
+        public static implicit operator MTLBinding(in MTLBufferBinding obj) => new MTLBinding(obj.NativePtr);
+        public static implicit operator MTLBufferBinding(in MTLBinding obj) => new MTLBufferBinding(obj.NativePtr);
 
+        public MTLBufferBinding(in IntPtr ptr) => NativePtr = ptr;
+
+        public NSString Name => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_name));
+
+        public MTLBindingType Type => (MTLBindingType)ObjectiveCRuntime.long_objc_msgSend(NativePtr, sel_type);
+
+        public MTLBindingAccess Access => (MTLBindingAccess)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_access);
+
+        public ulong Index => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_index);
+
+        public bool Used => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isUsed);
+
+        public bool Argument => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isArgument);
         public ulong BufferAlignment => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_bufferAlignment);
 
         public ulong BufferDataSize => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_bufferDataSize);
@@ -442,6 +437,12 @@ namespace SharpMetal.Metal
 
         public MTLPointerType BufferPointerType => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_bufferPointerType));
 
+        private static readonly Selector sel_name = "name";
+        private static readonly Selector sel_type = "type";
+        private static readonly Selector sel_access = "access";
+        private static readonly Selector sel_index = "index";
+        private static readonly Selector sel_isUsed = "isUsed";
+        private static readonly Selector sel_isArgument = "isArgument";
         private static readonly Selector sel_bufferAlignment = "bufferAlignment";
         private static readonly Selector sel_bufferDataSize = "bufferDataSize";
         private static readonly Selector sel_bufferDataType = "bufferDataType";
@@ -449,38 +450,62 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_bufferPointerType = "bufferPointerType";
     }
 
-    
-    public partial class MTLThreadgroupBinding : MTLBinding
+    public partial struct MTLThreadgroupBinding
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLThreadgroupBinding obj) => obj.NativePtr;
-        public MTLThreadgroupBinding(IntPtr ptr) : base(ptr) => NativePtr = ptr;
 
-        protected MTLThreadgroupBinding()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLThreadgroupBinding obj) => obj.NativePtr;
+        public static implicit operator MTLBinding(in MTLThreadgroupBinding obj) => new MTLBinding(obj.NativePtr);
+        public static implicit operator MTLThreadgroupBinding(in MTLBinding obj) => new MTLThreadgroupBinding(obj.NativePtr);
 
+        public MTLThreadgroupBinding(in IntPtr ptr) => NativePtr = ptr;
+
+        public NSString Name => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_name));
+
+        public MTLBindingType Type => (MTLBindingType)ObjectiveCRuntime.long_objc_msgSend(NativePtr, sel_type);
+
+        public MTLBindingAccess Access => (MTLBindingAccess)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_access);
+
+        public ulong Index => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_index);
+
+        public bool Used => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isUsed);
+
+        public bool Argument => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isArgument);
         public ulong ThreadgroupMemoryAlignment => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_threadgroupMemoryAlignment);
 
         public ulong ThreadgroupMemoryDataSize => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_threadgroupMemoryDataSize);
 
+        private static readonly Selector sel_name = "name";
+        private static readonly Selector sel_type = "type";
+        private static readonly Selector sel_access = "access";
+        private static readonly Selector sel_index = "index";
+        private static readonly Selector sel_isUsed = "isUsed";
+        private static readonly Selector sel_isArgument = "isArgument";
         private static readonly Selector sel_threadgroupMemoryAlignment = "threadgroupMemoryAlignment";
         private static readonly Selector sel_threadgroupMemoryDataSize = "threadgroupMemoryDataSize";
     }
 
-    
-    public partial class MTLTextureBinding : MTLBinding
+    public partial struct MTLTextureBinding
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLTextureBinding obj) => obj.NativePtr;
-        public MTLTextureBinding(IntPtr ptr) : base(ptr) => NativePtr = ptr;
 
-        protected MTLTextureBinding()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLTextureBinding obj) => obj.NativePtr;
+        public static implicit operator MTLBinding(in MTLTextureBinding obj) => new MTLBinding(obj.NativePtr);
+        public static implicit operator MTLTextureBinding(in MTLBinding obj) => new MTLTextureBinding(obj.NativePtr);
 
+        public MTLTextureBinding(in IntPtr ptr) => NativePtr = ptr;
+
+        public NSString Name => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_name));
+
+        public MTLBindingType Type => (MTLBindingType)ObjectiveCRuntime.long_objc_msgSend(NativePtr, sel_type);
+
+        public MTLBindingAccess Access => (MTLBindingAccess)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_access);
+
+        public ulong Index => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_index);
+
+        public bool Used => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isUsed);
+
+        public bool Argument => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isArgument);
         public MTLTextureType TextureType => (MTLTextureType)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_textureType);
 
         public MTLDataType TextureDataType => (MTLDataType)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_textureDataType);
@@ -489,28 +514,49 @@ namespace SharpMetal.Metal
 
         public ulong ArrayLength => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_arrayLength);
 
+        private static readonly Selector sel_name = "name";
+        private static readonly Selector sel_type = "type";
+        private static readonly Selector sel_access = "access";
+        private static readonly Selector sel_index = "index";
+        private static readonly Selector sel_isUsed = "isUsed";
+        private static readonly Selector sel_isArgument = "isArgument";
         private static readonly Selector sel_textureType = "textureType";
         private static readonly Selector sel_textureDataType = "textureDataType";
         private static readonly Selector sel_isDepthTexture = "isDepthTexture";
         private static readonly Selector sel_arrayLength = "arrayLength";
     }
 
-    
-    public partial class MTLObjectPayloadBinding : MTLBinding
+    public partial struct MTLObjectPayloadBinding
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLObjectPayloadBinding obj) => obj.NativePtr;
-        public MTLObjectPayloadBinding(IntPtr ptr) : base(ptr) => NativePtr = ptr;
 
-        protected MTLObjectPayloadBinding()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLObjectPayloadBinding obj) => obj.NativePtr;
+        public static implicit operator MTLBinding(in MTLObjectPayloadBinding obj) => new MTLBinding(obj.NativePtr);
+        public static implicit operator MTLObjectPayloadBinding(in MTLBinding obj) => new MTLObjectPayloadBinding(obj.NativePtr);
 
+        public MTLObjectPayloadBinding(in IntPtr ptr) => NativePtr = ptr;
+
+        public NSString Name => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_name));
+
+        public MTLBindingType Type => (MTLBindingType)ObjectiveCRuntime.long_objc_msgSend(NativePtr, sel_type);
+
+        public MTLBindingAccess Access => (MTLBindingAccess)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_access);
+
+        public ulong Index => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_index);
+
+        public bool Used => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isUsed);
+
+        public bool Argument => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isArgument);
         public ulong ObjectPayloadAlignment => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_objectPayloadAlignment);
 
         public ulong ObjectPayloadDataSize => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_objectPayloadDataSize);
 
+        private static readonly Selector sel_name = "name";
+        private static readonly Selector sel_type = "type";
+        private static readonly Selector sel_access = "access";
+        private static readonly Selector sel_index = "index";
+        private static readonly Selector sel_isUsed = "isUsed";
+        private static readonly Selector sel_isArgument = "isArgument";
         private static readonly Selector sel_objectPayloadAlignment = "objectPayloadAlignment";
         private static readonly Selector sel_objectPayloadDataSize = "objectPayloadDataSize";
     }

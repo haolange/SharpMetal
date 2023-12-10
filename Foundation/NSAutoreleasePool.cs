@@ -7,7 +7,7 @@ namespace SharpMetal.Foundation
     public partial struct NSAutoreleasePool : IDisposable
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSAutoreleasePool obj) => obj.NativePtr;
+        public static implicit operator IntPtr(in NSAutoreleasePool obj) => obj.NativePtr;
         public NSAutoreleasePool(in IntPtr ptr) => NativePtr = ptr;
 
         public static NSAutoreleasePool Begin()

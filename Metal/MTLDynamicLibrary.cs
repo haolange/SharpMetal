@@ -1,6 +1,5 @@
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
@@ -14,17 +13,11 @@ namespace SharpMetal.Metal
         Unsupported = 5,
     }
 
-    
-    public partial class MTLDynamicLibrary
+    public partial struct MTLDynamicLibrary
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLDynamicLibrary obj) => obj.NativePtr;
-        public MTLDynamicLibrary(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLDynamicLibrary()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLDynamicLibrary obj) => obj.NativePtr;
+        public MTLDynamicLibrary(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label
         {
@@ -36,7 +29,7 @@ namespace SharpMetal.Metal
 
         public NSString InstallName => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_installName));
 
-        public bool SerializeToURL(NSURL url, ref NSError error)
+        public bool SerializeToURL(in NSURL url, ref NSError error)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_serializeToURLerror, url, ref error.NativePtr);
         }

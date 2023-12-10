@@ -1,7 +1,6 @@
+using System.Text;
 using SharpMetal.Foundation;
 using System.Runtime.CompilerServices;
-using System.Runtime.Versioning;
-using System.Text;
 
 namespace SharpMetal.ObjectiveCCore
 {
@@ -19,11 +18,11 @@ namespace SharpMetal.ObjectiveCCore
     public unsafe struct ObjectiveCClass
     {
         public readonly IntPtr NativePtr;
-        public static implicit operator IntPtr(ObjectiveCClass c) => c.NativePtr;
+        public static implicit operator IntPtr(in ObjectiveCClass c) => c.NativePtr;
 
         public string Name => NSUtil.GetUtf8String(ObjectiveCRuntime.class_getName(this));
 
-        public ObjectiveCClass(IntPtr ptr)
+        public ObjectiveCClass(in IntPtr ptr)
         {
             NativePtr = ptr;
         }

@@ -1,57 +1,49 @@
-using System.Runtime.Versioning;
 using SharpMetal.ObjectiveCCore;
-using SharpMetal.Foundation;
 
 namespace SharpMetal.Metal
 {
-    
-    public partial class MTLIndirectRenderCommand
+    public partial struct MTLIndirectRenderCommand
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLIndirectRenderCommand obj) => obj.NativePtr;
-        public MTLIndirectRenderCommand(IntPtr ptr) => NativePtr = ptr;
-
-        protected MTLIndirectRenderCommand()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in MTLIndirectRenderCommand obj) => obj.NativePtr;
+        public MTLIndirectRenderCommand(in IntPtr ptr) => NativePtr = ptr;
 
         public void SetRenderPipelineState(MTLRenderPipelineState pipelineState)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setRenderPipelineState, pipelineState);
         }
 
-        public void SetVertexBuffer(MTLBuffer buffer, ulong offset, ulong index)
+        public void SetVertexBuffer(in MTLBuffer buffer, in ulong offset, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexBufferoffsetatIndex, buffer, offset, index);
         }
 
-        public void SetFragmentBuffer(MTLBuffer buffer, ulong offset, ulong index)
+        public void SetFragmentBuffer(in MTLBuffer buffer, in ulong offset, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentBufferoffsetatIndex, buffer, offset, index);
         }
 
-        public void SetVertexBuffer(MTLBuffer buffer, ulong offset, ulong stride, ulong index)
+        public void SetVertexBuffer(in MTLBuffer buffer, in ulong offset, in ulong stride, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexBufferoffsetattributeStrideatIndex, buffer, offset, stride, index);
         }
 
-        public void DrawPatches(ulong numberOfPatchControlPoints, ulong patchStart, ulong patchCount, MTLBuffer patchIndexBuffer, ulong patchIndexBufferOffset, ulong instanceCount, ulong baseInstance, MTLBuffer buffer, ulong offset, ulong instanceStride)
+        public void DrawPatches(in ulong numberOfPatchControlPoints, in ulong patchStart, in ulong patchCount, in MTLBuffer patchIndexBuffer, in ulong patchIndexBufferOffset, in ulong instanceCount, in ulong baseInstance, in MTLBuffer buffer, in ulong offset, in ulong instanceStride)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawPatchespatchStartpatchCountpatchIndexBufferpatchIndexBufferOffsetinstanceCountbaseInstancetessellationFactorBuffertessellationFactorBufferOffsettessellationFactorBufferInstanceStride, numberOfPatchControlPoints, patchStart, patchCount, patchIndexBuffer, patchIndexBufferOffset, instanceCount, baseInstance, buffer, offset, instanceStride);
         }
 
-        public void DrawIndexedPatches(ulong numberOfPatchControlPoints, ulong patchStart, ulong patchCount, MTLBuffer patchIndexBuffer, ulong patchIndexBufferOffset, MTLBuffer controlPointIndexBuffer, ulong controlPointIndexBufferOffset, ulong instanceCount, ulong baseInstance, MTLBuffer buffer, ulong offset, ulong instanceStride)
+        public void DrawIndexedPatches(in ulong numberOfPatchControlPoints, in ulong patchStart, in ulong patchCount, in MTLBuffer patchIndexBuffer, in ulong patchIndexBufferOffset, in MTLBuffer controlPointIndexBuffer, in ulong controlPointIndexBufferOffset, in ulong instanceCount, in ulong baseInstance, in MTLBuffer buffer, in ulong offset, in ulong instanceStride)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawIndexedPatchespatchStartpatchCountpatchIndexBufferpatchIndexBufferOffsetcontrolPointIndexBuffercontrolPointIndexBufferOffsetinstanceCountbaseInstancetessellationFactorBuffertessellationFactorBufferOffsettessellationFactorBufferInstanceStride, numberOfPatchControlPoints, patchStart, patchCount, patchIndexBuffer, patchIndexBufferOffset, controlPointIndexBuffer, controlPointIndexBufferOffset, instanceCount, baseInstance, buffer, offset, instanceStride);
         }
 
-        public void DrawPrimitives(MTLPrimitiveType primitiveType, ulong vertexStart, ulong vertexCount, ulong instanceCount, ulong baseInstance)
+        public void DrawPrimitives(in MTLPrimitiveType primitiveType, in ulong vertexStart, in ulong vertexCount, in ulong instanceCount, in ulong baseInstance)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawPrimitivesvertexStartvertexCountinstanceCountbaseInstance, (ulong)primitiveType, vertexStart, vertexCount, instanceCount, baseInstance);
         }
 
-        public void DrawIndexedPrimitives(MTLPrimitiveType primitiveType, ulong indexCount, MTLIndexType indexType, MTLBuffer indexBuffer, ulong indexBufferOffset, ulong instanceCount, long baseVertex, ulong baseInstance)
+        public void DrawIndexedPrimitives(in MTLPrimitiveType primitiveType, in ulong indexCount, in MTLIndexType indexType, in MTLBuffer indexBuffer, in ulong indexBufferOffset, in ulong instanceCount, long baseVertex, in ulong baseInstance)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawIndexedPrimitivesindexCountindexTypeindexBufferindexBufferOffsetinstanceCountbaseVertexbaseInstance, (ulong)primitiveType, indexCount, (ulong)indexType, indexBuffer, indexBufferOffset, instanceCount, baseVertex, baseInstance);
         }
@@ -72,38 +64,33 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_reset = "reset";
     }
 
-    public partial class MTLIndirectComputeCommand
+    public partial struct MTLIndirectComputeCommand
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLIndirectComputeCommand obj) => obj.NativePtr;
-        public MTLIndirectComputeCommand(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLIndirectComputeCommand obj) => obj.NativePtr;
+        public MTLIndirectComputeCommand(in IntPtr ptr) => NativePtr = ptr;
 
-        protected MTLIndirectComputeCommand()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetComputePipelineState(MTLComputePipelineState pipelineState)
+        public void SetComputePipelineState(in MTLComputePipelineState pipelineState)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setComputePipelineState, pipelineState);
         }
 
-        public void SetKernelBuffer(MTLBuffer buffer, ulong offset, ulong index)
+        public void SetKernelBuffer(in MTLBuffer buffer, in ulong offset, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setKernelBufferoffsetatIndex, buffer, offset, index);
         }
 
-        public void SetKernelBuffer(MTLBuffer buffer, ulong offset, ulong stride, ulong index)
+        public void SetKernelBuffer(in MTLBuffer buffer, in ulong offset, in ulong stride, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setKernelBufferoffsetattributeStrideatIndex, buffer, offset, stride, index);
         }
 
-        public void ConcurrentDispatchThreadgroups(MTLSize threadgroupsPerGrid, MTLSize threadsPerThreadgroup)
+        public void ConcurrentDispatchThreadgroups(in MTLSize threadgroupsPerGrid, in MTLSize threadsPerThreadgroup)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_concurrentDispatchThreadgroupsthreadsPerThreadgroup, threadgroupsPerGrid, threadsPerThreadgroup);
         }
 
-        public void ConcurrentDispatchThreads(MTLSize threadsPerGrid, MTLSize threadsPerThreadgroup)
+        public void ConcurrentDispatchThreads(in MTLSize threadsPerGrid, in MTLSize threadsPerThreadgroup)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_concurrentDispatchThreadsthreadsPerThreadgroup, threadsPerGrid, threadsPerThreadgroup);
         }
@@ -118,7 +105,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_clearBarrier);
         }
 
-        public void SetImageblockWidth(ulong width, ulong height)
+        public void SetImageblockWidth(in ulong width, in ulong height)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setImageblockWidthheight, width, height);
         }
@@ -128,12 +115,12 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_reset);
         }
 
-        public void SetThreadgroupMemoryLength(ulong length, ulong index)
+        public void SetThreadgroupMemoryLength(in ulong length, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setThreadgroupMemoryLengthatIndex, length, index);
         }
 
-        public void SetStageInRegion(MTLRegion region)
+        public void SetStageInRegion(in MTLRegion region)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStageInRegion, region);
         }

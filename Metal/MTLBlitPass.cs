@@ -1,15 +1,12 @@
-using System.Runtime.Versioning;
 using SharpMetal.ObjectiveCCore;
-using SharpMetal.Foundation;
 
 namespace SharpMetal.Metal
 {
-    
-    public partial class MTLBlitPassSampleBufferAttachmentDescriptor
+    public partial struct MTLBlitPassSampleBufferAttachmentDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLBlitPassSampleBufferAttachmentDescriptor obj) => obj.NativePtr;
-        public MTLBlitPassSampleBufferAttachmentDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLBlitPassSampleBufferAttachmentDescriptor obj) => obj.NativePtr;
+        public MTLBlitPassSampleBufferAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLBlitPassSampleBufferAttachmentDescriptor()
         {
@@ -43,12 +40,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setEndOfEncoderSampleIndex = "setEndOfEncoderSampleIndex:";
     }
 
-    
-    public partial class MTLBlitPassSampleBufferAttachmentDescriptorArray
+    public partial struct MTLBlitPassSampleBufferAttachmentDescriptorArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLBlitPassSampleBufferAttachmentDescriptorArray obj) => obj.NativePtr;
-        public MTLBlitPassSampleBufferAttachmentDescriptorArray(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLBlitPassSampleBufferAttachmentDescriptorArray obj) => obj.NativePtr;
+        public MTLBlitPassSampleBufferAttachmentDescriptorArray(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLBlitPassSampleBufferAttachmentDescriptorArray()
         {
@@ -56,12 +52,12 @@ namespace SharpMetal.Metal
             NativePtr = cls.AllocInit();
         }
 
-        public MTLBlitPassSampleBufferAttachmentDescriptor Object(ulong attachmentIndex)
+        public MTLBlitPassSampleBufferAttachmentDescriptor Object(in ulong attachmentIndex)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectAtIndexedSubscript, attachmentIndex));
         }
 
-        public void SetObject(MTLBlitPassSampleBufferAttachmentDescriptor attachment, ulong attachmentIndex)
+        public void SetObject(in MTLBlitPassSampleBufferAttachmentDescriptor attachment, in ulong attachmentIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectatIndexedSubscript, attachment, attachmentIndex);
         }
@@ -70,12 +66,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setObjectatIndexedSubscript = "setObject:atIndexedSubscript:";
     }
 
-    
-    public partial class MTLBlitPassDescriptor
+    public partial struct MTLBlitPassDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLBlitPassDescriptor obj) => obj.NativePtr;
-        public MTLBlitPassDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLBlitPassDescriptor obj) => obj.NativePtr;
+        public MTLBlitPassDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLBlitPassDescriptor()
         {

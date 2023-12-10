@@ -1,7 +1,6 @@
-using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
+using System.Runtime.InteropServices;
 
 namespace SharpMetal.Metal
 {
@@ -44,7 +43,6 @@ namespace SharpMetal.Metal
         Lossless = 0,
         Lossy = 1,
     }
-
     
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLTextureSwizzleChannels
@@ -55,12 +53,11 @@ namespace SharpMetal.Metal
         public MTLTextureSwizzle alpha;
     }
 
-    
-    public partial class MTLSharedTextureHandle
+    public partial struct MTLSharedTextureHandle
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLSharedTextureHandle obj) => obj.NativePtr;
-        public MTLSharedTextureHandle(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLSharedTextureHandle obj) => obj.NativePtr;
+        public MTLSharedTextureHandle(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLSharedTextureHandle()
         {
@@ -76,12 +73,11 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_label = "label";
     }
 
-    
-    public partial class MTLTextureDescriptor
+    public partial struct MTLTextureDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLTextureDescriptor obj) => obj.NativePtr;
-        public MTLTextureDescriptor(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLTextureDescriptor obj) => obj.NativePtr;
+        public MTLTextureDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLTextureDescriptor()
         {
@@ -185,17 +181,17 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setSwizzle, value);
         }
 
-        public static MTLTextureDescriptor Texture2DDescriptor(MTLPixelFormat pixelFormat, ulong width, ulong height, bool mipmapped)
+        public static MTLTextureDescriptor Texture2DDescriptor(in MTLPixelFormat pixelFormat, in ulong width, in ulong height, in bool mipmapped)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("MTLTextureDescriptor"), sel_texture2DDescriptorWithPixelFormatwidthheightmipmapped, (ulong)pixelFormat, width, height, mipmapped));
         }
 
-        public static MTLTextureDescriptor TextureCubeDescriptor(MTLPixelFormat pixelFormat, ulong size, bool mipmapped)
+        public static MTLTextureDescriptor TextureCubeDescriptor(in MTLPixelFormat pixelFormat, in ulong size, in bool mipmapped)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("MTLTextureDescriptor"), sel_textureCubeDescriptorWithPixelFormatsizemipmapped, (ulong)pixelFormat, size, mipmapped));
         }
 
-        public static MTLTextureDescriptor TextureBufferDescriptor(MTLPixelFormat pixelFormat, ulong width, MTLResourceOptions resourceOptions, MTLTextureUsage usage)
+        public static MTLTextureDescriptor TextureBufferDescriptor(in MTLPixelFormat pixelFormat, in ulong width, in MTLResourceOptions resourceOptions, in MTLTextureUsage usage)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("MTLTextureDescriptor"), sel_textureBufferDescriptorWithPixelFormatwidthresourceOptionsusage, (ulong)pixelFormat, width, (ulong)resourceOptions, (ulong)usage));
         }
@@ -237,17 +233,39 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setSwizzle = "setSwizzle:";
     }
 
-    
-    public partial class MTLTexture : MTLResource
+    public partial struct MTLTexture
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLTexture obj) => obj.NativePtr;
-        public MTLTexture(IntPtr ptr) : base(ptr) => NativePtr = ptr;
 
-        protected MTLTexture()
+        public static implicit operator IntPtr(in MTLTexture obj) => obj.NativePtr;
+        public static implicit operator MTLResource(in MTLTexture obj) => new MTLResource(obj.NativePtr);
+        public static implicit operator MTLTexture(in MTLResource obj) => new MTLTexture(obj.NativePtr);
+
+        public MTLTexture(in IntPtr ptr) => NativePtr = ptr;
+
+        public NSString Label
         {
-            throw new NotImplementedException();
+            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_label));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLabel, value);
         }
+
+        public MTLDevice Device => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_device));
+
+        public MTLCPUCacheMode CpuCacheMode => (MTLCPUCacheMode)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_cpuCacheMode);
+
+        public MTLStorageMode StorageMode => (MTLStorageMode)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_storageMode);
+
+        public MTLHazardTrackingMode HazardTrackingMode => (MTLHazardTrackingMode)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_hazardTrackingMode);
+
+        public MTLResourceOptions ResourceOptions => (MTLResourceOptions)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_resourceOptions);
+
+        public MTLHeap Heap => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_heap));
+
+        public ulong HeapOffset => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_heapOffset);
+
+        public ulong AllocatedSize => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_allocatedSize);
+
+        public bool IsAliasable => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isAliasable);
 
         public MTLResource RootResource => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_rootResource));
 
@@ -307,46 +325,69 @@ namespace SharpMetal.Metal
 
         public MTLTextureSwizzleChannels Swizzle => ObjectiveCRuntime.MTLTextureSwizzleChannels_objc_msgSend(NativePtr, sel_swizzle);
 
-        public void GetBytes(IntPtr pixelBytes, ulong bytesPerRow, ulong bytesPerImage, MTLRegion region, ulong level, ulong slice)
+        public MTLPurgeableState SetPurgeableState(in MTLPurgeableState state)
+        {
+            return (MTLPurgeableState)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_setPurgeableState, (ulong)state);
+        }
+
+        public void MakeAliasable()
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_makeAliasable);
+        }
+
+        public void GetBytes(in IntPtr pixelBytes, in ulong bytesPerRow, in ulong bytesPerImage, in MTLRegion region, in ulong level, in ulong slice)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_getBytesbytesPerRowbytesPerImagefromRegionmipmapLevelslice, pixelBytes, bytesPerRow, bytesPerImage, region, level, slice);
         }
 
-        public void ReplaceRegion(MTLRegion region, ulong level, ulong slice, IntPtr pixelBytes, ulong bytesPerRow, ulong bytesPerImage)
+        public void ReplaceRegion(in MTLRegion region, in ulong level, in ulong slice, in IntPtr pixelBytes, in ulong bytesPerRow, in ulong bytesPerImage)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_replaceRegionmipmapLevelslicewithBytesbytesPerRowbytesPerImage, region, level, slice, pixelBytes, bytesPerRow, bytesPerImage);
         }
 
-        public void GetBytes(IntPtr pixelBytes, ulong bytesPerRow, MTLRegion region, ulong level)
+        public void GetBytes(in IntPtr pixelBytes, in ulong bytesPerRow, in MTLRegion region, in ulong level)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_getBytesbytesPerRowfromRegionmipmapLevel, pixelBytes, bytesPerRow, region, level);
         }
 
-        public void ReplaceRegion(MTLRegion region, ulong level, IntPtr pixelBytes, ulong bytesPerRow)
+        public void ReplaceRegion(in MTLRegion region, in ulong level, in IntPtr pixelBytes, in ulong bytesPerRow)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_replaceRegionmipmapLevelwithBytesbytesPerRow, region, level, pixelBytes, bytesPerRow);
         }
 
-        public MTLTexture NewTextureView(MTLPixelFormat pixelFormat)
+        public MTLTexture NewTextureView(in MTLPixelFormat pixelFormat)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newTextureViewWithPixelFormat, (ulong)pixelFormat));
         }
 
-        public MTLTexture NewTextureView(MTLPixelFormat pixelFormat, MTLTextureType textureType, NSRange levelRange, NSRange sliceRange)
+        public MTLTexture NewTextureView(in MTLPixelFormat pixelFormat, in MTLTextureType textureType, in NSRange levelRange, in NSRange sliceRange)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newTextureViewWithPixelFormattextureTypelevelsslices, (ulong)pixelFormat, (ulong)textureType, levelRange, sliceRange));
         }
 
-        public MTLTexture NewRemoteTextureViewForDevice(MTLDevice device)
+        public MTLTexture NewRemoteTextureViewForDevice(in MTLDevice device)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newRemoteTextureViewForDevice, device));
         }
 
-        public MTLTexture NewTextureView(MTLPixelFormat pixelFormat, MTLTextureType textureType, NSRange levelRange, NSRange sliceRange, MTLTextureSwizzleChannels swizzle)
+        public MTLTexture NewTextureView(in MTLPixelFormat pixelFormat, in MTLTextureType textureType, in NSRange levelRange, in NSRange sliceRange, in MTLTextureSwizzleChannels swizzle)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newTextureViewWithPixelFormattextureTypelevelsslicesswizzle, (ulong)pixelFormat, (ulong)textureType, levelRange, sliceRange, swizzle));
         }
 
+        private static readonly Selector sel_label = "label";
+        private static readonly Selector sel_setLabel = "setLabel:";
+        private static readonly Selector sel_device = "device";
+        private static readonly Selector sel_cpuCacheMode = "cpuCacheMode";
+        private static readonly Selector sel_storageMode = "storageMode";
+        private static readonly Selector sel_hazardTrackingMode = "hazardTrackingMode";
+        private static readonly Selector sel_resourceOptions = "resourceOptions";
+        private static readonly Selector sel_setPurgeableState = "setPurgeableState:";
+        private static readonly Selector sel_heap = "heap";
+        private static readonly Selector sel_heapOffset = "heapOffset";
+        private static readonly Selector sel_allocatedSize = "allocatedSize";
+        private static readonly Selector sel_makeAliasable = "makeAliasable";
+        private static readonly Selector sel_isAliasable = "isAliasable";
         private static readonly Selector sel_rootResource = "rootResource";
         private static readonly Selector sel_parentTexture = "parentTexture";
         private static readonly Selector sel_parentRelativeLevel = "parentRelativeLevel";
