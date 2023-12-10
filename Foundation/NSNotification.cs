@@ -3,16 +3,11 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    public partial class NSNotification
+    public partial struct NSNotification
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSNotification obj) => obj.NativePtr;
-        public NSNotification(IntPtr ptr) => NativePtr = ptr;
-
-        protected NSNotification()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in NSNotification obj) => obj.NativePtr;
+        public NSNotification(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Name => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_name));
 
@@ -25,16 +20,12 @@ namespace SharpMetal.Foundation
         private static readonly Selector sel_userInfo = "userInfo";
     }
 
-    public partial class NSNotificationCenter
+    public partial struct NSNotificationCenter
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSNotificationCenter obj) => obj.NativePtr;
-        public NSNotificationCenter(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in NSNotificationCenter obj) => obj.NativePtr;
+        public NSNotificationCenter(in IntPtr ptr) => NativePtr = ptr;
 
-        protected NSNotificationCenter()
-        {
-            throw new NotImplementedException();
-        }
 
         public static NSNotificationCenter DefaultCenter()
         {

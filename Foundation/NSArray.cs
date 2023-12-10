@@ -27,17 +27,17 @@ namespace SharpMetal.Foundation
             }
         }
 
-        public static NSArray Array(NSObject pObject)
+        public static NSArray Array(in NSObject pObject)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSArray"), sel_arrayWithObject, pObject));
         }
 
-        public static NSArray Array(NSObject pObjects, in ulong count)
+        public static NSArray Array(in NSObject pObjects, in ulong count)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSArray"), sel_arrayWithObjectscount, pObjects, count));
         }
 
-        public NSArray Init(NSObject pObjects, in ulong count)
+        public NSArray Init(in NSObject pObjects, in ulong count)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithObjectscount, pObjects, count));
         }

@@ -3,11 +3,11 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    public partial class NSValue
+    public partial struct NSValue
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSValue obj) => obj.NativePtr;
-        public NSValue(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in NSValue obj) => obj.NativePtr;
+        public NSValue(in IntPtr ptr) => NativePtr = ptr;
 
         public NSValue()
         {
@@ -19,32 +19,32 @@ namespace SharpMetal.Foundation
 
         public IntPtr PointerValue => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_pointerValue));
 
-        public static NSValue Value(IntPtr pValue, ushort pType)
+        public static NSValue Value(in IntPtr pValue, in ushort pType)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSValue"), sel_valueWithBytesobjCType, pValue, pType));
         }
 
-        public static NSValue Value(IntPtr pPointer)
+        public static NSValue Value(in IntPtr pPointer)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSValue"), sel_valueWithPointer, pPointer));
         }
 
-        public NSValue Init(IntPtr pValue, ushort pType)
+        public NSValue Init(in IntPtr pValue, in ushort pType)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithBytesobjCType, pValue, pType));
         }
 
-        public NSValue Init(IntPtr pCoder)
+        public NSValue Init(in IntPtr pCoder)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithCoder, pCoder));
         }
 
-        public void GetValue(IntPtr pValue, ulong size)
+        public void GetValue(in IntPtr pValue, in ulong size)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_getValuesize, pValue, size);
         }
 
-        public bool IsEqualToValue(NSValue pValue)
+        public bool IsEqualToValue(in NSValue pValue)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isEqualToValue, pValue);
         }
@@ -59,10 +59,10 @@ namespace SharpMetal.Foundation
         private static readonly Selector sel_pointerValue = "pointerValue";
     }
 
-    public partial class NSNumber
+    public partial struct NSNumber
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSNumber obj) => obj.NativePtr;
+        public static implicit operator IntPtr(in NSNumber obj) => obj.NativePtr;
         public NSNumber(IntPtr ptr) => NativePtr = ptr;
 
         public NSNumber()
@@ -103,122 +103,122 @@ namespace SharpMetal.Foundation
 
         public NSString StringValue => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_stringValue));
 
-        public static NSNumber Number(ushort value)
+        public static NSNumber Number(in ushort value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSNumber"), sel_numberWithChar, value));
         }
 
-        public static NSNumber Number(byte value)
+        public static NSNumber Number(in byte value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSNumber"), sel_numberWithUnsignedChar, value));
         }
 
-        public static NSNumber Number(short value)
+        public static NSNumber Number(in short value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSNumber"), sel_numberWithShort, value));
         }
 
-        public static NSNumber Number(int value)
+        public static NSNumber Number(in int value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSNumber"), sel_numberWithInt, value));
         }
 
-        public static NSNumber Number(uint value)
+        public static NSNumber Number(in uint value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSNumber"), sel_numberWithUnsignedInt, value));
         }
 
-        public static NSNumber Number(long value)
+        public static NSNumber Number(in long value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSNumber"), sel_numberWithLong, value));
         }
 
-        public static NSNumber Number(ulong value)
+        public static NSNumber Number(in ulong value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSNumber"), sel_numberWithUnsignedLong, value));
         }
 
-        public static NSNumber Number(float value)
+        public static NSNumber Number(in float value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSNumber"), sel_numberWithFloat, value));
         }
 
-        public static NSNumber Number(double value)
+        public static NSNumber Number(in double value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSNumber"), sel_numberWithDouble, value));
         }
 
-        public static NSNumber Number(bool value)
+        public static NSNumber Number(in bool value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSNumber"), sel_numberWithBool, value));
         }
 
-        public NSNumber Init(IntPtr pCoder)
+        public NSNumber Init(in IntPtr pCoder)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithCoder, pCoder));
         }
 
-        public NSNumber Init(ushort value)
+        public NSNumber Init(in ushort value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithChar, value));
         }
 
-        public NSNumber Init(byte value)
+        public NSNumber Init(in byte value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithUnsignedChar, value));
         }
 
-        public NSNumber Init(short value)
+        public NSNumber Init(in short value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithShort, value));
         }
 
-        public NSNumber Init(int value)
+        public NSNumber Init(in int value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithInt, value));
         }
 
-        public NSNumber Init(uint value)
+        public NSNumber Init(in uint value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithUnsignedInt, value));
         }
 
-        public NSNumber Init(long value)
+        public NSNumber Init(in long value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithLong, value));
         }
 
-        public NSNumber Init(ulong value)
+        public NSNumber Init(in ulong value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithUnsignedLong, value));
         }
 
-        public NSNumber Init(float value)
+        public NSNumber Init(in float value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithFloat, value));
         }
 
-        public NSNumber Init(double value)
+        public NSNumber Init(in double value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithDouble, value));
         }
 
-        public NSNumber Init(bool value)
+        public NSNumber Init(in bool value)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithBool, value));
         }
 
-        public NSComparisonResult Compare(NSNumber pOtherNumber)
+        public NSComparisonResult Compare(in NSNumber pOtherNumber)
         {
             return (NSComparisonResult)ObjectiveCRuntime.long_objc_msgSend(NativePtr, sel_compare, pOtherNumber);
         }
 
-        public bool IsEqualToNumber(NSNumber pNumber)
+        public bool IsEqualToNumber(in NSNumber pNumber)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isEqualToNumber, pNumber);
         }
 
-        public NSString DescriptionWithLocale(NSObject pLocale)
+        public NSString DescriptionWithLocale(in NSObject pLocale)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_descriptionWithLocale, pLocale));
         }

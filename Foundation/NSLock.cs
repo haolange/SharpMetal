@@ -3,23 +3,18 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    public partial class NSLocking
+    public partial struct NSLocking
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSLocking obj) => obj.NativePtr;
-        public NSLocking(IntPtr ptr) => NativePtr = ptr;
-
-        protected NSLocking()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in NSLocking obj) => obj.NativePtr;
+        public NSLocking(in IntPtr ptr) => NativePtr = ptr;
     }
 
-    public partial class NSCondition
+    public partial struct NSCondition
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSCondition obj) => obj.NativePtr;
-        public NSCondition(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in NSCondition obj) => obj.NativePtr;
+        public NSCondition(in IntPtr ptr) => NativePtr = ptr;
 
         public NSCondition()
         {
@@ -32,7 +27,7 @@ namespace SharpMetal.Foundation
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_wait);
         }
 
-        public bool WaitUntilDate(NSDate pLimit)
+        public bool WaitUntilDate(in NSDate pLimit)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_waitUntilDate, pLimit);
         }

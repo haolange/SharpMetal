@@ -1,6 +1,7 @@
 using System.Runtime.Versioning;
 using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.QuartzCore;
 
 namespace SharpMetal.Metal
 {
@@ -155,17 +156,17 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_commit);
         }
 
-        public void PresentDrawable(MTLDrawable drawable)
+        public void PresentDrawable(CAMetalDrawable drawable)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_presentDrawable, drawable);
         }
 
-        public void PresentDrawableAtTime(MTLDrawable drawable, IntPtr presentationTime)
+        public void PresentDrawableAtTime(CAMetalDrawable drawable, IntPtr presentationTime)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_presentDrawableatTime, drawable, presentationTime);
         }
 
-        public void PresentDrawableAfterMinimumDuration(MTLDrawable drawable, IntPtr duration)
+        public void PresentDrawableAfterMinimumDuration(CAMetalDrawable drawable, IntPtr duration)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_presentDrawableafterMinimumDuration, drawable, duration);
         }

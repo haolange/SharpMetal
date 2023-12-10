@@ -10,16 +10,18 @@ namespace SharpMetal.Metal
     }
 
     
-    public partial class MTLLogContainer : NSFastEnumeration
+    public partial struct MTLLogContainer
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(MTLLogContainer obj) => obj.NativePtr;
-        public MTLLogContainer(IntPtr ptr) : base(ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in MTLLogContainer obj) => obj.NativePtr;
+        public MTLLogContainer(in IntPtr ptr) => NativePtr = ptr;
 
-        protected MTLLogContainer()
+        public ulong CountByEnumerating(in NSFastEnumerationState pState, in NSObject pBuffer, in ulong len)
         {
-            throw new NotImplementedException();
+            return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_countByEnumeratingWithStateobjectscount, pState, pBuffer, len);
         }
+
+        private static readonly Selector sel_countByEnumeratingWithStateobjectscount = "countByEnumeratingWithState:objects:count:";
     }
 
     

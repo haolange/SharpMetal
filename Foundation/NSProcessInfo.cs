@@ -23,16 +23,11 @@ namespace SharpMetal.Foundation
         ActivityLatencyCritical = 0xFF00000000UL,
     }
 
-    public partial class NSProcessInfo
+    public partial struct NSProcessInfo
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSProcessInfo obj) => obj.NativePtr;
-        public NSProcessInfo(IntPtr ptr) => NativePtr = ptr;
-
-        protected NSProcessInfo()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in NSProcessInfo obj) => obj.NativePtr;
+        public NSProcessInfo(in IntPtr ptr) => NativePtr = ptr;
 
         public NSArray Arguments => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_arguments));
 
@@ -82,7 +77,7 @@ namespace SharpMetal.Foundation
 
         public bool IsMacCatalystApp => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isMacCatalystApp);
 
-        public bool IsOperatingSystemAtLeastVersion(NSOperatingSystemVersion version)
+        public bool IsOperatingSystemAtLeastVersion(in NSOperatingSystemVersion version)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isOperatingSystemAtLeastVersion, version);
         }
@@ -97,22 +92,22 @@ namespace SharpMetal.Foundation
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_enableSuddenTermination);
         }
 
-        public void DisableAutomaticTermination(NSString pReason)
+        public void DisableAutomaticTermination(in NSString pReason)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_disableAutomaticTermination, pReason);
         }
 
-        public void EnableAutomaticTermination(NSString pReason)
+        public void EnableAutomaticTermination(in NSString pReason)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_enableAutomaticTermination, pReason);
         }
 
-        public NSObject BeginActivity(NSActivityOptions options, NSString pReason)
+        public NSObject BeginActivity(NSActivityOptions options, in NSString pReason)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_beginActivityWithOptionsreason, (ulong)options, pReason));
         }
 
-        public void EndActivity(NSObject pActivity)
+        public void EndActivity(in NSObject pActivity)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_endActivity, pActivity);
         }

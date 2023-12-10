@@ -4,16 +4,11 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    public partial class NSData
+    public partial struct NSData
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSData obj) => obj.NativePtr;
-        public NSData(IntPtr ptr) => NativePtr = ptr;
-
-        protected NSData()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in NSData obj) => obj.NativePtr;
+        public NSData(in IntPtr ptr) => NativePtr = ptr;
 
         public IntPtr MutableBytes => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_mutableBytes));
 

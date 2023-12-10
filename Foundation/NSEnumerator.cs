@@ -10,16 +10,11 @@ namespace SharpMetal.Foundation
         public IntPtr itemsPtr;
     }
 
-    public partial class NSFastEnumeration
+    public partial struct NSEnumerator
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSFastEnumeration obj) => obj.NativePtr;
-        public NSFastEnumeration(IntPtr ptr) => NativePtr = ptr;
-
-        protected NSFastEnumeration()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in NSEnumerator obj) => obj.NativePtr;
+        public NSEnumerator(in IntPtr ptr) => NativePtr = ptr;
 
         public ulong CountByEnumerating(NSFastEnumerationState pState, NSObject pBuffer, ulong len)
         {
@@ -27,19 +22,5 @@ namespace SharpMetal.Foundation
         }
 
         private static readonly Selector sel_countByEnumeratingWithStateobjectscount = "countByEnumeratingWithState:objects:count:";
-    }
-
-    public partial class NSEnumerator : NSFastEnumeration
-    {
-        public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSEnumerator obj) => obj.NativePtr;
-        public NSEnumerator(IntPtr ptr) : base(ptr) => NativePtr = ptr;
-
-        protected NSEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-
     }
 }

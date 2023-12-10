@@ -1,58 +1,62 @@
 using System.Runtime.Versioning;
+using System.Text;
 using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    public partial class NS_NS_EXPORT
+    public enum NSComparisonResult : long
     {
-        public IntPtr NativePtr;
-        public static implicit operator IntPtr(NS_NS_EXPORT obj) => obj.NativePtr;
-        public NS_NS_EXPORT(IntPtr ptr) => NativePtr = ptr;
-
-        protected NS_NS_EXPORT()
-        {
-            throw new NotImplementedException();
-        }
-
-
-
+        OrderedAscending = -1L,
+        OrderedSame,
+        OrderedDescending,
     }
 
-    public partial class NSCopying
+    public partial struct NS_NS_EXPORT
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSCopying obj) => obj.NativePtr;
-        public NSCopying(IntPtr ptr) => NativePtr = ptr;
-
-        protected NSCopying()
-        {
-            throw new NotImplementedException();
-        }
-
+        public static implicit operator IntPtr(in NS_NS_EXPORT obj) => obj.NativePtr;
+        public NS_NS_EXPORT(in IntPtr ptr) => NativePtr = ptr;
     }
 
-    public partial class NSSecureCoding
+    public partial struct NSCopying
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSSecureCoding obj) => obj.NativePtr;
-        public NSSecureCoding(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in NSCopying obj) => obj.NativePtr;
+        public NSCopying(in IntPtr ptr) => NativePtr = ptr;
+    }
 
-        protected NSSecureCoding()
+    public partial struct NSSecureCoding
+    {
+        public IntPtr NativePtr;
+        public static implicit operator IntPtr(in NSSecureCoding obj) => obj.NativePtr;
+        public NSSecureCoding(in IntPtr ptr) => NativePtr = ptr;
+    }
+
+    public static class NSUtil
+    {
+        public static unsafe string GetUtf8String(byte* stringStart)
         {
-            throw new NotImplementedException();
+            int characters = 0;
+            while (stringStart[characters] != 0)
+            {
+                characters++;
+            }
+
+            return Encoding.UTF8.GetString(stringStart, characters);
+        }
+
+        public static T AllocInit<T>(string typeName) where T : struct
+        {
+            var cls = new ObjectiveCClass(typeName);
+            return cls.AllocInit<T>();
         }
     }
 
-    public partial class NSObject
+    public partial struct NSObject
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSObject obj) => obj.NativePtr;
-        public NSObject(IntPtr ptr) => NativePtr = ptr;
-
-        protected NSObject()
-        {
-            throw new NotImplementedException();
-        }
+        public static implicit operator IntPtr(in NSObject obj) => obj.NativePtr;
+        public NSObject(in IntPtr ptr) => NativePtr = ptr;
 
         public ulong Hash => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_hash);
 
@@ -60,9 +64,14 @@ namespace SharpMetal.Foundation
 
         public NSString DebugDescription => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_debugDescription));
 
-        public bool IsEqual(NSObject pObject)
+        public bool IsEqual(in NSObject pObject)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isEqual, pObject);
+        }
+
+        public bool IsKindOfClass(in IntPtr pObject)
+        {
+            return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isKindOfClass, pObject);
         }
 
         private static readonly Selector sel_methodSignatureForSelector = "methodSignatureForSelector:";
@@ -73,5 +82,6 @@ namespace SharpMetal.Foundation
         private static readonly Selector sel_isEqual = "isEqual:";
         private static readonly Selector sel_description = "description";
         private static readonly Selector sel_debugDescription = "debugDescription";
+        private static readonly Selector sel_isKindOfClass = "isKindOfClass:";
     }
 }

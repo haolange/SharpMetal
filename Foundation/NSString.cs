@@ -43,16 +43,28 @@ namespace SharpMetal.Foundation
         RegularExpressionSearch = 1024,
     }
 
-    public partial class NSString
+    public unsafe partial struct NSString
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSString obj) => obj.NativePtr;
-        public NSString(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in NSString obj) => obj.NativePtr;
+        public NSString(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString()
         {
             var cls = new ObjectiveCClass("NSString");
             NativePtr = cls.AllocInit();
+        }
+
+        public NSString(string s)
+        {
+            var cls = new ObjectiveCClass("NSString");
+            NativePtr = cls.AllocInit();
+
+            fixed (char* utf16Ptr = s)
+            {
+                UIntPtr length = (UIntPtr)s.Length;
+                IntPtr newString = ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithCharacters, (IntPtr)utf16Ptr, length);
+            }
         }
 
         public ulong Length => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_length);
@@ -61,73 +73,80 @@ namespace SharpMetal.Foundation
 
         public ushort FileSystemRepresentation => ObjectiveCRuntime.ushort_objc_msgSend(NativePtr, sel_fileSystemRepresentation);
 
-        public static NSString String(NSString pString)
+        public string GetValue()
+        {
+            ushort utf8Ptr = ObjectiveCRuntime.ushort_objc_msgSend(NativePtr, sel_UTF8String);
+            return NSUtil.GetUtf8String((byte*)&utf8Ptr);
+        }
+
+        public static NSString String(in NSString pString)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSString"), sel_stringWithString, pString));
         }
 
-        public static NSString String(ushort pString, NSStringEncoding encoding)
+        public static NSString String(in ushort pString, in NSStringEncoding encoding)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSString"), sel_stringWithCStringencoding, pString, (ulong)encoding));
         }
 
-        public NSString Init(NSString pString)
+        public NSString Init(in NSString pString)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithString, pString));
         }
 
-        public NSString Init(ushort pString, NSStringEncoding encoding)
+        public NSString Init(in ushort pString, in NSStringEncoding encoding)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithCStringencoding, pString, (ulong)encoding));
         }
 
-        public NSString Init(IntPtr pBytes, ulong len, NSStringEncoding encoding, bool freeBuffer)
+        public NSString Init(in IntPtr pBytes, in ulong len, in NSStringEncoding encoding, in bool freeBuffer)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithBytesNoCopylengthencodingfreeWhenDone, pBytes, len, (ulong)encoding, freeBuffer));
         }
 
-        public ushort Character(ulong index)
+        public ushort Character(in ulong index)
         {
             return ObjectiveCRuntime.ushort_objc_msgSend(NativePtr, sel_characterAtIndex, index);
         }
 
-        public ushort CString(NSStringEncoding encoding)
+        public ushort CString(in NSStringEncoding encoding)
         {
             return ObjectiveCRuntime.ushort_objc_msgSend(NativePtr, sel_cStringUsingEncoding, (ulong)encoding);
         }
 
-        public ulong MaximumLengthOfBytes(NSStringEncoding encoding)
+        public ulong MaximumLengthOfBytes(in NSStringEncoding encoding)
         {
             return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_maximumLengthOfBytesUsingEncoding, (ulong)encoding);
         }
 
-        public ulong LengthOfBytes(NSStringEncoding encoding)
+        public ulong LengthOfBytes(in NSStringEncoding encoding)
         {
             return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_maximumLengthOfBytesUsingEncoding, (ulong)encoding);
         }
 
-        public bool IsEqualToString(NSString pString)
+        public bool IsEqualToString(in NSString pString)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isEqualToString, pString);
         }
 
-        public NSRange RangeOfString(NSString pString, NSStringCompareOptions options)
+        public NSRange RangeOfString(in NSString pString, in NSStringCompareOptions options)
         {
             return ObjectiveCRuntime.NSRange_objc_msgSend(NativePtr, sel_rangeOfStringoptions, pString, (ulong)options);
         }
 
-        public NSString StringByAppendingString(NSString pString)
+        public NSString StringByAppendingString(in NSString pString)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_stringByAppendingString, pString));
         }
 
-        public NSComparisonResult CaseInsensitiveCompare(NSString pString)
+        public NSComparisonResult CaseInsensitiveCompare(in NSString pString)
         {
             return (NSComparisonResult)ObjectiveCRuntime.long_objc_msgSend(NativePtr, sel_caseInsensitiveCompare, pString);
         }
 
         private static readonly Selector sel_string = "string";
         private static readonly Selector sel_stringWithString = "stringWithString:";
+        private static readonly Selector sel_initWithCharacters = "initWithCharacters:length:";
         private static readonly Selector sel_stringWithCStringencoding = "stringWithCString:encoding:";
         private static readonly Selector sel_initWithString = "initWithString:";
         private static readonly Selector sel_initWithCStringencoding = "initWithCString:encoding:";

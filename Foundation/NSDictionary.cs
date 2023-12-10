@@ -4,11 +4,11 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    public partial class NSDictionary
+    public partial struct NSDictionary
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSDictionary obj) => obj.NativePtr;
-        public NSDictionary(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in NSDictionary obj) => obj.NativePtr;
+        public NSDictionary(in IntPtr ptr) => NativePtr = ptr;
 
         public NSDictionary()
         {
@@ -20,27 +20,27 @@ namespace SharpMetal.Foundation
 
         public ulong Count => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_count);
 
-        public static NSDictionary Dictionary(NSObject pObject, NSObject pKey)
+        public static NSDictionary Dictionary(in NSObject pObject, in NSObject pKey)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSDictionary"), sel_dictionaryWithObjectforKey, pObject, pKey));
         }
 
-        public static NSDictionary Dictionary(NSObject pObjects, NSObject pKeys, ulong count)
+        public static NSDictionary Dictionary(in NSObject pObjects, in NSObject pKeys, in ulong count)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSDictionary"), sel_dictionaryWithObjectsforKeyscount, pObjects, pKeys, count));
         }
 
-        public NSDictionary Init(NSObject pObjects, NSObject pKeys, ulong count)
+        public NSDictionary Init(in NSObject pObjects, in NSObject pKeys, in ulong count)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithObjectsforKeyscount, pObjects, pKeys, count));
         }
 
-        public NSDictionary Init(IntPtr pCoder)
+        public NSDictionary Init(in IntPtr pCoder)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithCoder, pCoder));
         }
 
-        public IntPtr Object(NSObject pKey)
+        public IntPtr Object(in NSObject pKey)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectForKey, pKey));
         }

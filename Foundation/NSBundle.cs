@@ -4,11 +4,11 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    public partial class NSBundle
+    public partial struct NSBundle
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSBundle obj) => obj.NativePtr;
-        public NSBundle(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in NSBundle obj) => obj.NativePtr;
+        public NSBundle(in IntPtr ptr) => NativePtr = ptr;
 
         public NSBundle()
         {
@@ -67,22 +67,22 @@ namespace SharpMetal.Foundation
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSBundle"), sel_mainBundle));
         }
 
-        public static NSBundle Bundle(NSString pPath)
+        public static NSBundle Bundle(in NSString pPath)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSBundle"), sel_bundleWithPath, pPath));
         }
 
-        public static NSBundle Bundle(NSURL pURL)
+        public static NSBundle Bundle(in NSURL pURL)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSBundle"), sel_bundleWithURL, pURL));
         }
 
-        public NSBundle Init(NSString pPath)
+        public NSBundle Init(in NSString pPath)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithPath, pPath));
         }
 
-        public NSBundle Init(NSURL pURL)
+        public NSBundle Init(in NSURL pURL)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithURL, pURL));
         }
@@ -97,17 +97,17 @@ namespace SharpMetal.Foundation
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_loadAndReturnError, ref pError.NativePtr);
         }
 
-        public NSURL URLForAuxiliaryExecutable(NSString pExecutableName)
+        public NSURL URLForAuxiliaryExecutable(in NSString pExecutableName)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_URLForAuxiliaryExecutable, pExecutableName));
         }
 
-        public NSString PathForAuxiliaryExecutable(NSString pExecutableName)
+        public NSString PathForAuxiliaryExecutable(in NSString pExecutableName)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_pathForAuxiliaryExecutable, pExecutableName));
         }
 
-        public NSObject ObjectForInfoDictionaryKey(NSString pKey)
+        public NSObject ObjectForInfoDictionaryKey(in NSString pKey)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectForInfoDictionaryKey, pKey));
         }

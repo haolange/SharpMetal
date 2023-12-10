@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices;
 using System.Runtime.Versioning;
 using SharpMetal.Foundation;
+using SharpMetal.QuartzCore;
 
 namespace SharpMetal.Metal
 {
@@ -12,7 +13,6 @@ namespace SharpMetal.Metal
         public ulong y;
         public ulong z;
     }
-
     
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLSize
@@ -22,15 +22,15 @@ namespace SharpMetal.Metal
         public ulong depth;
     }
 
-    
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLRegion
     {
         public MTLOrigin origin;
         public MTLSize size;
+
+        public override string ToString() => string.Format("{0}, {1}", origin, size);
     }
 
-    
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLSamplePosition
     {
@@ -38,7 +38,6 @@ namespace SharpMetal.Metal
         public float y;
     }
 
-    
     [StructLayout(LayoutKind.Sequential)]
     public struct MTLResourceID
     {

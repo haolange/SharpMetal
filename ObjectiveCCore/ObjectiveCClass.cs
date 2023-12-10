@@ -1,11 +1,27 @@
+using SharpMetal.Foundation;
+using System.Runtime.CompilerServices;
 using System.Runtime.Versioning;
+using System.Text;
 
 namespace SharpMetal.ObjectiveCCore
 {
-    public struct ObjectiveCClass
+    public struct ObjectiveCMethod
+    {
+        public readonly IntPtr NativePtr;
+        public ObjectiveCMethod(in IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in ObjectiveCMethod method) => method.NativePtr;
+        public static implicit operator ObjectiveCMethod(in IntPtr ptr) => new ObjectiveCMethod(ptr);
+
+        public Selector GetSelector() => ObjectiveCRuntime.method_getName(this);
+        public string GetName() => GetSelector().Name;
+    }
+
+    public unsafe struct ObjectiveCClass
     {
         public readonly IntPtr NativePtr;
         public static implicit operator IntPtr(ObjectiveCClass c) => c.NativePtr;
+
+        public string Name => NSUtil.GetUtf8String(ObjectiveCRuntime.class_getName(this));
 
         public ObjectiveCClass(IntPtr ptr)
         {
@@ -24,6 +40,24 @@ namespace SharpMetal.ObjectiveCCore
             NativePtr = ptr;
         }
 
+        public IntPtr GetProperty(string propertyName)
+        {
+            int byteCount = Encoding.UTF8.GetMaxByteCount(propertyName.Length);
+            byte* utf8BytesPtr = stackalloc byte[byteCount];
+            fixed (char* namePtr = propertyName)
+            {
+                Encoding.UTF8.GetBytes(namePtr, propertyName.Length, utf8BytesPtr, byteCount);
+            }
+
+            return ObjectiveCRuntime.class_getProperty(this, utf8BytesPtr);
+        }
+
+        public ObjectiveCClass Alloc()
+        {
+            var value = ObjectiveC.IntPtr_objc_msgSend(NativePtr, "alloc");
+            return new ObjectiveCClass(value);
+        }
+
         public ObjectiveCClass AllocInit()
         {
             var value = ObjectiveC.IntPtr_objc_msgSend(NativePtr, "alloc");
@@ -31,10 +65,22 @@ namespace SharpMetal.ObjectiveCCore
             return new ObjectiveCClass(value);
         }
 
-        public ObjectiveCClass Alloc()
+        public T Alloc<T>() where T : struct
         {
-            var value = ObjectiveC.IntPtr_objc_msgSend(NativePtr, "alloc");
-            return new ObjectiveCClass(value);
+            IntPtr value = ObjectiveC.IntPtr_objc_msgSend(NativePtr, "alloc");
+            return Unsafe.AsRef<T>(&value);
+        }
+
+        public T AllocInit<T>() where T : struct
+        {
+            IntPtr value = ObjectiveC.IntPtr_objc_msgSend(NativePtr, "alloc");
+            ObjectiveC.objc_msgSend(value, "init");
+            return Unsafe.AsRef<T>(&value);
+        }
+
+        public ObjectiveCMethod* class_copyMethodList(out uint count)
+        {
+            return ObjectiveCRuntime.class_copyMethodList(this, out count);
         }
     }
 }

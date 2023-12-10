@@ -4,11 +4,11 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    public partial class NSAutoreleasePool : IDisposable
+    public partial struct NSAutoreleasePool : IDisposable
     {
         public IntPtr NativePtr;
         public static implicit operator IntPtr(NSAutoreleasePool obj) => obj.NativePtr;
-        public NSAutoreleasePool(IntPtr ptr) => NativePtr = ptr;
+        public NSAutoreleasePool(in IntPtr ptr) => NativePtr = ptr;
 
         public static NSAutoreleasePool Begin()
         {
@@ -16,7 +16,7 @@ namespace SharpMetal.Foundation
             return new NSAutoreleasePool(cls.AllocInit());
         }
 
-        public void Drain()
+        /*public void Drain()
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drain);
         }
@@ -29,15 +29,15 @@ namespace SharpMetal.Foundation
         public static void ShowPools()
         {
             throw new NotSupportedException();
-        }
+        }*/
 
         public void Dispose()
         {
             ObjectiveCRuntime.release(NativePtr);
         }
 
-        private static readonly Selector sel_drain = "drain";
-        private static readonly Selector sel_showPools = "showPools";
-        private static readonly Selector sel_addObject = "addObject:";
+        //private static readonly Selector sel_drain = "drain";
+        //private static readonly Selector sel_showPools = "showPools";
+        //private static readonly Selector sel_addObject = "addObject:";
     }
 }

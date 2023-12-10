@@ -3,11 +3,11 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    public partial class NSURL
+    public partial struct NSURL
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSURL obj) => obj.NativePtr;
-        public NSURL(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in NSURL obj) => obj.NativePtr;
+        public NSURL(in IntPtr ptr) => NativePtr = ptr;
 
         public NSURL()
         {
@@ -17,17 +17,17 @@ namespace SharpMetal.Foundation
 
         public ushort FileSystemRepresentation => ObjectiveCRuntime.ushort_objc_msgSend(NativePtr, sel_fileSystemRepresentation);
 
-        public static NSURL FileURLWithPath(NSString pPath)
+        public static NSURL FileURLWithPath(in NSString pPath)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSURL"), sel_fileURLWithPath, pPath));
         }
 
-        public NSURL Init(NSString pString)
+        public NSURL Init(in NSString pString)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithString, pString));
         }
 
-        public NSURL InitFileURLWithPath(NSString pPath)
+        public NSURL InitFileURLWithPath(in NSString pPath)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initFileURLWithPath, pPath));
         }

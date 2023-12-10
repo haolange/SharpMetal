@@ -3,11 +3,11 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    public partial class NSSet
+    public partial struct NSSet
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSSet obj) => obj.NativePtr;
-        public NSSet(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in NSSet obj) => obj.NativePtr;
+        public NSSet(in IntPtr ptr) => NativePtr = ptr;
 
         public NSSet()
         {
@@ -19,12 +19,12 @@ namespace SharpMetal.Foundation
 
         public IntPtr ObjectEnumerator => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectEnumerator));
 
-        public NSSet Init(NSObject pObjects, ulong count)
+        public NSSet Init(in NSObject pObjects, in ulong count)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithObjectscount, pObjects, count));
         }
 
-        public NSSet Init(IntPtr pCoder)
+        public NSSet Init(in IntPtr pCoder)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithCoder, pCoder));
         }

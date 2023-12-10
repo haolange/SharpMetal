@@ -3,10 +3,12 @@ using System.Runtime.Versioning;
 using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
 using SharpMetal.Metal;
+using SharpMetal.QuartzCore;
+using System.Runtime.CompilerServices;
 
 namespace SharpMetal.ObjectiveCCore
 {
-    public static partial class ObjectiveCRuntime
+    public static unsafe partial class ObjectiveCRuntime
     {
         [LibraryImport(ObjectiveC.ObjCRuntime, EntryPoint = "objc_msgSend")]
         public static partial IntPtr IntPtr_objc_msgSend(IntPtr receiver, IntPtr selector, ulong a, ulong b, NSRange c, NSRange d, MTLTextureSwizzleChannels e);
@@ -133,6 +135,9 @@ namespace SharpMetal.ObjectiveCCore
 
         [LibraryImport(ObjectiveC.ObjCRuntime, EntryPoint = "objc_msgSend")]
         public static partial MTLResourceID MTLResourceID_objc_msgSend(IntPtr receiver, IntPtr selector);
+
+        [LibraryImport(ObjectiveC.ObjCRuntime, EntryPoint = "objc_msgSend")]
+        public static partial MTLRegion MTLRegion_objc_msgSend(IntPtr receiver, IntPtr selector);
 
         [LibraryImport(ObjectiveC.ObjCRuntime, EntryPoint = "objc_msgSend")]
         public static partial MTLSize MTLSize_objc_msgSend(IntPtr receiver, IntPtr selector, ulong a, ulong b, ulong c);
@@ -493,9 +498,62 @@ namespace SharpMetal.ObjectiveCCore
         [LibraryImport(ObjectiveC.ObjCRuntime, EntryPoint = "objc_msgSend")]
         public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, IntPtr b, IntPtr c, NSRange d);
 
+        public static T objc_msgSend<T>(IntPtr receiver, Selector selector) where T : struct
+        {
+            IntPtr value = IntPtr_objc_msgSend(receiver, selector);
+            return Unsafe.AsRef<T>(&value);
+        }
+        public static T objc_msgSend<T>(IntPtr receiver, Selector selector, uint a) where T : struct
+        {
+            IntPtr value = IntPtr_objc_msgSend(receiver, selector, a);
+            return Unsafe.AsRef<T>(&value);
+        }
+        public static T objc_msgSend<T>(IntPtr receiver, Selector selector, IntPtr a) where T : struct
+        {
+            IntPtr value = IntPtr_objc_msgSend(receiver, selector, a);
+            return Unsafe.AsRef<T>(&value);
+        }
+        public static string string_objc_msgSend(IntPtr receiver, Selector selector)
+        {
+            return objc_msgSend<NSString>(receiver, selector).GetValue();
+        }
+
+        [DllImport(ObjectiveC.ObjCRuntime)]
+        public static extern IntPtr sel_registerName(byte* namePtr);
+
+        [DllImport(ObjectiveC.ObjCRuntime)]
+        public static extern byte* sel_getName(IntPtr selector);
+
+        [DllImport(ObjectiveC.ObjCRuntime)]
+        public static extern IntPtr objc_getClass(byte* namePtr);
+
+        [DllImport(ObjectiveC.ObjCRuntime)]
+        public static extern ObjectiveCClass object_getClass(IntPtr obj);
+
+        [DllImport(ObjectiveC.ObjCRuntime)]
+        public static extern IntPtr class_getProperty(ObjectiveCClass cls, byte* namePtr);
+
+        [DllImport(ObjectiveC.ObjCRuntime)]
+        public static extern byte* class_getName(ObjectiveCClass cls);
+
+        [DllImport(ObjectiveC.ObjCRuntime)]
+        public static extern byte* property_copyAttributeValue(IntPtr property, byte* attributeNamePtr);
+
+        [DllImport(ObjectiveC.ObjCRuntime)]
+        public static extern Selector method_getName(ObjectiveCMethod method);
+
+        [DllImport(ObjectiveC.ObjCRuntime)]
+        public static extern ObjectiveCMethod* class_copyMethodList(ObjectiveCClass cls, out uint outCount);
+
+        [DllImport(ObjectiveC.ObjCRuntime)]
+        public static extern void free(IntPtr receiver);
+
         public static void retain(IntPtr receiver) => objc_msgSend(receiver, sel_retain);
+
         public static void release(IntPtr receiver) => objc_msgSend(receiver, sel_release);
+
         public static ulong GetRetainCount(IntPtr receiver) => ulong_objc_msgSend(receiver, sel_retainCount);
+
 
         private static readonly Selector sel_retain = "retain";
         private static readonly Selector sel_release = "release";

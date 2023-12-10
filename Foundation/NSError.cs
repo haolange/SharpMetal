@@ -3,11 +3,11 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
 {
-    public partial class NSError
+    public partial struct NSError
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(NSError obj) => obj.NativePtr;
-        public NSError(IntPtr ptr) => NativePtr = ptr;
+        public static implicit operator IntPtr(in NSError obj) => obj.NativePtr;
+        public NSError(in IntPtr ptr) => NativePtr = ptr;
 
         public NSError()
         {
@@ -29,12 +29,12 @@ namespace SharpMetal.Foundation
 
         public NSString LocalizedFailureReason => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_localizedFailureReason));
 
-        public static NSError Error(IntPtr domain, long code, NSDictionary pDictionary)
+        public static NSError Error(in IntPtr domain, in long code, in NSDictionary pDictionary)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("NSError"), sel_errorWithDomaincodeuserInfo, domain, code, pDictionary));
         }
 
-        public NSError Init(IntPtr domain, long code, NSDictionary pDictionary)
+        public NSError Init(in IntPtr domain, in long code, in NSDictionary pDictionary)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithDomaincodeuserInfo, domain, code, pDictionary));
         }
