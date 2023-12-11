@@ -211,6 +211,9 @@ namespace SharpMetal.ObjectiveCCore
         public static partial float float_objc_msgSend(IntPtr receiver, IntPtr selector);
 
         [LibraryImport(ObjectiveC.ObjCRuntime, EntryPoint = "objc_msgSend")]
+        public static partial float float_objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a);
+        
+        [LibraryImport(ObjectiveC.ObjCRuntime, EntryPoint = "objc_msgSend")]
         public static partial int int_objc_msgSend(IntPtr receiver, IntPtr selector);
 
         [LibraryImport(ObjectiveC.ObjCRuntime, EntryPoint = "objc_msgSend")]
