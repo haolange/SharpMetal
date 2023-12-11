@@ -339,67 +339,67 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newCommandQueue));
         }
 
-        public MTLCommandQueue NewCommandQueue(ulong maxCommandBufferCount)
+        public MTLCommandQueue NewCommandQueue(in ulong maxCommandBufferCount)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newCommandQueueWithMaxCommandBufferCount, maxCommandBufferCount));
         }
 
-        public MTLSizeAndAlign HeapTextureSizeAndAlign(MTLTextureDescriptor desc)
+        public MTLSizeAndAlign HeapTextureSizeAndAlign(in MTLTextureDescriptor desc)
         {
             return ObjectiveCRuntime.MTLSizeAndAlign_objc_msgSend(NativePtr, sel_heapTextureSizeAndAlignWithDescriptor, desc);
         }
 
-        public MTLSizeAndAlign HeapBufferSizeAndAlign(ulong length, MTLResourceOptions options)
+        public MTLSizeAndAlign HeapBufferSizeAndAlign(in ulong length, in MTLResourceOptions options)
         {
             return ObjectiveCRuntime.MTLSizeAndAlign_objc_msgSend(NativePtr, sel_heapBufferSizeAndAlignWithLengthoptions, length, (ulong)options);
         }
 
-        public MTLHeap NewHeap(MTLHeapDescriptor descriptor)
+        public MTLHeap NewHeap(in MTLHeapDescriptor descriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newHeapWithDescriptor, descriptor));
         }
 
-        public MTLBuffer NewBuffer(ulong length, MTLResourceOptions options)
+        public MTLBuffer NewBuffer(in ulong length, in MTLResourceOptions options)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newBufferWithLengthoptions, length, (ulong)options));
         }
 
-        public MTLBuffer NewBuffer(in IntPtr pointer, ulong length, MTLResourceOptions options)
+        public MTLBuffer NewBuffer(in IntPtr pointer, in ulong length, in MTLResourceOptions options)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newBufferWithByteslengthoptions, pointer, length, (ulong)options));
         }
 
-        public MTLDepthStencilState NewDepthStencilState(MTLDepthStencilDescriptor descriptor)
+        public MTLDepthStencilState NewDepthStencilState(in MTLDepthStencilDescriptor descriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newDepthStencilStateWithDescriptor, descriptor));
         }
 
-        public MTLTexture NewTexture(MTLTextureDescriptor descriptor)
+        public MTLTexture NewTexture(in MTLTextureDescriptor descriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newTextureWithDescriptor, descriptor));
         }
 
-        public MTLTexture NewTexture(MTLTextureDescriptor descriptor, IntPtr iosurface, ulong plane)
+        public MTLTexture NewTexture(in MTLTextureDescriptor descriptor, in IntPtr iosurface, in ulong plane)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newTextureWithDescriptoriosurfaceplane, descriptor, iosurface, plane));
         }
 
-        public MTLTexture NewSharedTexture(MTLTextureDescriptor descriptor)
+        public MTLTexture NewSharedTexture(in MTLTextureDescriptor descriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newSharedTextureWithDescriptor, descriptor));
         }
 
-        public MTLTexture NewSharedTexture(MTLSharedTextureHandle sharedHandle)
+        public MTLTexture NewSharedTexture(in MTLSharedTextureHandle sharedHandle)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newSharedTextureWithHandle, sharedHandle));
         }
 
-        public MTLSamplerState NewSamplerState(MTLSamplerDescriptor descriptor)
+        public MTLSamplerState NewSamplerState(in MTLSamplerDescriptor descriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newSamplerStateWithDescriptor, descriptor));
         }
 
-        public MTLLibrary NewDefaultLibrary(NSBundle bundle, ref NSError error)
+        public MTLLibrary NewDefaultLibrary(in NSBundle bundle, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newDefaultLibraryWithBundleerror, bundle, ref error.NativePtr));
         }
@@ -409,12 +409,12 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newDefaultLibraryWithBundleerror));
         }
 
-        public MTLLibrary NewLibrary(NSString filepath, ref NSError error)
+        public MTLLibrary NewLibrary(in NSString filepath, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newLibraryWithFileerror, filepath, ref error.NativePtr));
         }
 
-        public MTLLibrary NewLibrary(NSURL url, ref NSError error)
+        public MTLLibrary NewLibrary(in NSURL url, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newLibraryWithURLerror, url, ref error.NativePtr));
         }
@@ -424,102 +424,102 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newLibraryWithDataerror, data, ref error.NativePtr));
         }
 
-        public MTLLibrary NewLibrary(NSString source, MTLCompileOptions options, ref NSError error)
+        public MTLLibrary NewLibrary(in NSString source, in MTLCompileOptions options, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newLibraryWithSourceoptionserror, source, options, ref error.NativePtr));
         }
 
-        public MTLLibrary NewLibrary(MTLStitchedLibraryDescriptor descriptor, ref NSError error)
+        public MTLLibrary NewLibrary(in MTLStitchedLibraryDescriptor descriptor, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newLibraryWithStitchedDescriptorerror, descriptor, ref error.NativePtr));
         }
 
-        public MTLRenderPipelineState NewRenderPipelineState(MTLRenderPipelineDescriptor descriptor, ref NSError error)
+        public MTLRenderPipelineState NewRenderPipelineState(in MTLRenderPipelineDescriptor descriptor, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newRenderPipelineStateWithDescriptorerror, descriptor, ref error.NativePtr));
         }
 
-        public MTLRenderPipelineState NewRenderPipelineState(MTLRenderPipelineDescriptor descriptor, MTLPipelineOption options, IntPtr reflection, ref NSError error)
+        public MTLRenderPipelineState NewRenderPipelineState(in MTLRenderPipelineDescriptor descriptor, in MTLPipelineOption options, in IntPtr reflection, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newRenderPipelineStateWithDescriptoroptionsreflectionerror, descriptor, (ulong)options, reflection, ref error.NativePtr));
         }
 
-        public MTLComputePipelineState NewComputePipelineState(MTLFunction computeFunction, ref NSError error)
+        public MTLComputePipelineState NewComputePipelineState(in MTLFunction computeFunction, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newComputePipelineStateWithFunctionerror, computeFunction, ref error.NativePtr));
         }
 
-        public MTLComputePipelineState NewComputePipelineState(MTLFunction computeFunction, MTLPipelineOption options, IntPtr reflection, ref NSError error)
+        public MTLComputePipelineState NewComputePipelineState(in MTLFunction computeFunction, in MTLPipelineOption options, in IntPtr reflection, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newComputePipelineStateWithFunctionoptionsreflectionerror, computeFunction, (ulong)options, reflection, ref error.NativePtr));
         }
 
-        public MTLComputePipelineState NewComputePipelineState(MTLComputePipelineDescriptor descriptor, MTLPipelineOption options, IntPtr reflection, ref NSError error)
+        public MTLComputePipelineState NewComputePipelineState(in MTLComputePipelineDescriptor descriptor, in MTLPipelineOption options, in IntPtr reflection, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newComputePipelineStateWithDescriptoroptionsreflectionerror, descriptor, (ulong)options, reflection, ref error.NativePtr));
         }
 
-        public bool SupportsFeatureSet(MTLFeatureSet featureSet)
+        public bool SupportsFeatureSet(in MTLFeatureSet featureSet)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportsFeatureSet, (ulong)featureSet);
         }
 
-        public bool SupportsFamily(MTLGPUFamily gpuFamily)
+        public bool SupportsFamily(in MTLGPUFamily gpuFamily)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportsFamily, (long)gpuFamily);
         }
 
-        public bool SupportsTextureSampleCount(ulong sampleCount)
+        public bool SupportsTextureSampleCount(in ulong sampleCount)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportsTextureSampleCount, sampleCount);
         }
 
-        public ulong MinimumLinearTextureAlignmentForPixelFormat(MTLPixelFormat format)
+        public ulong MinimumLinearTextureAlignmentForPixelFormat(in MTLPixelFormat format)
         {
             return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_minimumLinearTextureAlignmentForPixelFormat, (ulong)format);
         }
 
-        public ulong MinimumTextureBufferAlignmentForPixelFormat(MTLPixelFormat format)
+        public ulong MinimumTextureBufferAlignmentForPixelFormat(in MTLPixelFormat format)
         {
             return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_minimumTextureBufferAlignmentForPixelFormat, (ulong)format);
         }
 
-        public MTLRenderPipelineState NewRenderPipelineState(MTLTileRenderPipelineDescriptor descriptor, MTLPipelineOption options, IntPtr reflection, ref NSError error)
+        public MTLRenderPipelineState NewRenderPipelineState(in MTLTileRenderPipelineDescriptor descriptor, in MTLPipelineOption options, in IntPtr reflection, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newRenderPipelineStateWithTileDescriptoroptionsreflectionerror, descriptor, (ulong)options, reflection, ref error.NativePtr));
         }
 
-        public MTLRenderPipelineState NewRenderPipelineState(MTLMeshRenderPipelineDescriptor descriptor, MTLPipelineOption options, IntPtr reflection, ref NSError error)
+        public MTLRenderPipelineState NewRenderPipelineState(in MTLMeshRenderPipelineDescriptor descriptor, in MTLPipelineOption options, in IntPtr reflection, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newRenderPipelineStateWithMeshDescriptoroptionsreflectionerror, descriptor, (ulong)options, reflection, ref error.NativePtr));
         }
 
-        public void GetDefaultSamplePositions(MTLSamplePosition positions, ulong count)
+        public void GetDefaultSamplePositions(in MTLSamplePosition positions, in ulong count)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_getDefaultSamplePositionscount, positions, count);
         }
 
-        public MTLArgumentEncoder NewArgumentEncoder(NSArray arguments)
+        public MTLArgumentEncoder NewArgumentEncoder(in NSArray arguments)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newArgumentEncoderWithArguments, arguments));
         }
 
-        public bool SupportsRasterizationRateMap(ulong layerCount)
+        public bool SupportsRasterizationRateMap(in ulong layerCount)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportsRasterizationRateMapWithLayerCount, layerCount);
         }
 
-        public MTLRasterizationRateMap NewRasterizationRateMap(MTLRasterizationRateMapDescriptor descriptor)
+        public MTLRasterizationRateMap NewRasterizationRateMap(in MTLRasterizationRateMapDescriptor descriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newRasterizationRateMapWithDescriptor, descriptor));
         }
 
-        public MTLIndirectCommandBuffer NewIndirectCommandBuffer(MTLIndirectCommandBufferDescriptor descriptor, ulong maxCount, MTLResourceOptions options)
+        public MTLIndirectCommandBuffer NewIndirectCommandBuffer(in MTLIndirectCommandBufferDescriptor descriptor, in ulong maxCount, in MTLResourceOptions options)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newIndirectCommandBufferWithDescriptormaxCommandCountoptions, descriptor, maxCount, (ulong)options));
         }
 
-        public MTLSharedEvent NewSharedEvent(MTLSharedEventHandle sharedEventHandle)
+        public MTLSharedEvent NewSharedEvent(in MTLSharedEventHandle sharedEventHandle)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newSharedEventWithHandle, sharedEventHandle));
         }
@@ -529,7 +529,7 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newSharedEventWithHandle));
         }
 
-        public IntPtr NewIOHandle(NSURL url, ref NSError error)
+        public IntPtr NewIOHandle(in NSURL url, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newIOHandleWithURLerror, url, ref error.NativePtr));
         }
@@ -539,37 +539,37 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newIOCommandQueueWithDescriptorerror, descriptor, ref error.NativePtr));
         }
 
-        public IntPtr NewIOHandle(NSURL url, MTLIOCompressionMethod compressionMethod, ref NSError error)
+        public IntPtr NewIOHandle(in NSURL url, in MTLIOCompressionMethod compressionMethod, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newIOHandleWithURLcompressionMethoderror, url, (long)compressionMethod, ref error.NativePtr));
         }
 
-        public IntPtr NewIOFileHandle(NSURL url, ref NSError error)
+        public IntPtr NewIOFileHandle(in NSURL url, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newIOFileHandleWithURLerror, url, ref error.NativePtr));
         }
 
-        public IntPtr NewIOFileHandle(NSURL url, MTLIOCompressionMethod compressionMethod, ref NSError error)
+        public IntPtr NewIOFileHandle(in NSURL url, in MTLIOCompressionMethod compressionMethod, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newIOFileHandleWithURLcompressionMethoderror, url, (long)compressionMethod, ref error.NativePtr));
         }
 
-        public MTLSize SparseTileSize(MTLTextureType textureType, MTLPixelFormat pixelFormat, ulong sampleCount)
+        public MTLSize SparseTileSize(in MTLTextureType textureType, in MTLPixelFormat pixelFormat, in ulong sampleCount)
         {
             return ObjectiveCRuntime.MTLSize_objc_msgSend(NativePtr, sel_sparseTileSizeWithTextureTypepixelFormatsampleCount, (ulong)textureType, (ulong)pixelFormat, sampleCount);
         }
 
-        public void ConvertSparsePixelRegions(MTLRegion pixelRegions, MTLRegion tileRegions, MTLSize tileSize, MTLSparseTextureRegionAlignmentMode mode, ulong numRegions)
+        public void ConvertSparsePixelRegions(in MTLRegion pixelRegions, in MTLRegion tileRegions, in MTLSize tileSize, in MTLSparseTextureRegionAlignmentMode mode, in ulong numRegions)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_convertSparsePixelRegionstoTileRegionswithTileSizealignmentModenumRegions, pixelRegions, tileRegions, tileSize, (ulong)mode, numRegions);
         }
 
-        public void ConvertSparseTileRegions(MTLRegion tileRegions, MTLRegion pixelRegions, MTLSize tileSize, ulong numRegions)
+        public void ConvertSparseTileRegions(in MTLRegion tileRegions, in MTLRegion pixelRegions, in MTLSize tileSize, in ulong numRegions)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_convertSparseTileRegionstoPixelRegionswithTileSizenumRegions, tileRegions, pixelRegions, tileSize, numRegions);
         }
 
-        public ulong SparseTileSizeInBytes(MTLSparsePageSize sparsePageSize)
+        public ulong SparseTileSizeInBytes(in MTLSparsePageSize sparsePageSize)
         {
             return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_sparseTileSizeInBytesForSparsePageSize, (long)sparsePageSize);
         }
@@ -579,72 +579,72 @@ namespace SharpMetal.Metal
             return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_sparseTileSizeInBytesForSparsePageSize);
         }
 
-        public MTLSize SparseTileSize(MTLTextureType textureType, MTLPixelFormat pixelFormat, ulong sampleCount, MTLSparsePageSize sparsePageSize)
+        public MTLSize SparseTileSize(in MTLTextureType textureType, in MTLPixelFormat pixelFormat, in ulong sampleCount, in MTLSparsePageSize sparsePageSize)
         {
             return ObjectiveCRuntime.MTLSize_objc_msgSend(NativePtr, sel_sparseTileSizeWithTextureTypepixelFormatsampleCountsparsePageSize, (ulong)textureType, (ulong)pixelFormat, sampleCount, (long)sparsePageSize);
         }
 
-        public MTLCounterSampleBuffer NewCounterSampleBuffer(MTLCounterSampleBufferDescriptor descriptor, ref NSError error)
+        public MTLCounterSampleBuffer NewCounterSampleBuffer(in MTLCounterSampleBufferDescriptor descriptor, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newCounterSampleBufferWithDescriptorerror, descriptor, ref error.NativePtr));
         }
 
-        public void SampleTimestamps(ulong cpuTimestamp, ulong gpuTimestamp)
+        public void SampleTimestamps(in ulong cpuTimestamp, in ulong gpuTimestamp)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_sampleTimestampsgpuTimestamp, cpuTimestamp, gpuTimestamp);
         }
 
-        public MTLArgumentEncoder NewArgumentEncoder(MTLBufferBinding bufferBinding)
+        public MTLArgumentEncoder NewArgumentEncoder(in MTLBufferBinding bufferBinding)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newArgumentEncoderWithBufferBinding, bufferBinding));
         }
 
-        public bool SupportsCounterSampling(MTLCounterSamplingPoint samplingPoint)
+        public bool SupportsCounterSampling(in MTLCounterSamplingPoint samplingPoint)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportsCounterSampling, (ulong)samplingPoint);
         }
 
-        public bool SupportsVertexAmplificationCount(ulong count)
+        public bool SupportsVertexAmplificationCount(in ulong count)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportsVertexAmplificationCount, count);
         }
 
-        public MTLDynamicLibrary NewDynamicLibrary(MTLLibrary library, ref NSError error)
+        public MTLDynamicLibrary NewDynamicLibrary(in MTLLibrary library, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newDynamicLibraryerror, library, ref error.NativePtr));
         }
 
-        public MTLDynamicLibrary NewDynamicLibrary(NSURL url, ref NSError error)
+        public MTLDynamicLibrary NewDynamicLibrary(in NSURL url, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newDynamicLibraryWithURLerror, url, ref error.NativePtr));
         }
 
-        public MTLBinaryArchive NewBinaryArchive(MTLBinaryArchiveDescriptor descriptor, ref NSError error)
+        public MTLBinaryArchive NewBinaryArchive(in MTLBinaryArchiveDescriptor descriptor, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newBinaryArchiveWithDescriptorerror, descriptor, ref error.NativePtr));
         }
 
-        public MTLAccelerationStructureSizes AccelerationStructureSizes(MTLAccelerationStructureDescriptor descriptor)
+        public MTLAccelerationStructureSizes AccelerationStructureSizes(in MTLAccelerationStructureDescriptor descriptor)
         {
             return ObjectiveCRuntime.MTLAccelerationStructureSizes_objc_msgSend(NativePtr, sel_accelerationStructureSizesWithDescriptor, descriptor);
         }
 
-        public MTLAccelerationStructure NewAccelerationStructure(ulong size)
+        public MTLAccelerationStructure NewAccelerationStructure(in ulong size)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newAccelerationStructureWithSize, size));
         }
 
-        public MTLAccelerationStructure NewAccelerationStructure(MTLAccelerationStructureDescriptor descriptor)
+        public MTLAccelerationStructure NewAccelerationStructure(in MTLAccelerationStructureDescriptor descriptor)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newAccelerationStructureWithDescriptor, descriptor));
         }
 
-        public MTLSizeAndAlign HeapAccelerationStructureSizeAndAlign(ulong size)
+        public MTLSizeAndAlign HeapAccelerationStructureSizeAndAlign(in ulong size)
         {
             return ObjectiveCRuntime.MTLSizeAndAlign_objc_msgSend(NativePtr, sel_heapAccelerationStructureSizeAndAlignWithSize, size);
         }
 
-        public MTLSizeAndAlign HeapAccelerationStructureSizeAndAlign(MTLAccelerationStructureDescriptor descriptor)
+        public MTLSizeAndAlign HeapAccelerationStructureSizeAndAlign(in MTLAccelerationStructureDescriptor descriptor)
         {
             return ObjectiveCRuntime.MTLSizeAndAlign_objc_msgSend(NativePtr, sel_heapAccelerationStructureSizeAndAlignWithDescriptor, descriptor);
         }

@@ -27,7 +27,7 @@ namespace SharpMetal.Metal
 
         public NSError Error => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_error));
 
-        public void LoadBytes(in IntPtr pointer, ulong size, in IntPtr sourceHandle, in ulong sourceHandleOffset)
+        public void LoadBytes(in IntPtr pointer, in ulong size, in IntPtr sourceHandle, in ulong sourceHandleOffset)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_loadBytessizesourceHandlesourceHandleOffset, pointer, size, sourceHandle, sourceHandleOffset);
         }

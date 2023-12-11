@@ -67,7 +67,7 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLIOScratchBufferAllocator obj) => obj.NativePtr;
         public MTLIOScratchBufferAllocator(in IntPtr ptr) => NativePtr = ptr;
 
-        public IntPtr NewScratchBuffer(ulong minimumSize)
+        public IntPtr NewScratchBuffer(in ulong minimumSize)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newScratchBufferWithMinimumSize, minimumSize));
         }

@@ -121,29 +121,7 @@ namespace SharpMetal.Metal
         public float motionEndTime;
     }
 
-    public partial struct MTLAccelerationStructureDescriptor
-    {
-        public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLAccelerationStructureDescriptor obj) => obj.NativePtr;
-        public MTLAccelerationStructureDescriptor(in IntPtr ptr) => NativePtr = ptr;
-
-        public MTLAccelerationStructureDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLAccelerationStructureDescriptor");
-            NativePtr = cls.AllocInit();
-        }
-
-        public MTLAccelerationStructureUsage Usage
-        {
-            get => (MTLAccelerationStructureUsage)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_usage);
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setUsage, (ulong)value);
-        }
-
-        private static readonly Selector sel_usage = "usage";
-        private static readonly Selector sel_setUsage = "setUsage:";
-    }
-
-    /*public partial struct MTLAccelerationStructureGeometryDescriptor
+    public partial struct MTLAccelerationStructureGeometryDescriptor
     {
         public IntPtr NativePtr;
         public static implicit operator IntPtr(in MTLAccelerationStructureGeometryDescriptor obj) => obj.NativePtr;
@@ -219,7 +197,7 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setPrimitiveDataStride = "setPrimitiveDataStride:";
         private static readonly Selector sel_primitiveDataElementSize = "primitiveDataElementSize";
         private static readonly Selector sel_setPrimitiveDataElementSize = "setPrimitiveDataElementSize:";
-    }*/
+    }
 
     public partial struct MTLMotionKeyframeData
     {
@@ -255,7 +233,11 @@ namespace SharpMetal.Metal
     public partial struct MTLAccelerationStructureTriangleGeometryDescriptor
     {
         public IntPtr NativePtr;
+
         public static implicit operator IntPtr(in MTLAccelerationStructureTriangleGeometryDescriptor obj) => obj.NativePtr;
+        public static implicit operator MTLAccelerationStructureGeometryDescriptor(in MTLAccelerationStructureTriangleGeometryDescriptor obj) => new MTLAccelerationStructureGeometryDescriptor(obj.NativePtr);
+        public static implicit operator MTLAccelerationStructureTriangleGeometryDescriptor(in MTLAccelerationStructureGeometryDescriptor obj) => new MTLAccelerationStructureTriangleGeometryDescriptor(obj.NativePtr);
+
         public MTLAccelerationStructureTriangleGeometryDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLAccelerationStructureTriangleGeometryDescriptor()
@@ -414,7 +396,11 @@ namespace SharpMetal.Metal
     public partial struct MTLAccelerationStructureBoundingBoxGeometryDescriptor
     {
         public IntPtr NativePtr;
+
         public static implicit operator IntPtr(in MTLAccelerationStructureBoundingBoxGeometryDescriptor obj) => obj.NativePtr;
+        public static implicit operator MTLAccelerationStructureGeometryDescriptor(in MTLAccelerationStructureBoundingBoxGeometryDescriptor obj) => new MTLAccelerationStructureGeometryDescriptor(obj.NativePtr);
+        public static implicit operator MTLAccelerationStructureBoundingBoxGeometryDescriptor(in MTLAccelerationStructureGeometryDescriptor obj) => new MTLAccelerationStructureBoundingBoxGeometryDescriptor(obj.NativePtr);
+
         public MTLAccelerationStructureBoundingBoxGeometryDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLAccelerationStructureBoundingBoxGeometryDescriptor()
@@ -525,7 +511,11 @@ namespace SharpMetal.Metal
     public partial struct MTLAccelerationStructureMotionTriangleGeometryDescriptor
     {
         public IntPtr NativePtr;
+
         public static implicit operator IntPtr(in MTLAccelerationStructureMotionTriangleGeometryDescriptor obj) => obj.NativePtr;
+        public static implicit operator MTLAccelerationStructureGeometryDescriptor(in MTLAccelerationStructureMotionTriangleGeometryDescriptor obj) => new MTLAccelerationStructureGeometryDescriptor(obj.NativePtr);
+        public static implicit operator MTLAccelerationStructureMotionTriangleGeometryDescriptor(in MTLAccelerationStructureGeometryDescriptor obj) => new MTLAccelerationStructureMotionTriangleGeometryDescriptor(obj.NativePtr);
+
         public MTLAccelerationStructureMotionTriangleGeometryDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLAccelerationStructureMotionTriangleGeometryDescriptor()
@@ -676,7 +666,11 @@ namespace SharpMetal.Metal
     public partial struct MTLAccelerationStructureMotionBoundingBoxGeometryDescriptor
     {
         public IntPtr NativePtr;
+
         public static implicit operator IntPtr(in MTLAccelerationStructureMotionBoundingBoxGeometryDescriptor obj) => obj.NativePtr;
+        public static implicit operator MTLAccelerationStructureGeometryDescriptor(in MTLAccelerationStructureMotionBoundingBoxGeometryDescriptor obj) => new MTLAccelerationStructureGeometryDescriptor(obj.NativePtr);
+        public static implicit operator MTLAccelerationStructureMotionBoundingBoxGeometryDescriptor(in MTLAccelerationStructureGeometryDescriptor obj) => new MTLAccelerationStructureMotionBoundingBoxGeometryDescriptor(obj.NativePtr);
+
         public MTLAccelerationStructureMotionBoundingBoxGeometryDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLAccelerationStructureMotionBoundingBoxGeometryDescriptor()
@@ -779,7 +773,11 @@ namespace SharpMetal.Metal
     public partial struct MTLAccelerationStructureCurveGeometryDescriptor
     {
         public IntPtr NativePtr;
+
         public static implicit operator IntPtr(in MTLAccelerationStructureCurveGeometryDescriptor obj) => obj.NativePtr;
+        public static implicit operator MTLAccelerationStructureGeometryDescriptor(in MTLAccelerationStructureCurveGeometryDescriptor obj) => new MTLAccelerationStructureGeometryDescriptor(obj.NativePtr);
+        public static implicit operator MTLAccelerationStructureCurveGeometryDescriptor(in MTLAccelerationStructureGeometryDescriptor obj) => new MTLAccelerationStructureCurveGeometryDescriptor(obj.NativePtr);
+
         public MTLAccelerationStructureCurveGeometryDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLAccelerationStructureCurveGeometryDescriptor()
@@ -994,7 +992,11 @@ namespace SharpMetal.Metal
     public partial struct MTLAccelerationStructureMotionCurveGeometryDescriptor
     {
         public IntPtr NativePtr;
+
         public static implicit operator IntPtr(in MTLAccelerationStructureMotionCurveGeometryDescriptor obj) => obj.NativePtr;
+        public static implicit operator MTLAccelerationStructureGeometryDescriptor(in MTLAccelerationStructureMotionCurveGeometryDescriptor obj) => new MTLAccelerationStructureGeometryDescriptor(obj.NativePtr);
+        public static implicit operator MTLAccelerationStructureMotionCurveGeometryDescriptor(in MTLAccelerationStructureGeometryDescriptor obj) => new MTLAccelerationStructureMotionCurveGeometryDescriptor(obj.NativePtr);
+
         public MTLAccelerationStructureMotionCurveGeometryDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLAccelerationStructureMotionCurveGeometryDescriptor()
@@ -1188,6 +1190,28 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_curveEndCaps = "curveEndCaps";
         private static readonly Selector sel_setCurveEndCaps = "setCurveEndCaps:";
         private static readonly Selector sel_descriptor = "descriptor";
+    }
+
+    public partial struct MTLAccelerationStructureDescriptor
+    {
+        public IntPtr NativePtr;
+        public static implicit operator IntPtr(in MTLAccelerationStructureDescriptor obj) => obj.NativePtr;
+        public MTLAccelerationStructureDescriptor(in IntPtr ptr) => NativePtr = ptr;
+
+        public MTLAccelerationStructureDescriptor()
+        {
+            var cls = new ObjectiveCClass("MTLAccelerationStructureDescriptor");
+            NativePtr = cls.AllocInit();
+        }
+
+        public MTLAccelerationStructureUsage Usage
+        {
+            get => (MTLAccelerationStructureUsage)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_usage);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setUsage, (ulong)value);
+        }
+
+        private static readonly Selector sel_usage = "usage";
+        private static readonly Selector sel_setUsage = "setUsage:";
     }
 
     public partial struct MTLInstanceAccelerationStructureDescriptor
