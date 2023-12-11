@@ -1,6 +1,4 @@
 # SharpMetal
-This repository forked from IsaacMarovitz SharpMetal:https://github.com/IsaacMarovitz/SharpMetal 
+[This repository forked from IsaacMarovitz repository SharpMetal]([https://github.com/haolange/InfinityRenderPipeline](https://github.com/IsaacMarovitz/SharpMetal))
 
-Content for Apple Metal 3.0 graphics api binding for dotnet.
-
-Change to no gc struct and support iOS, And add MetalFX support.
+Apple Metal 3.0 graphics api binding for dotnet. Change src to no gc struct and support iOS, add MetalFX support.
