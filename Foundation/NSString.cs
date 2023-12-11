@@ -1,4 +1,7 @@
+using System.Diagnostics;
+using System.Drawing;
 using System.Runtime.Versioning;
+using System.Text;
 using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
@@ -43,6 +46,25 @@ namespace SharpMetal.Foundation
         RegularExpressionSearch = 1024,
     }
 
+    internal unsafe sealed class NSStringDebugView
+    {
+        NSString m_Target;
+
+        public NSStringDebugView(NSString target)
+        {
+            m_Target = target;
+        }
+
+        public string StringValue
+        {
+            get
+            {
+                return m_Target.ToString();
+            }
+        }
+    }
+
+    [DebuggerTypeProxy(typeof(NSStringDebugView))]
     public unsafe partial struct NSString
     {
         public IntPtr NativePtr;
@@ -73,10 +95,13 @@ namespace SharpMetal.Foundation
 
         public ushort FileSystemRepresentation => ObjectiveCRuntime.ushort_objc_msgSend(NativePtr, sel_fileSystemRepresentation);
 
-        public string GetValue()
+        public override string ToString()
         {
-            ushort utf8Ptr = ObjectiveCRuntime.ushort_objc_msgSend(NativePtr, sel_UTF8String);
-            return NSUtil.GetUtf8String((byte*)&utf8Ptr);
+            //ushort utf8Ptr = ObjectiveCRuntime.ushort_objc_msgSend(NativePtr, sel_UTF8String);
+            //return Encoding.UTF8.GetString((byte*)&utf8Ptr, (int)Length);
+
+            byte* utf8Ptr = ObjectiveCRuntime.bytePtr_objc_msgSend(NativePtr, sel_UTF8String);
+            return NSUtil.GetUtf8String(utf8Ptr);
         }
 
         public static NSString String(in NSString pString)
