@@ -1,2 +1,2 @@
 # SharpMetal
-low level apple Metal graphics api bindings for dotnet.
+Apple Metal 3.0 graphics api binding for dotnet.
