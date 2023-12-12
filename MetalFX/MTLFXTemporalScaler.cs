@@ -92,19 +92,19 @@ namespace SharpMetal.MetalFX
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, MTLFXSelector.sel_newTemporalScalerWithDevice, device));
         }
 
-        public bool SupportsDevice(in MTLDevice device)
+        public static bool SupportsDevice(in MTLDevice device)
         {
-            return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, MTLFXSelector.sel_supportsDevice, device);
+            return ObjectiveCRuntime.bool_objc_msgSend(new ObjectiveCClass("MTLFXTemporalScalerDescriptor"), MTLFXSelector.sel_supportsDevice, device);
         }
 
-        public float SupportedInputContentMinScaleForDevice(in MTLDevice device)
+        public static float SupportedInputContentMinScaleForDevice(in MTLDevice device)
         {
-            return ObjectiveCRuntime.float_objc_msgSend(NativePtr, MTLFXSelector.sel_supportedInputContentMinScaleForDevice, device);
+            return ObjectiveCRuntime.float_objc_msgSend(new ObjectiveCClass("MTLFXTemporalScalerDescriptor"), MTLFXSelector.sel_supportedInputContentMinScaleForDevice, device);
         }
 
-        public float SupportedInputContentMaxScaleForDevice(in MTLDevice device)
+        public static float SupportedInputContentMaxScaleForDevice(in MTLDevice device)
         {
-            return ObjectiveCRuntime.float_objc_msgSend(NativePtr, MTLFXSelector.sel_supportedInputContentMaxScaleForDevice, device);
+            return ObjectiveCRuntime.float_objc_msgSend(new ObjectiveCClass("MTLFXTemporalScalerDescriptor"), MTLFXSelector.sel_supportedInputContentMaxScaleForDevice, device);
         }
     }
 

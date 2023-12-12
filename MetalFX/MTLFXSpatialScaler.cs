@@ -69,9 +69,9 @@ namespace SharpMetal.MetalFX
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(device, MTLFXSelector.sel_newSpatialScalerWithDevice, NativePtr));
         }
 
-        public bool SupportsDevice(in MTLDevice device)
+        public static bool SupportsDevice(in MTLDevice device)
         {
-            return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, MTLFXSelector.sel_supportsDevice, device);
+            return ObjectiveCRuntime.bool_objc_msgSend(new ObjectiveCClass("MTLFXSpatialScalerDescriptor"), MTLFXSelector.sel_supportsDevice, device);
         }
     }
 
