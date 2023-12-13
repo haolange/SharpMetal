@@ -501,41 +501,38 @@ namespace SharpMetal.ObjectiveCCore
         [LibraryImport(ObjectiveC.ObjCRuntime, EntryPoint = "objc_msgSend")]
         public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, IntPtr b, IntPtr c, NSRange d);
 
+        [LibraryImport(ObjectiveC.ObjCRuntime, EntryPoint = "objc_msgSend_stret")]
+        public static partial void objc_msgSend_stret(void* retPtr, IntPtr receiver, Selector selector);
+
+        [DllImport(ObjectiveC.ObjCRuntime, EntryPoint = "objc_msgSend")]
+        public static extern void objc_msgSend(IntPtr receiver, Selector selector, MTLCommandBufferHandler a);
+
         [DllImport(ObjectiveC.ObjCRuntime)]
         public static extern IntPtr sel_registerName(byte* namePtr);
-
 
         [DllImport(ObjectiveC.ObjCRuntime)]
         public static extern byte* sel_getName(IntPtr selector);
 
-
         [DllImport(ObjectiveC.ObjCRuntime)]
         public static extern IntPtr objc_getClass(byte* namePtr);
-
 
         [DllImport(ObjectiveC.ObjCRuntime)]
         public static extern ObjectiveCClass object_getClass(IntPtr obj);
 
-
         [DllImport(ObjectiveC.ObjCRuntime)]
         public static extern IntPtr class_getProperty(ObjectiveCClass cls, byte* namePtr);
-
 
         [DllImport(ObjectiveC.ObjCRuntime)]
         public static extern byte* class_getName(ObjectiveCClass cls);
 
-
         [DllImport(ObjectiveC.ObjCRuntime)]
         public static extern byte* property_copyAttributeValue(IntPtr property, byte* attributeNamePtr);
-
 
         [DllImport(ObjectiveC.ObjCRuntime)]
         public static extern Selector method_getName(ObjectiveCMethod method);
 
-
         [DllImport(ObjectiveC.ObjCRuntime)]
         public static extern ObjectiveCMethod* class_copyMethodList(ObjectiveCClass cls, out uint outCount);
-
 
         [DllImport(ObjectiveC.ObjCRuntime)]
         public static extern void free(IntPtr receiver);
@@ -562,6 +559,13 @@ namespace SharpMetal.ObjectiveCCore
         {
             IntPtr value = IntPtr_objc_msgSend(receiver, selector, a);
             return Unsafe.AsRef<T>(&value);
+        }
+
+        public static T objc_msgSend_stret<T>(IntPtr receiver, Selector selector) where T : struct
+        {
+            T ret = default(T);
+            objc_msgSend_stret(Unsafe.AsPointer(ref ret), receiver, selector);
+            return ret;
         }
 
         public static string string_objc_msgSend(IntPtr receiver, Selector selector)

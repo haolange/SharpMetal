@@ -1,4 +1,3 @@
-using System.Runtime.Versioning;
 using SharpMetal.Foundation;
 using SharpMetal.ObjectiveCCore;
 

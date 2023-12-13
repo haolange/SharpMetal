@@ -1,8 +1,8 @@
-﻿using SharpMetal.QuartzCore;
+﻿using SharpMetal.Metal;
+using SharpMetal.QuartzCore;
 using SharpMetal.ObjectiveCCore;
-using SharpMetal.Metal;
 
-namespace Apple.Metal.Foundation
+namespace SharpMetal.Foundation
 {
     public unsafe struct UIScreen
     {

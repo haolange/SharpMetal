@@ -1,5 +1,3 @@
-using System;
-using System.Runtime.Versioning;
 using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation
@@ -16,7 +14,7 @@ namespace SharpMetal.Foundation
             return new NSAutoreleasePool(cls.AllocInit());
         }
 
-        /*public void Drain()
+        public void Drain()
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drain);
         }
@@ -29,15 +27,15 @@ namespace SharpMetal.Foundation
         public static void ShowPools()
         {
             throw new NotSupportedException();
-        }*/
+        }
 
         public void Dispose()
         {
             ObjectiveCRuntime.release(NativePtr);
         }
 
-        //private static readonly Selector sel_drain = "drain";
-        //private static readonly Selector sel_showPools = "showPools";
-        //private static readonly Selector sel_addObject = "addObject:";
+        private static readonly Selector sel_drain = "drain";
+        private static readonly Selector sel_showPools = "showPools";
+        private static readonly Selector sel_addObject = "addObject:";
     }
 }

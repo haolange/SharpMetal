@@ -1,7 +1,4 @@
 using System.Diagnostics;
-using System.Drawing;
-using System.Runtime.Versioning;
-using System.Text;
 using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation

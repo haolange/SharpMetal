@@ -1,5 +1,3 @@
-using System;
-using System.Runtime.Versioning;
 using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Foundation

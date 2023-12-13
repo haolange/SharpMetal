@@ -1,6 +1,7 @@
 using SharpMetal.Metal;
 using System.Runtime.Versioning;
 using SharpMetal.ObjectiveCCore;
+using SharpMetal.Foundation;
 
 namespace SharpMetal.QuartzCore
 {
@@ -8,6 +9,7 @@ namespace SharpMetal.QuartzCore
     {
         public IntPtr NativePtr;
         public static implicit operator IntPtr(in CAMetalLayer obj) => obj.NativePtr;
+
         public CAMetalLayer(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLDevice Device
@@ -18,7 +20,7 @@ namespace SharpMetal.QuartzCore
 
         public MTLPixelFormat PixelFormat
         {
-            get => (MTLPixelFormat) ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_setPixelFormat);
+            get => (MTLPixelFormat) ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_pixelFormat);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setPixelFormat, (uint)value);
         }
 
@@ -34,24 +36,49 @@ namespace SharpMetal.QuartzCore
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDrawableSize, value);
         }
 
-        public MTLRegion frame
+        public MTLRegion Frame
         {
             get => ObjectiveCRuntime.MTLRegion_objc_msgSend(NativePtr, sel_frame);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFrame, value);
         }
 
-        public bool opaque
+        public bool Opaque
         {
             get => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isOpaque);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setOpaque, value);
         }
 
-        public bool displaySyncEnabled
+        public bool DisplaySyncEnabled
         {
             get => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_displaySyncEnabled);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDisplaySyncEnabled, value);
         }
 
+        public CAMetalDrawable nextDrawable()
+        {
+            return ObjectiveCRuntime.objc_msgSend<CAMetalDrawable>(NativePtr, sel_nextDrawable);
+        }
+
+        public static CAMetalLayer New()
+        {
+            return s_class.AllocInit<CAMetalLayer>();
+        }
+
+        public static bool TryCast(in IntPtr layerPointer, out CAMetalLayer metalLayer)
+        {
+            var layerObject = new NSObject(layerPointer);
+
+            if (layerObject.IsKindOfClass(s_class))
+            {
+                metalLayer = new CAMetalLayer(layerPointer);
+                return true;
+            }
+
+            metalLayer = default;
+            return false;
+        }
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass("CAMetalLayer");
 
         private static readonly Selector sel_layer = "layer";
         private static readonly Selector sel_device = "device";

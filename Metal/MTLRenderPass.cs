@@ -47,6 +47,14 @@ namespace SharpMetal.Metal
         public double green;
         public double blue;
         public double alpha;
+
+        public MTLClearColor(in double r, in double g, in double b, in double a)
+        {
+            red = r;
+            green = g;
+            blue = b;
+            alpha = a;
+        }
     }
 
     public partial struct MTLRenderPassAttachmentDescriptor
@@ -736,6 +744,13 @@ namespace SharpMetal.Metal
         {
             return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_getSamplePositionscount, positions, count);
         }
+
+        public static MTLRenderPassDescriptor New()
+        {
+            return s_class.AllocInit<MTLRenderPassDescriptor>();
+        }
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass("MTLRenderPassDescriptor");
 
         private static readonly Selector sel_renderPassDescriptor = "renderPassDescriptor";
         private static readonly Selector sel_colorAttachments = "colorAttachments";

@@ -1,6 +1,5 @@
-using System.Runtime.InteropServices;
-using System.Runtime.Versioning;
 using SharpMetal.ObjectiveCCore;
+using System.Runtime.InteropServices;
 
 namespace SharpMetal.Foundation
 {
