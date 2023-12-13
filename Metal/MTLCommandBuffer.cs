@@ -173,19 +173,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_waitUntilCompleted);
         }
 
-        public void AddScheduledHandler(in IntPtr block)
-        {
-            throw new NotImplementedException();
-        }
-
         public void AddScheduledHandler(in MTLCommandBufferHandler block)
         {
-            throw new NotImplementedException();
-        }
-
-        public void AddCompletedHandler(in IntPtr block)
-        {
-            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addCompletedHandler, block);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addScheduledHandler, block);
         }
 
         public void AddCompletedHandler(in MTLCommandBufferHandler block)
@@ -286,6 +276,7 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_presentDrawableafterMinimumDuration = "presentDrawable:afterMinimumDuration:";
         private static readonly Selector sel_waitUntilScheduled = "waitUntilScheduled";
         private static readonly Selector sel_waitUntilCompleted = "waitUntilCompleted";
+        private static readonly Selector sel_addScheduledHandler = "addScheduledHandler:";
         private static readonly Selector sel_addCompletedHandler = "addCompletedHandler:";
         private static readonly Selector sel_status = "status";
         private static readonly Selector sel_error = "error";
