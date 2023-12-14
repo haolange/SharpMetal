@@ -5,14 +5,10 @@ namespace SharpMetal.Foundation
     public partial struct NSURL
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in NSURL obj) => obj.NativePtr;
+
         public NSURL(in IntPtr ptr) => NativePtr = ptr;
 
-        public NSURL()
-        {
-            var cls = new ObjectiveCClass("NSURL");
-            NativePtr = cls.AllocInit();
-        }
+        public static NSURL New() => s_class.AllocInit<NSURL>();
 
         public ushort FileSystemRepresentation => ObjectiveCRuntime.ushort_objc_msgSend(NativePtr, sel_fileSystemRepresentation);
 
@@ -31,6 +27,9 @@ namespace SharpMetal.Foundation
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initFileURLWithPath, pPath));
         }
 
+        public static implicit operator IntPtr(in NSURL obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(NSURL));
         private static readonly Selector sel_fileURLWithPath = "fileURLWithPath:";
         private static readonly Selector sel_initWithString = "initWithString:";
         private static readonly Selector sel_initFileURLWithPath = "initFileURLWithPath:";

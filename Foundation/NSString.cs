@@ -65,19 +65,12 @@ namespace SharpMetal.Foundation
     public unsafe partial struct NSString
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in NSString obj) => obj.NativePtr;
-        public NSString(in IntPtr ptr) => NativePtr = ptr;
 
-        public NSString()
-        {
-            var cls = new ObjectiveCClass("NSString");
-            NativePtr = cls.AllocInit();
-        }
+        public NSString(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString(string s)
         {
-            var cls = new ObjectiveCClass("NSString");
-            NativePtr = cls.AllocInit();
+            NativePtr = s_class.AllocInit<NSString>();
 
             fixed (char* utf16Ptr = s)
             {
@@ -85,6 +78,8 @@ namespace SharpMetal.Foundation
                 IntPtr newString = ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithCharacters, (IntPtr)utf16Ptr, length);
             }
         }
+
+        public static NSString New() => s_class.AllocInit<NSString>();
 
         public ulong Length => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_length);
 
@@ -166,6 +161,9 @@ namespace SharpMetal.Foundation
             return (NSComparisonResult)ObjectiveCRuntime.long_objc_msgSend(NativePtr, sel_caseInsensitiveCompare, pString);
         }
 
+        public static implicit operator IntPtr(in NSString obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(NSString));
         private static readonly Selector sel_string = "string";
         private static readonly Selector sel_stringWithString = "stringWithString:";
         private static readonly Selector sel_initWithCharacters = "initWithCharacters:length:";

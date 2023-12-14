@@ -1,5 +1,4 @@
 using SharpMetal.ObjectiveCCore;
-using System;
 
 namespace SharpMetal.QuartzCore
 {

@@ -12,14 +12,10 @@ namespace SharpMetal.Foundation
     public partial struct NSCondition
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in NSCondition obj) => obj.NativePtr;
+
         public NSCondition(in IntPtr ptr) => NativePtr = ptr;
 
-        public NSCondition()
-        {
-            var cls = new ObjectiveCClass("NSCondition");
-            NativePtr = cls.AllocInit();
-        }
+        public static NSCondition New() => s_class.AllocInit<NSCondition>();
 
         public void Wait()
         {
@@ -41,6 +37,9 @@ namespace SharpMetal.Foundation
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_broadcast);
         }
 
+        public static implicit operator IntPtr(in NSCondition obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(NSCondition));
         private static readonly Selector sel_wait = "wait";
         private static readonly Selector sel_waitUntilDate = "waitUntilDate:";
         private static readonly Selector sel_signal = "signal";

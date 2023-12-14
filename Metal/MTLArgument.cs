@@ -147,11 +147,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLType obj) => obj.NativePtr;
         public MTLType(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLType()
-        {
-            var cls = new ObjectiveCClass("MTLType");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLType New() => s_class.AllocInit<MTLType>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLType));
 
         public MTLDataType DataType => (MTLDataType)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_dataType);
 
@@ -164,11 +162,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLStructMember obj) => obj.NativePtr;
         public MTLStructMember(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLStructMember()
-        {
-            var cls = new ObjectiveCClass("MTLStructMember");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLStructMember New() => s_class.AllocInit<MTLStructMember>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLStructMember));
 
         public NSString Name => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_name));
 
@@ -202,11 +198,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLStructType obj) => obj.NativePtr;
         public MTLStructType(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLStructType()
-        {
-            var cls = new ObjectiveCClass("MTLStructType");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLStructType New() => s_class.AllocInit<MTLStructType>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLStructType));
 
         public NSArray Members => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_members));
 
@@ -225,11 +219,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLArrayType obj) => obj.NativePtr;
         public MTLArrayType(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLArrayType()
-        {
-            var cls = new ObjectiveCClass("MTLArrayType");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLArrayType New() => s_class.AllocInit<MTLArrayType>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLArrayType));
 
         public MTLDataType ElementType => (MTLDataType)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_elementType);
 
@@ -263,11 +255,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLPointerType obj) => obj.NativePtr;
         public MTLPointerType(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLPointerType()
-        {
-            var cls = new ObjectiveCClass("MTLPointerType");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLPointerType New() => s_class.AllocInit<MTLPointerType>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLPointerType));
 
         public MTLDataType ElementType => (MTLDataType)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_elementType);
 
@@ -298,11 +288,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLTextureReferenceType obj) => obj.NativePtr;
         public MTLTextureReferenceType(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLTextureReferenceType()
-        {
-            var cls = new ObjectiveCClass("MTLTextureReferenceType");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLTextureReferenceType New() => s_class.AllocInit<MTLTextureReferenceType>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLTextureReferenceType));
 
         public MTLDataType TextureDataType => (MTLDataType)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_textureDataType);
 
@@ -324,11 +312,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLArgument obj) => obj.NativePtr;
         public MTLArgument(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLArgument()
-        {
-            var cls = new ObjectiveCClass("MTLArgument");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLArgument New() => s_class.AllocInit<MTLArgument>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLArgument));
 
         public NSString Name => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_name));
 

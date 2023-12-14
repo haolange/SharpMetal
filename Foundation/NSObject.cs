@@ -43,12 +43,6 @@ namespace SharpMetal.Foundation
 
             return Encoding.UTF8.GetString(stringStart, characters);
         }
-
-        public static T AllocInit<T>(string typeName) where T : struct
-        {
-            var cls = new ObjectiveCClass(typeName);
-            return cls.AllocInit<T>();
-        }
     }
 
     public partial struct NSObject

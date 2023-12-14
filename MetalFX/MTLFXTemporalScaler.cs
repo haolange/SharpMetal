@@ -6,14 +6,10 @@ namespace SharpMetal.MetalFX
     public partial struct MTLFXTemporalScalerDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLFXTemporalScalerDescriptor obj) => obj.NativePtr;
+
         public MTLFXTemporalScalerDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLFXTemporalScalerDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLFXTemporalScalerDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLFXTemporalScalerDescriptor New() => s_class.AllocInit<MTLFXTemporalScalerDescriptor>();
 
         public MTLPixelFormat ColorTextureFormat
         {
@@ -94,24 +90,28 @@ namespace SharpMetal.MetalFX
 
         public static bool SupportsDevice(in MTLDevice device)
         {
-            return ObjectiveCRuntime.bool_objc_msgSend(new ObjectiveCClass("MTLFXTemporalScalerDescriptor"), MTLFXSelector.sel_supportsDevice, device);
+            return ObjectiveCRuntime.bool_objc_msgSend(s_class, MTLFXSelector.sel_supportsDevice, device);
         }
 
         public static float SupportedInputContentMinScaleForDevice(in MTLDevice device)
         {
-            return ObjectiveCRuntime.float_objc_msgSend(new ObjectiveCClass("MTLFXTemporalScalerDescriptor"), MTLFXSelector.sel_supportedInputContentMinScaleForDevice, device);
+            return ObjectiveCRuntime.float_objc_msgSend(s_class, MTLFXSelector.sel_supportedInputContentMinScaleForDevice, device);
         }
 
         public static float SupportedInputContentMaxScaleForDevice(in MTLDevice device)
         {
-            return ObjectiveCRuntime.float_objc_msgSend(new ObjectiveCClass("MTLFXTemporalScalerDescriptor"), MTLFXSelector.sel_supportedInputContentMaxScaleForDevice, device);
+            return ObjectiveCRuntime.float_objc_msgSend(s_class, MTLFXSelector.sel_supportedInputContentMaxScaleForDevice, device);
         }
+
+        public static implicit operator IntPtr(in MTLFXTemporalScalerDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLFXTemporalScalerDescriptor));
     }
 
     public partial struct MTLFXTemporalScaler
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLFXTemporalScaler obj) => obj.NativePtr;
+
         public MTLFXTemporalScaler(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLTextureUsage ColorTextureUsage
@@ -278,5 +278,7 @@ namespace SharpMetal.MetalFX
         {
             ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, MTLFXSelector.sel_encodeToCommandBuffer, commandBuffer);
         }
+
+        public static implicit operator IntPtr(in MTLFXTemporalScaler obj) => obj.NativePtr;
     }
 }

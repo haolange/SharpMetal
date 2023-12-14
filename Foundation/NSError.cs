@@ -5,14 +5,10 @@ namespace SharpMetal.Foundation
     public partial struct NSError
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in NSError obj) => obj.NativePtr;
+
         public NSError(in IntPtr ptr) => NativePtr = ptr;
 
-        public NSError()
-        {
-            var cls = new ObjectiveCClass("NSError");
-            NativePtr = cls.AllocInit();
-        }
+        public static NSError New() => s_class.AllocInit<NSError>();
 
         public long Code => ObjectiveCRuntime.long_objc_msgSend(NativePtr, sel_code);
 
@@ -38,6 +34,9 @@ namespace SharpMetal.Foundation
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithDomaincodeuserInfo, domain, code, pDictionary));
         }
 
+        public static implicit operator IntPtr(in NSError obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(NSError));
         private static readonly Selector sel_errorWithDomaincodeuserInfo = "errorWithDomain:code:userInfo:";
         private static readonly Selector sel_initWithDomaincodeuserInfo = "initWithDomain:code:userInfo:";
         private static readonly Selector sel_code = "code";

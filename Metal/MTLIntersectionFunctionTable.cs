@@ -19,14 +19,10 @@ namespace SharpMetal.Metal
     public partial struct MTLIntersectionFunctionTableDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLIntersectionFunctionTableDescriptor obj) => obj.NativePtr;
+
         public MTLIntersectionFunctionTableDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLIntersectionFunctionTableDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLIntersectionFunctionTableDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLIntersectionFunctionTableDescriptor New() => s_class.AllocInit<MTLIntersectionFunctionTableDescriptor>();
 
         public ulong FunctionCount
         {
@@ -34,6 +30,9 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFunctionCount, value);
         }
 
+        public static implicit operator IntPtr(in MTLIntersectionFunctionTableDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLIntersectionFunctionTableDescriptor));
         private static readonly Selector sel_intersectionFunctionTableDescriptor = "intersectionFunctionTableDescriptor";
         private static readonly Selector sel_functionCount = "functionCount";
         private static readonly Selector sel_setFunctionCount = "setFunctionCount:";

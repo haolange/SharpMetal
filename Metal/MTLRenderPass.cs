@@ -1,3 +1,4 @@
+using SharpMetal.Foundation;
 using SharpMetal.ObjectiveCCore;
 using System.Runtime.InteropServices;
 
@@ -63,11 +64,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLRenderPassAttachmentDescriptor obj) => obj.NativePtr;
         public MTLRenderPassAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLRenderPassAttachmentDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLRenderPassAttachmentDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLRenderPassAttachmentDescriptor New() => s_class.AllocInit<MTLRenderPassAttachmentDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLRenderPassAttachmentDescriptor));
 
         public MTLTexture Texture
         {
@@ -169,11 +168,9 @@ namespace SharpMetal.Metal
 
         public MTLRenderPassColorAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLRenderPassColorAttachmentDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLRenderPassColorAttachmentDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLRenderPassColorAttachmentDescriptor New() => s_class.AllocInit<MTLRenderPassColorAttachmentDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLRenderPassColorAttachmentDescriptor));
 
         public MTLTexture Texture
         {
@@ -283,11 +280,9 @@ namespace SharpMetal.Metal
 
         public MTLRenderPassDepthAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLRenderPassDepthAttachmentDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLRenderPassDepthAttachmentDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLRenderPassDepthAttachmentDescriptor New() => s_class.AllocInit<MTLRenderPassDepthAttachmentDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLRenderPassDepthAttachmentDescriptor));
 
         public MTLTexture Texture
         {
@@ -405,11 +400,9 @@ namespace SharpMetal.Metal
 
         public MTLRenderPassStencilAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLRenderPassStencilAttachmentDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLRenderPassStencilAttachmentDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLRenderPassStencilAttachmentDescriptor New() => s_class.AllocInit<MTLRenderPassStencilAttachmentDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLRenderPassStencilAttachmentDescriptor));
 
         public MTLTexture Texture
         {
@@ -535,11 +528,9 @@ namespace SharpMetal.Metal
             }
         }
 
-        public MTLRenderPassColorAttachmentDescriptorArray()
-        {
-            var cls = new ObjectiveCClass("MTLRenderPassColorAttachmentDescriptorArray");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLRenderPassColorAttachmentDescriptor New() => s_class.AllocInit<MTLRenderPassColorAttachmentDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLRenderPassColorAttachmentDescriptor));
 
         public MTLRenderPassColorAttachmentDescriptor Object(in ulong attachmentIndex)
         {
@@ -561,11 +552,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLRenderPassSampleBufferAttachmentDescriptor obj) => obj.NativePtr;
         public MTLRenderPassSampleBufferAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLRenderPassSampleBufferAttachmentDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLRenderPassSampleBufferAttachmentDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLRenderPassSampleBufferAttachmentDescriptor New() => s_class.AllocInit<MTLRenderPassSampleBufferAttachmentDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLRenderPassSampleBufferAttachmentDescriptor));
 
         public MTLCounterSampleBuffer SampleBuffer
         {
@@ -627,11 +616,9 @@ namespace SharpMetal.Metal
             }
         }
 
-        public MTLRenderPassSampleBufferAttachmentDescriptorArray()
-        {
-            var cls = new ObjectiveCClass("MTLRenderPassSampleBufferAttachmentDescriptorArray");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLRenderPassSampleBufferAttachmentDescriptor New() => s_class.AllocInit<MTLRenderPassSampleBufferAttachmentDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLRenderPassSampleBufferAttachmentDescriptor));
 
         public MTLRenderPassSampleBufferAttachmentDescriptor Object(in ulong attachmentIndex)
         {
@@ -650,14 +637,10 @@ namespace SharpMetal.Metal
     public partial struct MTLRenderPassDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLRenderPassDescriptor obj) => obj.NativePtr;
+
         public MTLRenderPassDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLRenderPassDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLRenderPassDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLRenderPassDescriptor New() => s_class.AllocInit<MTLRenderPassDescriptor>();
 
         public MTLRenderPassColorAttachmentDescriptorArray ColorAttachments => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_colorAttachments));
 
@@ -745,13 +728,9 @@ namespace SharpMetal.Metal
             return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_getSamplePositionscount, positions, count);
         }
 
-        public static MTLRenderPassDescriptor New()
-        {
-            return s_class.AllocInit<MTLRenderPassDescriptor>();
-        }
+        public static implicit operator IntPtr(in MTLRenderPassDescriptor obj) => obj.NativePtr;
 
         private static readonly ObjectiveCClass s_class = new ObjectiveCClass("MTLRenderPassDescriptor");
-
         private static readonly Selector sel_renderPassDescriptor = "renderPassDescriptor";
         private static readonly Selector sel_colorAttachments = "colorAttachments";
         private static readonly Selector sel_depthAttachment = "depthAttachment";

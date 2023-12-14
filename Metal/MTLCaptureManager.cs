@@ -20,14 +20,10 @@ namespace SharpMetal.Metal
     public partial struct MTLCaptureDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLCaptureDescriptor obj) => obj.NativePtr;
+
         public MTLCaptureDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLCaptureDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLCaptureDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLCaptureDescriptor New() => s_class.AllocInit<MTLCaptureDescriptor>();
 
         public IntPtr CaptureObject
         {
@@ -47,6 +43,9 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setOutputURL, value);
         }
 
+        public static implicit operator IntPtr(in MTLCaptureDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLCaptureDescriptor));
         private static readonly Selector sel_captureObject = "captureObject";
         private static readonly Selector sel_setCaptureObject = "setCaptureObject:";
         private static readonly Selector sel_destination = "destination";
@@ -59,26 +58,22 @@ namespace SharpMetal.Metal
     public partial struct MTLCaptureManager
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLCaptureManager obj) => obj.NativePtr;
+
         public MTLCaptureManager(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLCaptureManager()
-        {
-            var cls = new ObjectiveCClass("MTLCaptureManager");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLCaptureManager New() => s_class.AllocInit<MTLCaptureManager>();
 
         public MTLCaptureScope DefaultCaptureScope
         {
             get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_defaultCaptureScope));
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDefaultCaptureScope, value);
         }
-
+        
         public bool IsCapturing => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isCapturing);
 
         public static MTLCaptureManager SharedCaptureManager()
         {
-            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("MTLCaptureManager"), sel_sharedCaptureManager));
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(s_class, sel_sharedCaptureManager));
         }
 
         public MTLCaptureScope NewCaptureScope(in MTLDevice device)
@@ -121,6 +116,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_stopCapture);
         }
 
+        public static implicit operator IntPtr(in MTLCaptureManager obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLCaptureManager));
         private static readonly Selector sel_sharedCaptureManager = "sharedCaptureManager";
         private static readonly Selector sel_newCaptureScopeWithDevice = "newCaptureScopeWithDevice:";
         private static readonly Selector sel_newCaptureScopeWithCommandQueue = "newCaptureScopeWithCommandQueue:";

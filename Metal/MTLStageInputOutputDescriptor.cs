@@ -1,3 +1,4 @@
+using SharpMetal.Foundation;
 using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
@@ -82,14 +83,10 @@ namespace SharpMetal.Metal
     public partial struct MTLBufferLayoutDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLBufferLayoutDescriptor obj) => obj.NativePtr;
+
         public MTLBufferLayoutDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLBufferLayoutDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLBufferLayoutDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLBufferLayoutDescriptor New() => s_class.AllocInit<MTLBufferLayoutDescriptor>();
 
         public ulong Stride
         {
@@ -109,6 +106,9 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStepRate, value);
         }
 
+        public static implicit operator IntPtr(in MTLBufferLayoutDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLBufferLayoutDescriptor));
         private static readonly Selector sel_stride = "stride";
         private static readonly Selector sel_setStride = "setStride:";
         private static readonly Selector sel_stepFunction = "stepFunction";
@@ -120,8 +120,10 @@ namespace SharpMetal.Metal
     public partial struct MTLBufferLayoutDescriptorArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLBufferLayoutDescriptorArray obj) => obj.NativePtr;
+
         public MTLBufferLayoutDescriptorArray(in IntPtr ptr) => NativePtr = ptr;
+
+        public static MTLBufferLayoutDescriptorArray New() => s_class.AllocInit<MTLBufferLayoutDescriptorArray>();
 
         public MTLBufferLayoutDescriptor this[uint index]
         {
@@ -135,12 +137,6 @@ namespace SharpMetal.Metal
             }
         }
 
-        public MTLBufferLayoutDescriptorArray()
-        {
-            var cls = new ObjectiveCClass("MTLBufferLayoutDescriptorArray");
-            NativePtr = cls.AllocInit();
-        }
-
         public MTLBufferLayoutDescriptor Object(in ulong index)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectAtIndexedSubscript, index));
@@ -151,6 +147,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectatIndexedSubscript, bufferDesc, index);
         }
 
+        public static implicit operator IntPtr(in MTLBufferLayoutDescriptorArray obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLBufferLayoutDescriptorArray));
         private static readonly Selector sel_objectAtIndexedSubscript = "objectAtIndexedSubscript:";
         private static readonly Selector sel_setObjectatIndexedSubscript = "setObject:atIndexedSubscript:";
     }
@@ -158,14 +157,10 @@ namespace SharpMetal.Metal
     public partial struct MTLAttributeDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLAttributeDescriptor obj) => obj.NativePtr;
+
         public MTLAttributeDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLAttributeDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLAttributeDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLAttributeDescriptor New() => s_class.AllocInit<MTLAttributeDescriptor>();
 
         public MTLAttributeFormat Format
         {
@@ -185,6 +180,9 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBufferIndex, value);
         }
 
+        public static implicit operator IntPtr(in MTLAttributeDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLAttributeDescriptor));
         private static readonly Selector sel_format = "format";
         private static readonly Selector sel_setFormat = "setFormat:";
         private static readonly Selector sel_offset = "offset";
@@ -196,8 +194,10 @@ namespace SharpMetal.Metal
     public partial struct MTLAttributeDescriptorArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLAttributeDescriptorArray obj) => obj.NativePtr;
+
         public MTLAttributeDescriptorArray(in IntPtr ptr) => NativePtr = ptr;
+
+        public static MTLAttributeDescriptorArray New() => s_class.AllocInit<MTLAttributeDescriptorArray>();
 
         public MTLAttributeDescriptor this[uint index]
         {
@@ -211,12 +211,6 @@ namespace SharpMetal.Metal
             }
         }
 
-        public MTLAttributeDescriptorArray()
-        {
-            var cls = new ObjectiveCClass("MTLAttributeDescriptorArray");
-            NativePtr = cls.AllocInit();
-        }
-
         public MTLAttributeDescriptor Object(in ulong index)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectAtIndexedSubscript, index));
@@ -227,6 +221,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectatIndexedSubscript, attributeDesc, index);
         }
 
+        public static implicit operator IntPtr(in MTLAttributeDescriptorArray obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLAttributeDescriptorArray));
         private static readonly Selector sel_objectAtIndexedSubscript = "objectAtIndexedSubscript:";
         private static readonly Selector sel_setObjectatIndexedSubscript = "setObject:atIndexedSubscript:";
     }
@@ -234,14 +231,10 @@ namespace SharpMetal.Metal
     public partial struct MTLStageInputOutputDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLStageInputOutputDescriptor obj) => obj.NativePtr;
+
         public MTLStageInputOutputDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLStageInputOutputDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLStageInputOutputDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLStageInputOutputDescriptor New() => s_class.AllocInit<MTLStageInputOutputDescriptor>();
 
         public MTLBufferLayoutDescriptorArray Layouts => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_layouts));
 
@@ -264,6 +257,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_reset);
         }
 
+        public static implicit operator IntPtr(in MTLStageInputOutputDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLStageInputOutputDescriptor));
         private static readonly Selector sel_stageInputOutputDescriptor = "stageInputOutputDescriptor";
         private static readonly Selector sel_layouts = "layouts";
         private static readonly Selector sel_attributes = "attributes";

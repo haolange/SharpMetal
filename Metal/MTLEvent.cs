@@ -25,14 +25,10 @@ namespace SharpMetal.Metal
     public partial struct MTLSharedEventListener
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLSharedEventListener obj) => obj.NativePtr;
+
         public MTLSharedEventListener(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLSharedEventListener()
-        {
-            var cls = new ObjectiveCClass("MTLSharedEventListener");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLSharedEventListener New() => s_class.AllocInit<MTLSharedEventListener>();
 
         public IntPtr DispatchQueue => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_dispatchQueue));
 
@@ -41,6 +37,9 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithDispatchQueue, dispatchQueue));
         }
 
+        public static implicit operator IntPtr(in MTLSharedEventListener obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLSharedEventListener));
         private static readonly Selector sel_initWithDispatchQueue = "initWithDispatchQueue:";
         private static readonly Selector sel_dispatchQueue = "dispatchQueue";
     }
@@ -87,17 +86,16 @@ namespace SharpMetal.Metal
     public partial struct MTLSharedEventHandle
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLSharedEventHandle obj) => obj.NativePtr;
+
         public MTLSharedEventHandle(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLSharedEventHandle()
-        {
-            var cls = new ObjectiveCClass("MTLSharedEventHandle");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLSharedEventHandle New() => s_class.AllocInit<MTLSharedEventHandle>();
 
         public NSString Label => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_label));
 
+        public static implicit operator IntPtr(in MTLSharedEventHandle obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLSharedEventHandle));
         private static readonly Selector sel_label = "label";
     }
 }

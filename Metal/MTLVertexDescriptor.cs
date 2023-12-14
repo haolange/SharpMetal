@@ -1,3 +1,4 @@
+using SharpMetal.Foundation;
 using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
@@ -72,14 +73,10 @@ namespace SharpMetal.Metal
     public partial struct MTLVertexBufferLayoutDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLVertexBufferLayoutDescriptor obj) => obj.NativePtr;
+
         public MTLVertexBufferLayoutDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLVertexBufferLayoutDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLVertexBufferLayoutDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLVertexBufferLayoutDescriptor New() => s_class.AllocInit<MTLVertexBufferLayoutDescriptor>();
 
         public ulong Stride
         {
@@ -99,6 +96,9 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStepRate, value);
         }
 
+        public static implicit operator IntPtr(in MTLVertexBufferLayoutDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLVertexBufferLayoutDescriptor));
         private static readonly Selector sel_stride = "stride";
         private static readonly Selector sel_setStride = "setStride:";
         private static readonly Selector sel_stepFunction = "stepFunction";
@@ -110,8 +110,10 @@ namespace SharpMetal.Metal
     public partial struct MTLVertexBufferLayoutDescriptorArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLVertexBufferLayoutDescriptorArray obj) => obj.NativePtr;
+
         public MTLVertexBufferLayoutDescriptorArray(in IntPtr ptr) => NativePtr = ptr;
+
+        public static MTLVertexBufferLayoutDescriptorArray New() => s_class.AllocInit<MTLVertexBufferLayoutDescriptorArray>();
 
         public MTLVertexBufferLayoutDescriptor this[uint index]
         {
@@ -125,12 +127,6 @@ namespace SharpMetal.Metal
             }
         }
 
-        public MTLVertexBufferLayoutDescriptorArray()
-        {
-            var cls = new ObjectiveCClass("MTLVertexBufferLayoutDescriptorArray");
-            NativePtr = cls.AllocInit();
-        }
-
         public MTLVertexBufferLayoutDescriptor Object(in ulong index)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectAtIndexedSubscript, index));
@@ -141,6 +137,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectatIndexedSubscript, bufferDesc, index);
         }
 
+        public static implicit operator IntPtr(in MTLVertexBufferLayoutDescriptorArray obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLVertexBufferLayoutDescriptorArray));
         private static readonly Selector sel_objectAtIndexedSubscript = "objectAtIndexedSubscript:";
         private static readonly Selector sel_setObjectatIndexedSubscript = "setObject:atIndexedSubscript:";
     }
@@ -148,14 +147,10 @@ namespace SharpMetal.Metal
     public partial struct MTLVertexAttributeDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLVertexAttributeDescriptor obj) => obj.NativePtr;
+
         public MTLVertexAttributeDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLVertexAttributeDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLVertexAttributeDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLVertexAttributeDescriptor New() => s_class.AllocInit<MTLVertexAttributeDescriptor>();
 
         public MTLVertexFormat Format
         {
@@ -175,6 +170,9 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBufferIndex, value);
         }
 
+        public static implicit operator IntPtr(in MTLVertexAttributeDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLVertexAttributeDescriptor));
         private static readonly Selector sel_format = "format";
         private static readonly Selector sel_setFormat = "setFormat:";
         private static readonly Selector sel_offset = "offset";
@@ -186,8 +184,10 @@ namespace SharpMetal.Metal
     public partial struct MTLVertexAttributeDescriptorArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLVertexAttributeDescriptorArray obj) => obj.NativePtr;
+
         public MTLVertexAttributeDescriptorArray(in IntPtr ptr) => NativePtr = ptr;
+
+        public static MTLVertexAttributeDescriptorArray New() => s_class.AllocInit<MTLVertexAttributeDescriptorArray>();
 
         public MTLVertexAttributeDescriptor this[uint index]
         {
@@ -201,12 +201,6 @@ namespace SharpMetal.Metal
             }
         }
 
-        public MTLVertexAttributeDescriptorArray()
-        {
-            var cls = new ObjectiveCClass("MTLVertexAttributeDescriptorArray");
-            NativePtr = cls.AllocInit();
-        }
-
         public MTLVertexAttributeDescriptor Object(in ulong index)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectAtIndexedSubscript, index));
@@ -217,6 +211,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectatIndexedSubscript, attributeDesc, index);
         }
 
+        public static implicit operator IntPtr(in MTLVertexAttributeDescriptorArray obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLVertexAttributeDescriptorArray));
         private static readonly Selector sel_objectAtIndexedSubscript = "objectAtIndexedSubscript:";
         private static readonly Selector sel_setObjectatIndexedSubscript = "setObject:atIndexedSubscript:";
     }
@@ -224,14 +221,10 @@ namespace SharpMetal.Metal
     public partial struct MTLVertexDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLVertexDescriptor obj) => obj.NativePtr;
+
         public MTLVertexDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLVertexDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLVertexDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLVertexDescriptor New() => s_class.AllocInit<MTLVertexDescriptor>();
 
         public MTLVertexBufferLayoutDescriptorArray Layouts => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_layouts));
 
@@ -242,7 +235,10 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_reset);
         }
 
-        private static readonly Selector sel_vertexDescriptor = "vertexDescriptor";
+        public static implicit operator IntPtr(in MTLVertexDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLVertexDescriptor));
+        //private static readonly Selector sel_vertexDescriptor = "vertexDescriptor";
         private static readonly Selector sel_layouts = "layouts";
         private static readonly Selector sel_attributes = "attributes";
         private static readonly Selector sel_reset = "reset";

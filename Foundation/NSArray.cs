@@ -5,18 +5,17 @@ namespace SharpMetal.Foundation
     public struct NSArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in NSArray obj) => obj.NativePtr;
+        
         public NSArray(in IntPtr ptr) => NativePtr = ptr;
 
-        public NSArray()
-        {
-            var cls = new ObjectiveCClass("NSArray");
-            NativePtr = cls.AllocInit();
-        }
+        public static NSArray New() => s_class.AllocInit<NSArray>();
 
         public ulong Count => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_count);
+        
         public IntPtr lastObject => ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_lastObject);
+        
         public IntPtr firstObject => ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_firstObject);
+        
         public IntPtr this[uint index]
         {
             get
@@ -50,6 +49,9 @@ namespace SharpMetal.Foundation
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectAtIndex, index));
         }
 
+        public static implicit operator IntPtr(in NSArray obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(NSArray));
         private static readonly Selector sel_array = "array";
         private static readonly Selector sel_lastObject = "lastObject";
         private static readonly Selector sel_firstObject = "firstObject";

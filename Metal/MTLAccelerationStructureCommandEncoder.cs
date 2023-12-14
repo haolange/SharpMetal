@@ -143,33 +143,32 @@ namespace SharpMetal.Metal
     public partial struct MTLAccelerationStructurePassSampleBufferAttachmentDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLAccelerationStructurePassSampleBufferAttachmentDescriptor obj) => obj.NativePtr;
+
         public MTLAccelerationStructurePassSampleBufferAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLAccelerationStructurePassSampleBufferAttachmentDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLAccelerationStructurePassSampleBufferAttachmentDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLAccelerationStructurePassSampleBufferAttachmentDescriptor New() => s_class.AllocInit<MTLAccelerationStructurePassSampleBufferAttachmentDescriptor>();
 
         public MTLCounterSampleBuffer SampleBuffer
         {
             get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_sampleBuffer));
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setSampleBuffer, value);
         }
-
+        
         public ulong StartOfEncoderSampleIndex
         {
             get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_startOfEncoderSampleIndex);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStartOfEncoderSampleIndex, value);
         }
-
+        
         public ulong EndOfEncoderSampleIndex
         {
             get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_endOfEncoderSampleIndex);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setEndOfEncoderSampleIndex, value);
         }
 
+        public static implicit operator IntPtr(in MTLAccelerationStructurePassSampleBufferAttachmentDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLAccelerationStructurePassSampleBufferAttachmentDescriptor));
         private static readonly Selector sel_sampleBuffer = "sampleBuffer";
         private static readonly Selector sel_setSampleBuffer = "setSampleBuffer:";
         private static readonly Selector sel_startOfEncoderSampleIndex = "startOfEncoderSampleIndex";
@@ -181,8 +180,10 @@ namespace SharpMetal.Metal
     public partial struct MTLAccelerationStructurePassSampleBufferAttachmentDescriptorArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLAccelerationStructurePassSampleBufferAttachmentDescriptorArray obj) => obj.NativePtr;
+
         public MTLAccelerationStructurePassSampleBufferAttachmentDescriptorArray(in IntPtr ptr) => NativePtr = ptr;
+
+        public static MTLAccelerationStructurePassSampleBufferAttachmentDescriptor New() => s_class.AllocInit<MTLAccelerationStructurePassSampleBufferAttachmentDescriptor>();
 
         public MTLAccelerationStructurePassSampleBufferAttachmentDescriptor this[uint index]
         {
@@ -196,12 +197,6 @@ namespace SharpMetal.Metal
             }
         }
 
-        public MTLAccelerationStructurePassSampleBufferAttachmentDescriptorArray()
-        {
-            var cls = new ObjectiveCClass("MTLAccelerationStructurePassSampleBufferAttachmentDescriptorArray");
-            NativePtr = cls.AllocInit();
-        }
-
         public MTLAccelerationStructurePassSampleBufferAttachmentDescriptor Object(in ulong attachmentIndex)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectAtIndexedSubscript, attachmentIndex));
@@ -212,6 +207,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectatIndexedSubscript, attachment, attachmentIndex);
         }
 
+        public static implicit operator IntPtr(in MTLAccelerationStructurePassSampleBufferAttachmentDescriptorArray obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLAccelerationStructurePassSampleBufferAttachmentDescriptor));
         private static readonly Selector sel_objectAtIndexedSubscript = "objectAtIndexedSubscript:";
         private static readonly Selector sel_setObjectatIndexedSubscript = "setObject:atIndexedSubscript:";
     }
@@ -219,18 +217,17 @@ namespace SharpMetal.Metal
     public partial struct MTLAccelerationStructurePassDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLAccelerationStructurePassDescriptor obj) => obj.NativePtr;
+
         public MTLAccelerationStructurePassDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLAccelerationStructurePassDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLAccelerationStructurePassDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLAccelerationStructurePassDescriptor New() => s_class.AllocInit<MTLAccelerationStructurePassDescriptor>();
 
         public MTLAccelerationStructurePassSampleBufferAttachmentDescriptorArray SampleBufferAttachments => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_sampleBufferAttachments));
 
-        private static readonly Selector sel_accelerationStructurePassDescriptor = "accelerationStructurePassDescriptor";
+        public static implicit operator IntPtr(in MTLAccelerationStructurePassDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLAccelerationStructurePassDescriptor));
         private static readonly Selector sel_sampleBufferAttachments = "sampleBufferAttachments";
+        private static readonly Selector sel_accelerationStructurePassDescriptor = "accelerationStructurePassDescriptor";
     }
 }

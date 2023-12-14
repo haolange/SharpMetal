@@ -5,14 +5,10 @@ namespace SharpMetal.Foundation
     public partial struct NSSet
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in NSSet obj) => obj.NativePtr;
+
         public NSSet(in IntPtr ptr) => NativePtr = ptr;
 
-        public NSSet()
-        {
-            var cls = new ObjectiveCClass("NSSet");
-            NativePtr = cls.AllocInit();
-        }
+        public static NSSet New() => s_class.AllocInit<NSSet>();
 
         public ulong Count => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_count);
 
@@ -28,6 +24,9 @@ namespace SharpMetal.Foundation
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithCoder, pCoder));
         }
 
+        public static implicit operator IntPtr(in NSSet obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(NSSet));
         private static readonly Selector sel_count = "count";
         private static readonly Selector sel_objectEnumerator = "objectEnumerator";
         private static readonly Selector sel_initWithObjectscount = "initWithObjects:count:";

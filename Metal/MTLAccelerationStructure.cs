@@ -127,11 +127,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLAccelerationStructureGeometryDescriptor obj) => obj.NativePtr;
         public MTLAccelerationStructureGeometryDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLAccelerationStructureGeometryDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLAccelerationStructureGeometryDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLAccelerationStructureGeometryDescriptor New() => s_class.AllocInit<MTLAccelerationStructureGeometryDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLAccelerationStructureGeometryDescriptor));
 
         public ulong IntersectionFunctionTableOffset
         {
@@ -205,11 +203,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLMotionKeyframeData obj) => obj.NativePtr;
         public MTLMotionKeyframeData(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLMotionKeyframeData()
-        {
-            var cls = new ObjectiveCClass("MTLMotionKeyframeData");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLMotionKeyframeData New() => s_class.AllocInit<MTLMotionKeyframeData>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLMotionKeyframeData));
 
         public MTLBuffer Buffer
         {
@@ -240,11 +236,9 @@ namespace SharpMetal.Metal
 
         public MTLAccelerationStructureTriangleGeometryDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLAccelerationStructureTriangleGeometryDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLAccelerationStructureTriangleGeometryDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLAccelerationStructureTriangleGeometryDescriptor New() => s_class.AllocInit<MTLAccelerationStructureTriangleGeometryDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLAccelerationStructureTriangleGeometryDescriptor));
 
         public ulong IntersectionFunctionTableOffset
         {
@@ -403,11 +397,9 @@ namespace SharpMetal.Metal
 
         public MTLAccelerationStructureBoundingBoxGeometryDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLAccelerationStructureBoundingBoxGeometryDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLAccelerationStructureBoundingBoxGeometryDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLAccelerationStructureBoundingBoxGeometryDescriptor New() => s_class.AllocInit<MTLAccelerationStructureBoundingBoxGeometryDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLAccelerationStructureBoundingBoxGeometryDescriptor));
 
         public ulong IntersectionFunctionTableOffset
         {
@@ -518,11 +510,9 @@ namespace SharpMetal.Metal
 
         public MTLAccelerationStructureMotionTriangleGeometryDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLAccelerationStructureMotionTriangleGeometryDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLAccelerationStructureMotionTriangleGeometryDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLAccelerationStructureMotionTriangleGeometryDescriptor New() => s_class.AllocInit<MTLAccelerationStructureMotionTriangleGeometryDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLAccelerationStructureMotionTriangleGeometryDescriptor));
 
         public ulong IntersectionFunctionTableOffset
         {
@@ -673,11 +663,9 @@ namespace SharpMetal.Metal
 
         public MTLAccelerationStructureMotionBoundingBoxGeometryDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLAccelerationStructureMotionBoundingBoxGeometryDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLAccelerationStructureMotionBoundingBoxGeometryDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLAccelerationStructureMotionBoundingBoxGeometryDescriptor New() => s_class.AllocInit<MTLAccelerationStructureMotionBoundingBoxGeometryDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLAccelerationStructureMotionBoundingBoxGeometryDescriptor));
 
         public ulong IntersectionFunctionTableOffset
         {
@@ -780,11 +768,9 @@ namespace SharpMetal.Metal
 
         public MTLAccelerationStructureCurveGeometryDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLAccelerationStructureCurveGeometryDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLAccelerationStructureCurveGeometryDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLAccelerationStructureCurveGeometryDescriptor New() => s_class.AllocInit<MTLAccelerationStructureCurveGeometryDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLAccelerationStructureCurveGeometryDescriptor));
 
         public ulong IntersectionFunctionTableOffset
         {
@@ -999,11 +985,9 @@ namespace SharpMetal.Metal
 
         public MTLAccelerationStructureMotionCurveGeometryDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLAccelerationStructureMotionCurveGeometryDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLAccelerationStructureMotionCurveGeometryDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLAccelerationStructureMotionCurveGeometryDescriptor New() => s_class.AllocInit<MTLAccelerationStructureMotionCurveGeometryDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLAccelerationStructureMotionCurveGeometryDescriptor));
 
         public ulong IntersectionFunctionTableOffset
         {
@@ -1198,11 +1182,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLAccelerationStructureDescriptor obj) => obj.NativePtr;
         public MTLAccelerationStructureDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLAccelerationStructureDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLAccelerationStructureDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLAccelerationStructureDescriptor New() => s_class.AllocInit<MTLAccelerationStructureDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLAccelerationStructureDescriptor));
 
         public MTLAccelerationStructureUsage Usage
         {
@@ -1224,11 +1206,9 @@ namespace SharpMetal.Metal
 
         public MTLInstanceAccelerationStructureDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLInstanceAccelerationStructureDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLInstanceAccelerationStructureDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLInstanceAccelerationStructureDescriptor New() => s_class.AllocInit<MTLInstanceAccelerationStructureDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLInstanceAccelerationStructureDescriptor));
 
         public MTLBuffer InstanceDescriptorBuffer
         {
@@ -1323,11 +1303,9 @@ namespace SharpMetal.Metal
 
         public MTLIndirectInstanceAccelerationStructureDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLIndirectInstanceAccelerationStructureDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLIndirectInstanceAccelerationStructureDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLIndirectInstanceAccelerationStructureDescriptor New() => s_class.AllocInit<MTLIndirectInstanceAccelerationStructureDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLIndirectInstanceAccelerationStructureDescriptor));
 
         public MTLBuffer InstanceDescriptorBuffer
         {
@@ -1446,11 +1424,9 @@ namespace SharpMetal.Metal
 
         public MTLPrimitiveAccelerationStructureDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLPrimitiveAccelerationStructureDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLPrimitiveAccelerationStructureDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLPrimitiveAccelerationStructureDescriptor New() => s_class.AllocInit<MTLPrimitiveAccelerationStructureDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLPrimitiveAccelerationStructureDescriptor));
 
         public NSArray GeometryDescriptors
         {

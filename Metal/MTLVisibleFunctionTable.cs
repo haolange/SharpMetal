@@ -6,14 +6,10 @@ namespace SharpMetal.Metal
     public partial struct MTLVisibleFunctionTableDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLVisibleFunctionTableDescriptor obj) => obj.NativePtr;
+
         public MTLVisibleFunctionTableDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLVisibleFunctionTableDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLVisibleFunctionTableDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLVisibleFunctionTableDescriptor New() => s_class.AllocInit<MTLVisibleFunctionTableDescriptor>();
 
         public ulong FunctionCount
         {
@@ -21,6 +17,9 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFunctionCount, value);
         }
 
+        public static implicit operator IntPtr(in MTLVisibleFunctionTableDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLVisibleFunctionTableDescriptor));
         private static readonly Selector sel_visibleFunctionTableDescriptor = "visibleFunctionTableDescriptor";
         private static readonly Selector sel_functionCount = "functionCount";
         private static readonly Selector sel_setFunctionCount = "setFunctionCount:";

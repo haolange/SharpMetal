@@ -14,14 +14,10 @@ namespace SharpMetal.Metal
     public partial struct MTLHeapDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLHeapDescriptor obj) => obj.NativePtr;
+
         public MTLHeapDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLHeapDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLHeapDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLHeapDescriptor New() => s_class.AllocInit<MTLHeapDescriptor>();
 
         public ulong Size
         {
@@ -40,31 +36,30 @@ namespace SharpMetal.Metal
             get => (MTLCPUCacheMode)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_cpuCacheMode);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setCpuCacheMode, (ulong)value);
         }
-
         public MTLSparsePageSize SparsePageSize
         {
             get => (MTLSparsePageSize)ObjectiveCRuntime.long_objc_msgSend(NativePtr, sel_sparsePageSize);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setSparsePageSize, (long)value);
         }
-
         public MTLHazardTrackingMode HazardTrackingMode
         {
             get => (MTLHazardTrackingMode)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_hazardTrackingMode);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setHazardTrackingMode, (ulong)value);
         }
-
         public MTLResourceOptions ResourceOptions
         {
             get => (MTLResourceOptions)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_resourceOptions);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setResourceOptions, (ulong)value);
         }
-
         public MTLHeapType Type
         {
             get => (MTLHeapType)ObjectiveCRuntime.long_objc_msgSend(NativePtr, sel_type);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setType, (long)value);
         }
 
+        public static implicit operator IntPtr(in MTLHeapDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLHeapDescriptor));
         private static readonly Selector sel_size = "size";
         private static readonly Selector sel_setSize = "setSize:";
         private static readonly Selector sel_storageMode = "storageMode";
@@ -84,7 +79,7 @@ namespace SharpMetal.Metal
     public partial struct MTLHeap
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLHeap obj) => obj.NativePtr;
+
         public MTLHeap(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label
@@ -160,6 +155,8 @@ namespace SharpMetal.Metal
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newAccelerationStructureWithDescriptoroffset, descriptor, offset));
         }
+
+        public static implicit operator IntPtr(in MTLHeap obj) => obj.NativePtr;
 
         private static readonly Selector sel_label = "label";
         private static readonly Selector sel_setLabel = "setLabel:";

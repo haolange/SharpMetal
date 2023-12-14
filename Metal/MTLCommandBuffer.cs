@@ -58,27 +58,26 @@ namespace SharpMetal.Metal
     public partial struct MTLCommandBufferDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLCommandBufferDescriptor obj) => obj.NativePtr;
+
         public MTLCommandBufferDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLCommandBufferDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLCommandBufferDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLCommandBufferDescriptor New() => s_class.AllocInit<MTLCommandBufferDescriptor>();
 
         public bool RetainedReferences
         {
             get => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_retainedReferences);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setRetainedReferences, value);
         }
-
+        
         public MTLCommandBufferErrorOption ErrorOptions
         {
             get => (MTLCommandBufferErrorOption)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_errorOptions);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setErrorOptions, (ulong)value);
         }
 
+        public static implicit operator IntPtr(in MTLCommandBufferDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLCommandBufferDescriptor));
         private static readonly Selector sel_retainedReferences = "retainedReferences";
         private static readonly Selector sel_setRetainedReferences = "setRetainedReferences:";
         private static readonly Selector sel_errorOptions = "errorOptions";

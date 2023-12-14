@@ -87,11 +87,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLRenderPipelineColorAttachmentDescriptor obj) => obj.NativePtr;
         public MTLRenderPipelineColorAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLRenderPipelineColorAttachmentDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLRenderPipelineColorAttachmentDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLRenderPipelineColorAttachmentDescriptor New() => s_class.AllocInit<MTLRenderPipelineColorAttachmentDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLRenderPipelineColorAttachmentDescriptor));
 
         public MTLPixelFormat PixelFormat
         {
@@ -174,11 +172,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLRenderPipelineReflection obj) => obj.NativePtr;
         public MTLRenderPipelineReflection(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLRenderPipelineReflection()
-        {
-            var cls = new ObjectiveCClass("MTLRenderPipelineReflection");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLRenderPipelineReflection New() => s_class.AllocInit<MTLRenderPipelineReflection>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLRenderPipelineReflection));
 
         public NSArray VertexBindings => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_vertexBindings));
 
@@ -209,14 +205,16 @@ namespace SharpMetal.Metal
     public partial struct MTLRenderPipelineDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLRenderPipelineDescriptor obj) => obj.NativePtr;
+
         public MTLRenderPipelineDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLRenderPipelineDescriptor()
+        public static MTLRenderPipelineDescriptor New() => s_class.AllocInit<MTLRenderPipelineDescriptor>();
+
+        /*public static MTLRenderPipelineDescriptor New()
         {
             var cls = new ObjectiveCClass("MTLRenderPipelineDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+            return cls.AllocInit<MTLRenderPipelineDescriptor>();
+        }*/
 
         public NSString Label
         {
@@ -413,6 +411,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_reset);
         }
 
+        public static implicit operator IntPtr(in MTLRenderPipelineDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLRenderPipelineDescriptor));
         private static readonly Selector sel_label = "label";
         private static readonly Selector sel_setLabel = "setLabel:";
         private static readonly Selector sel_vertexFunction = "vertexFunction";
@@ -485,11 +486,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLRenderPipelineFunctionsDescriptor obj) => obj.NativePtr;
         public MTLRenderPipelineFunctionsDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLRenderPipelineFunctionsDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLRenderPipelineFunctionsDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLRenderPipelineFunctionsDescriptor New() => s_class.AllocInit<MTLRenderPipelineFunctionsDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLRenderPipelineFunctionsDescriptor));
 
         public NSArray VertexAdditionalBinaryFunctions
         {
@@ -609,11 +608,9 @@ namespace SharpMetal.Metal
             }
         }
 
-        public MTLRenderPipelineColorAttachmentDescriptorArray()
-        {
-            var cls = new ObjectiveCClass("MTLRenderPipelineColorAttachmentDescriptorArray");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLRenderPipelineColorAttachmentDescriptorArray New() => s_class.AllocInit<MTLRenderPipelineColorAttachmentDescriptorArray>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLRenderPipelineColorAttachmentDescriptorArray));
 
         public MTLRenderPipelineColorAttachmentDescriptor Object(in ulong attachmentIndex)
         {
@@ -635,11 +632,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLTileRenderPipelineColorAttachmentDescriptor obj) => obj.NativePtr;
         public MTLTileRenderPipelineColorAttachmentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLTileRenderPipelineColorAttachmentDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLTileRenderPipelineColorAttachmentDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLTileRenderPipelineColorAttachmentDescriptor New() => s_class.AllocInit<MTLTileRenderPipelineColorAttachmentDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLTileRenderPipelineColorAttachmentDescriptor));
 
         public MTLPixelFormat PixelFormat
         {
@@ -669,11 +664,9 @@ namespace SharpMetal.Metal
             }
         }
 
-        public MTLTileRenderPipelineColorAttachmentDescriptorArray()
-        {
-            var cls = new ObjectiveCClass("MTLTileRenderPipelineColorAttachmentDescriptorArray");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLTileRenderPipelineColorAttachmentDescriptor New() => s_class.AllocInit<MTLTileRenderPipelineColorAttachmentDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(NSDictionary));
 
         public MTLTileRenderPipelineColorAttachmentDescriptor Object(in ulong attachmentIndex)
         {
@@ -695,11 +688,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLTileRenderPipelineDescriptor obj) => obj.NativePtr;
         public MTLTileRenderPipelineDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLTileRenderPipelineDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLTileRenderPipelineDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLTileRenderPipelineDescriptor New() => s_class.AllocInit<MTLTileRenderPipelineDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLTileRenderPipelineDescriptor));
 
         public NSString Label
         {
@@ -801,11 +792,9 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLMeshRenderPipelineDescriptor obj) => obj.NativePtr;
         public MTLMeshRenderPipelineDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLMeshRenderPipelineDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLMeshRenderPipelineDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLMeshRenderPipelineDescriptor New() => s_class.AllocInit<MTLMeshRenderPipelineDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLMeshRenderPipelineDescriptor));
 
         public NSString Label
         {

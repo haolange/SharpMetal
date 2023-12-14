@@ -144,51 +144,50 @@ namespace SharpMetal.Metal
     public partial struct MTLArgumentDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLArgumentDescriptor obj) => obj.NativePtr;
+
         public MTLArgumentDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLArgumentDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLArgumentDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLArgumentDescriptor New() => s_class.AllocInit<MTLArgumentDescriptor>();
 
         public MTLDataType DataType
         {
             get => (MTLDataType)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_dataType);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDataType, (ulong)value);
         }
-
+        
         public ulong Index
         {
             get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_index);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setIndex, value);
         }
-
+        
         public ulong ArrayLength
         {
             get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_arrayLength);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setArrayLength, value);
         }
-
+        
         public MTLBindingAccess Access
         {
             get => (MTLBindingAccess)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_access);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setAccess, (ulong)value);
         }
-
+        
         public MTLTextureType TextureType
         {
             get => (MTLTextureType)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_textureType);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTextureType, (ulong)value);
         }
-
+        
         public ulong ConstantBlockAlignment
         {
             get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_constantBlockAlignment);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setConstantBlockAlignment, value);
         }
 
+        public static implicit operator IntPtr(in MTLArgumentDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLArgumentDescriptor));
         private static readonly Selector sel_argumentDescriptor = "argumentDescriptor";
         private static readonly Selector sel_dataType = "dataType";
         private static readonly Selector sel_setDataType = "setDataType:";
@@ -207,17 +206,16 @@ namespace SharpMetal.Metal
     public partial struct MTLArchitecture
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLArchitecture obj) => obj.NativePtr;
+
         public MTLArchitecture(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLArchitecture()
-        {
-            var cls = new ObjectiveCClass("MTLArchitecture");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLArchitecture New() => s_class.AllocInit<MTLArchitecture>();
 
         public NSString Name => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_name));
 
+        public static implicit operator IntPtr(in MTLArchitecture obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLArchitecture));
         private static readonly Selector sel_name = "name";
     }
 

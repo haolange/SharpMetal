@@ -69,39 +69,38 @@ namespace SharpMetal.Metal
     public partial struct MTLCounterSampleBufferDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLCounterSampleBufferDescriptor obj) => obj.NativePtr;
+
         public MTLCounterSampleBufferDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLCounterSampleBufferDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLCounterSampleBufferDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLCounterSampleBufferDescriptor New() => s_class.AllocInit<MTLCounterSampleBufferDescriptor>();
 
         public MTLCounterSet CounterSet
         {
             get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_counterSet));
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setCounterSet, value);
         }
-
+        
         public NSString Label
         {
             get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_label));
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLabel, value);
         }
-
+        
         public MTLStorageMode StorageMode
         {
             get => (MTLStorageMode)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_storageMode);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStorageMode, (ulong)value);
         }
-
+        
         public ulong SampleCount
         {
             get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_sampleCount);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setSampleCount, value);
         }
 
+        public static implicit operator IntPtr(in MTLCounterSampleBufferDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLCounterSampleBufferDescriptor));
         private static readonly Selector sel_counterSet = "counterSet";
         private static readonly Selector sel_setCounterSet = "setCounterSet:";
         private static readonly Selector sel_label = "label";

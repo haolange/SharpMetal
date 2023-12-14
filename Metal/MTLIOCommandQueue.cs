@@ -78,14 +78,10 @@ namespace SharpMetal.Metal
     public partial struct MTLIOCommandQueueDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLIOCommandQueueDescriptor obj) => obj.NativePtr;
+
         public MTLIOCommandQueueDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLIOCommandQueueDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLIOCommandQueueDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLIOCommandQueueDescriptor New() => s_class.AllocInit<MTLIOCommandQueueDescriptor>();
 
         public ulong MaxCommandBufferCount
         {
@@ -117,6 +113,9 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setScratchBufferAllocator, value);
         }
 
+        public static implicit operator IntPtr(in MTLIOCommandQueueDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLIOCommandQueueDescriptor));
         private static readonly Selector sel_maxCommandBufferCount = "maxCommandBufferCount";
         private static readonly Selector sel_setMaxCommandBufferCount = "setMaxCommandBufferCount:";
         private static readonly Selector sel_priority = "priority";

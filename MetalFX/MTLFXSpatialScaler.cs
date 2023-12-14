@@ -13,15 +13,11 @@ namespace SharpMetal.MetalFX
     public partial struct MTLFXSpatialScalerDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLFXSpatialScalerDescriptor obj) => obj.NativePtr;
+
         public MTLFXSpatialScalerDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLFXSpatialScalerDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLFXSpatialScalerDescriptor");
-            NativePtr = cls.AllocInit();
-        }
-        
+        public static MTLFXSpatialScalerDescriptor New() => s_class.AllocInit<MTLFXSpatialScalerDescriptor>();
+
         public MTLPixelFormat ColorTextureFormat
         {
             get => (MTLPixelFormat)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, MTLFXSelector.sel_colorTextureFormat);
@@ -71,14 +67,18 @@ namespace SharpMetal.MetalFX
 
         public static bool SupportsDevice(in MTLDevice device)
         {
-            return ObjectiveCRuntime.bool_objc_msgSend(new ObjectiveCClass("MTLFXSpatialScalerDescriptor"), MTLFXSelector.sel_supportsDevice, device);
+            return ObjectiveCRuntime.bool_objc_msgSend(s_class, MTLFXSelector.sel_supportsDevice, device);
         }
+
+        public static implicit operator IntPtr(in MTLFXSpatialScalerDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLFXSpatialScalerDescriptor));
     }
 
     public partial struct MTLFXSpatialScaler
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLFXSpatialScaler obj) => obj.NativePtr;
+
         public MTLFXSpatialScaler(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLTextureUsage ColorTextureUsage
@@ -160,5 +160,7 @@ namespace SharpMetal.MetalFX
         {
             ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, MTLFXSelector.sel_encodeToCommandBuffer, commandBuffer);
         }
+
+        public static implicit operator IntPtr(in MTLFXSpatialScaler obj) => obj.NativePtr;
     }
 }

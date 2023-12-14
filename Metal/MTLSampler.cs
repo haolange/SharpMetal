@@ -37,14 +37,10 @@ namespace SharpMetal.Metal
     public partial struct MTLSamplerDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLSamplerDescriptor obj) => obj.NativePtr;
+
         public MTLSamplerDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLSamplerDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLSamplerDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLSamplerDescriptor New() => s_class.AllocInit<MTLSamplerDescriptor>();
 
         public MTLSamplerMinMagFilter MinFilter
         {
@@ -136,6 +132,9 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLabel, value);
         }
 
+        public static implicit operator IntPtr(in MTLSamplerDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLSamplerDescriptor));
         private static readonly Selector sel_minFilter = "minFilter";
         private static readonly Selector sel_setMinFilter = "setMinFilter:";
         private static readonly Selector sel_magFilter = "magFilter";

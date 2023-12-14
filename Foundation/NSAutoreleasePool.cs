@@ -5,14 +5,10 @@ namespace SharpMetal.Foundation
     public partial struct NSAutoreleasePool : IDisposable
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in NSAutoreleasePool obj) => obj.NativePtr;
+
         public NSAutoreleasePool(in IntPtr ptr) => NativePtr = ptr;
 
-        public static NSAutoreleasePool Begin()
-        {
-            var cls = new ObjectiveCClass("NSAutoreleasePool");
-            return new NSAutoreleasePool(cls.AllocInit());
-        }
+        public static NSAutoreleasePool Begin() => s_class.AllocInit<NSAutoreleasePool>();
 
         public void Drain()
         {
@@ -24,16 +20,19 @@ namespace SharpMetal.Foundation
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addObject, pObject);
         }
 
-        public static void ShowPools()
-        {
-            throw new NotSupportedException();
-        }
-
         public void Dispose()
         {
             ObjectiveCRuntime.release(NativePtr);
         }
 
+        public static void ShowPools()
+        {
+            throw new NotSupportedException();
+        }
+
+        public static implicit operator IntPtr(in NSAutoreleasePool obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(NSAutoreleasePool));
         private static readonly Selector sel_drain = "drain";
         private static readonly Selector sel_showPools = "showPools";
         private static readonly Selector sel_addObject = "addObject:";

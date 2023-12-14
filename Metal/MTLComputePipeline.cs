@@ -6,19 +6,18 @@ namespace SharpMetal.Metal
     public partial struct MTLComputePipelineReflection
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLComputePipelineReflection obj) => obj.NativePtr;
+
         public MTLComputePipelineReflection(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLComputePipelineReflection()
-        {
-            var cls = new ObjectiveCClass("MTLComputePipelineReflection");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLComputePipelineReflection New() => s_class.AllocInit<MTLComputePipelineReflection>();
 
         public NSArray Bindings => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_bindings));
-
+        
         public NSArray Arguments => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_arguments));
 
+        public static implicit operator IntPtr(in MTLComputePipelineReflection obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLComputePipelineReflection));
         private static readonly Selector sel_bindings = "bindings";
         private static readonly Selector sel_arguments = "arguments";
     }
@@ -26,83 +25,79 @@ namespace SharpMetal.Metal
     public partial struct MTLComputePipelineDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLComputePipelineDescriptor obj) => obj.NativePtr;
+
         public MTLComputePipelineDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLComputePipelineDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLComputePipelineDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLComputePipelineDescriptor New() => s_class.AllocInit<MTLComputePipelineDescriptor>();
 
         public NSString Label
         {
             get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_label));
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLabel, value);
         }
-
+        
         public MTLFunction ComputeFunction
         {
             get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_computeFunction));
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setComputeFunction, value);
         }
-
+        
         public bool ThreadGroupSizeIsMultipleOfThreadExecutionWidth
         {
             get => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_threadGroupSizeIsMultipleOfThreadExecutionWidth);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setThreadGroupSizeIsMultipleOfThreadExecutionWidth, value);
         }
-
+        
         public ulong MaxTotalThreadsPerThreadgroup
         {
             get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_maxTotalThreadsPerThreadgroup);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMaxTotalThreadsPerThreadgroup, value);
         }
-
+        
         public MTLStageInputOutputDescriptor StageInputDescriptor
         {
             get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_stageInputDescriptor));
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStageInputDescriptor, value);
         }
-
+        
         public MTLPipelineBufferDescriptorArray Buffers => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_buffers));
-
+        
         public bool SupportIndirectCommandBuffers
         {
             get => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportIndirectCommandBuffers);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setSupportIndirectCommandBuffers, value);
         }
-
+        
         public NSArray InsertLibraries
         {
             get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_insertLibraries));
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setInsertLibraries, value);
         }
-
+        
         public NSArray PreloadedLibraries
         {
             get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_preloadedLibraries));
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setPreloadedLibraries, value);
         }
-
+        
         public NSArray BinaryArchives
         {
             get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_binaryArchives));
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBinaryArchives, value);
         }
-
+        
         public MTLLinkedFunctions LinkedFunctions
         {
             get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_linkedFunctions));
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLinkedFunctions, value);
         }
-
+        
         public bool SupportAddingBinaryFunctions
         {
             get => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportAddingBinaryFunctions);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setSupportAddingBinaryFunctions, value);
         }
-
+        
         public ulong MaxCallStackDepth
         {
             get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_maxCallStackDepth);
@@ -114,6 +109,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_reset);
         }
 
+        public static implicit operator IntPtr(in MTLComputePipelineDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLComputePipelineDescriptor));
         private static readonly Selector sel_label = "label";
         private static readonly Selector sel_setLabel = "setLabel:";
         private static readonly Selector sel_computeFunction = "computeFunction";

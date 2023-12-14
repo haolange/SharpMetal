@@ -5,14 +5,10 @@ namespace SharpMetal.Foundation
     public partial struct NSDictionary
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in NSDictionary obj) => obj.NativePtr;
+
         public NSDictionary(in IntPtr ptr) => NativePtr = ptr;
 
-        public NSDictionary()
-        {
-            var cls = new ObjectiveCClass("NSDictionary");
-            NativePtr = cls.AllocInit();
-        }
+        public static NSDictionary New() => s_class.AllocInit<NSDictionary>();
 
         public NSEnumerator KeyEnumerator => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_keyEnumerator));
 
@@ -43,6 +39,9 @@ namespace SharpMetal.Foundation
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectForKey, pKey));
         }
 
+        public static implicit operator IntPtr(in NSDictionary obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(NSDictionary));
         private static readonly Selector sel_dictionary = "dictionary";
         private static readonly Selector sel_dictionaryWithObjectforKey = "dictionaryWithObject:forKey:";
         private static readonly Selector sel_dictionaryWithObjectsforKeyscount = "dictionaryWithObjects:forKeys:count:";

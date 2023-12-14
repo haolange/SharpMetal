@@ -24,14 +24,10 @@ namespace SharpMetal.Metal
     public partial struct MTLIndirectCommandBufferDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLIndirectCommandBufferDescriptor obj) => obj.NativePtr;
+
         public MTLIndirectCommandBufferDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLIndirectCommandBufferDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLIndirectCommandBufferDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLIndirectCommandBufferDescriptor New() => s_class.AllocInit<MTLIndirectCommandBufferDescriptor>();
 
         public MTLIndirectCommandType CommandTypes
         {
@@ -87,6 +83,9 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setSupportDynamicAttributeStride, value);
         }
 
+        public static implicit operator IntPtr(in MTLIndirectCommandBufferDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLIndirectCommandBufferDescriptor));
         private static readonly Selector sel_commandTypes = "commandTypes";
         private static readonly Selector sel_setCommandTypes = "setCommandTypes:";
         private static readonly Selector sel_inheritPipelineState = "inheritPipelineState";

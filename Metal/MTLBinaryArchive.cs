@@ -15,14 +15,10 @@ namespace SharpMetal.Metal
     public partial struct MTLBinaryArchiveDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLBinaryArchiveDescriptor obj) => obj.NativePtr;
+
         public MTLBinaryArchiveDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLBinaryArchiveDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLBinaryArchiveDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLBinaryArchiveDescriptor New() => s_class.AllocInit<MTLBinaryArchiveDescriptor>();
 
         public NSURL Url
         {
@@ -30,6 +26,9 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setUrl, value);
         }
 
+        public static implicit operator IntPtr(in MTLBinaryArchiveDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLBinaryArchiveDescriptor));
         private static readonly Selector sel_url = "url";
         private static readonly Selector sel_setUrl = "setUrl:";
     }

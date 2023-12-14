@@ -6,14 +6,10 @@ namespace SharpMetal.Metal
     public partial struct MTLLinkedFunctions
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLLinkedFunctions obj) => obj.NativePtr;
+
         public MTLLinkedFunctions(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLLinkedFunctions()
-        {
-            var cls = new ObjectiveCClass("MTLLinkedFunctions");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLLinkedFunctions New() => s_class.AllocInit<MTLLinkedFunctions>();
 
         public NSArray Functions
         {
@@ -39,6 +35,9 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setPrivateFunctions, value);
         }
 
+        public static implicit operator IntPtr(in MTLLinkedFunctions obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLLinkedFunctions));
         private static readonly Selector sel_linkedFunctions = "linkedFunctions";
         private static readonly Selector sel_functions = "functions";
         private static readonly Selector sel_setFunctions = "setFunctions:";

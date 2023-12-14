@@ -56,19 +56,18 @@ namespace SharpMetal.Metal
     public partial struct MTLSharedTextureHandle
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLSharedTextureHandle obj) => obj.NativePtr;
+
         public MTLSharedTextureHandle(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLSharedTextureHandle()
-        {
-            var cls = new ObjectiveCClass("MTLSharedTextureHandle");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLSharedTextureHandle New() => s_class.AllocInit<MTLSharedTextureHandle>();
 
         public MTLDevice Device => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_device));
 
         public NSString Label => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_label));
 
+        public static implicit operator IntPtr(in MTLSharedTextureHandle obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLSharedTextureHandle));
         private static readonly Selector sel_device = "device";
         private static readonly Selector sel_label = "label";
     }
@@ -76,14 +75,10 @@ namespace SharpMetal.Metal
     public partial struct MTLTextureDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLTextureDescriptor obj) => obj.NativePtr;
+
         public MTLTextureDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLTextureDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLTextureDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLTextureDescriptor New() => s_class.AllocInit<MTLTextureDescriptor>();
 
         public MTLTextureType TextureType
         {
@@ -196,6 +191,9 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("MTLTextureDescriptor"), sel_textureBufferDescriptorWithPixelFormatwidthresourceOptionsusage, (ulong)pixelFormat, width, (ulong)resourceOptions, (ulong)usage));
         }
 
+        public static implicit operator IntPtr(in MTLTextureDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass("MTLTextureDescriptor");
         private static readonly Selector sel_texture2DDescriptorWithPixelFormatwidthheightmipmapped = "texture2DDescriptorWithPixelFormat:width:height:mipmapped:";
         private static readonly Selector sel_textureCubeDescriptorWithPixelFormatsizemipmapped = "textureCubeDescriptorWithPixelFormat:size:mipmapped:";
         private static readonly Selector sel_textureBufferDescriptorWithPixelFormatwidthresourceOptionsusage = "textureBufferDescriptorWithPixelFormat:width:resourceOptions:usage:";

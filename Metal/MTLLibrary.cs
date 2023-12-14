@@ -65,14 +65,10 @@ namespace SharpMetal.Metal
     public partial struct MTLVertexAttribute
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLVertexAttribute obj) => obj.NativePtr;
+
         public MTLVertexAttribute(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLVertexAttribute()
-        {
-            var cls = new ObjectiveCClass("MTLVertexAttribute");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLVertexAttribute New() => s_class.AllocInit<MTLVertexAttribute>();
 
         public NSString Name => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_name));
 
@@ -86,6 +82,9 @@ namespace SharpMetal.Metal
 
         public bool PatchControlPointData => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isPatchControlPointData);
 
+        public static implicit operator IntPtr(in MTLVertexAttribute obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLVertexAttribute));
         private static readonly Selector sel_name = "name";
         private static readonly Selector sel_attributeIndex = "attributeIndex";
         private static readonly Selector sel_attributeType = "attributeType";
@@ -97,14 +96,10 @@ namespace SharpMetal.Metal
     public partial struct MTLAttribute
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLAttribute obj) => obj.NativePtr;
+
         public MTLAttribute(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLAttribute()
-        {
-            var cls = new ObjectiveCClass("MTLAttribute");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLAttribute New() => s_class.AllocInit<MTLAttribute>();
 
         public NSString Name => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_name));
 
@@ -118,6 +113,9 @@ namespace SharpMetal.Metal
 
         public bool PatchControlPointData => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isPatchControlPointData);
 
+        public static implicit operator IntPtr(in MTLAttribute obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLAttribute));
         private static readonly Selector sel_name = "name";
         private static readonly Selector sel_attributeIndex = "attributeIndex";
         private static readonly Selector sel_attributeType = "attributeType";
@@ -129,14 +127,10 @@ namespace SharpMetal.Metal
     public partial struct MTLFunctionConstant
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLFunctionConstant obj) => obj.NativePtr;
+
         public MTLFunctionConstant(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLFunctionConstant()
-        {
-            var cls = new ObjectiveCClass("MTLFunctionConstant");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLFunctionConstant New() => s_class.AllocInit<MTLFunctionConstant>();
 
         public NSString Name => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_name));
 
@@ -146,6 +140,9 @@ namespace SharpMetal.Metal
 
         public bool Required => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_required);
 
+        public static implicit operator IntPtr(in MTLFunctionConstant obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLFunctionConstant));
         private static readonly Selector sel_name = "name";
         private static readonly Selector sel_type = "type";
         private static readonly Selector sel_index = "index";
@@ -210,14 +207,10 @@ namespace SharpMetal.Metal
     public partial struct MTLCompileOptions
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLCompileOptions obj) => obj.NativePtr;
+
         public MTLCompileOptions(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLCompileOptions()
-        {
-            var cls = new ObjectiveCClass("MTLCompileOptions");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLCompileOptions New() => s_class.AllocInit<MTLCompileOptions>();
 
         public NSDictionary PreprocessorMacros
         {
@@ -285,6 +278,9 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMaxTotalThreadsPerThreadgroup, value);
         }
 
+        public static implicit operator IntPtr(in MTLCompileOptions obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLCompileOptions));
         private static readonly Selector sel_preprocessorMacros = "preprocessorMacros";
         private static readonly Selector sel_setPreprocessorMacros = "setPreprocessorMacros:";
         private static readonly Selector sel_fastMathEnabled = "fastMathEnabled";

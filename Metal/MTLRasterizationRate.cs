@@ -6,14 +6,10 @@ namespace SharpMetal.Metal
     public partial struct MTLRasterizationRateSampleArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLRasterizationRateSampleArray obj) => obj.NativePtr;
+
         public MTLRasterizationRateSampleArray(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLRasterizationRateSampleArray()
-        {
-            var cls = new ObjectiveCClass("MTLRasterizationRateSampleArray");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLRasterizationRateSampleArray New() => s_class.AllocInit<MTLRasterizationRateSampleArray>();
 
         public NSNumber Object(in ulong index)
         {
@@ -25,6 +21,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectatIndexedSubscript, value, index);
         }
 
+        public static implicit operator IntPtr(in MTLRasterizationRateSampleArray obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLRasterizationRateSampleArray));
         private static readonly Selector sel_objectAtIndexedSubscript = "objectAtIndexedSubscript:";
         private static readonly Selector sel_setObjectatIndexedSubscript = "setObject:atIndexedSubscript:";
     }
@@ -32,14 +31,10 @@ namespace SharpMetal.Metal
     public partial struct MTLRasterizationRateLayerDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLRasterizationRateLayerDescriptor obj) => obj.NativePtr;
+
         public MTLRasterizationRateLayerDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLRasterizationRateLayerDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLRasterizationRateLayerDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLRasterizationRateLayerDescriptor New() => s_class.AllocInit<MTLRasterizationRateLayerDescriptor>();
 
         public MTLSize SampleCount
         {
@@ -67,6 +62,9 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithSampleCounthorizontalvertical, sampleCount, horizontal, vertical));
         }
 
+        public static implicit operator IntPtr(in MTLRasterizationRateLayerDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLRasterizationRateLayerDescriptor));
         private static readonly Selector sel_initWithSampleCount = "initWithSampleCount:";
         private static readonly Selector sel_initWithSampleCounthorizontalvertical = "initWithSampleCount:horizontal:vertical:";
         private static readonly Selector sel_sampleCount = "sampleCount";
@@ -81,14 +79,10 @@ namespace SharpMetal.Metal
     public partial struct MTLRasterizationRateLayerArray
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLRasterizationRateLayerArray obj) => obj.NativePtr;
+
         public MTLRasterizationRateLayerArray(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLRasterizationRateLayerArray()
-        {
-            var cls = new ObjectiveCClass("MTLRasterizationRateLayerArray");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLRasterizationRateLayerArray New() => s_class.AllocInit<MTLRasterizationRateLayerArray>();
 
         public MTLRasterizationRateLayerDescriptor Object(in ulong layerIndex)
         {
@@ -100,6 +94,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectatIndexedSubscript, layer, layerIndex);
         }
 
+        public static implicit operator IntPtr(in MTLRasterizationRateLayerArray obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLRasterizationRateLayerArray));
         private static readonly Selector sel_objectAtIndexedSubscript = "objectAtIndexedSubscript:";
         private static readonly Selector sel_setObjectatIndexedSubscript = "setObject:atIndexedSubscript:";
     }
@@ -108,14 +105,12 @@ namespace SharpMetal.Metal
     public partial struct MTLRasterizationRateMapDescriptor
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLRasterizationRateMapDescriptor obj) => obj.NativePtr;
+
         public MTLRasterizationRateMapDescriptor(in IntPtr ptr) => NativePtr = ptr;
 
-        public MTLRasterizationRateMapDescriptor()
-        {
-            var cls = new ObjectiveCClass("MTLRasterizationRateMapDescriptor");
-            NativePtr = cls.AllocInit();
-        }
+        public static MTLRasterizationRateMapDescriptor New() => s_class.AllocInit<MTLRasterizationRateMapDescriptor>();
+
+        public ulong LayerCount => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_layerCount);
 
         public MTLRasterizationRateLayerArray Layers => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_layers));
 
@@ -130,8 +125,6 @@ namespace SharpMetal.Metal
             get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_label));
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLabel, value);
         }
-
-        public ulong LayerCount => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_layerCount);
 
         public static MTLRasterizationRateMapDescriptor RasterizationRateMapDescriptor(in MTLSize screenSize)
         {
@@ -158,6 +151,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLayeratIndex, layer, layerIndex);
         }
 
+        public static implicit operator IntPtr(in MTLRasterizationRateMapDescriptor obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLRasterizationRateMapDescriptor));
         private static readonly Selector sel_rasterizationRateMapDescriptorWithScreenSize = "rasterizationRateMapDescriptorWithScreenSize:";
         private static readonly Selector sel_rasterizationRateMapDescriptorWithScreenSizelayer = "rasterizationRateMapDescriptorWithScreenSize:layer:";
         private static readonly Selector sel_rasterizationRateMapDescriptorWithScreenSizelayerCountlayers = "rasterizationRateMapDescriptorWithScreenSize:layerCount:layers:";
@@ -174,7 +170,7 @@ namespace SharpMetal.Metal
     public partial struct MTLRasterizationRateMap
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in MTLRasterizationRateMap obj) => obj.NativePtr;
+
         public MTLRasterizationRateMap(in IntPtr ptr) => NativePtr = ptr;
 
         public MTLDevice Device => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_device));
@@ -209,6 +205,9 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_mapPhysicalToScreenCoordinatesforLayer, physicalCoordinates, layerIndex));
         }
 
+        public static implicit operator IntPtr(in MTLRasterizationRateMap obj) => obj.NativePtr;
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLRasterizationRateMap));
         private static readonly Selector sel_device = "device";
         private static readonly Selector sel_label = "label";
         private static readonly Selector sel_screenSize = "screenSize";

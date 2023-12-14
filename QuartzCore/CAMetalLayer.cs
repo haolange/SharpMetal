@@ -1,16 +1,16 @@
 using SharpMetal.Metal;
-using System.Runtime.Versioning;
-using SharpMetal.ObjectiveCCore;
 using SharpMetal.Foundation;
+using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.QuartzCore
 {
     public partial struct CAMetalLayer
     {
         public IntPtr NativePtr;
-        public static implicit operator IntPtr(in CAMetalLayer obj) => obj.NativePtr;
 
         public CAMetalLayer(in IntPtr ptr) => NativePtr = ptr;
+
+        public static CAMetalLayer New() => s_class.AllocInit<CAMetalLayer>();
 
         public MTLDevice Device
         {
@@ -59,11 +59,6 @@ namespace SharpMetal.QuartzCore
             return ObjectiveCRuntime.objc_msgSend<CAMetalDrawable>(NativePtr, sel_nextDrawable);
         }
 
-        public static CAMetalLayer New()
-        {
-            return s_class.AllocInit<CAMetalLayer>();
-        }
-
         public static bool TryCast(in IntPtr layerPointer, out CAMetalLayer metalLayer)
         {
             var layerObject = new NSObject(layerPointer);
@@ -78,8 +73,9 @@ namespace SharpMetal.QuartzCore
             return false;
         }
 
-        private static readonly ObjectiveCClass s_class = new ObjectiveCClass("CAMetalLayer");
+        public static implicit operator IntPtr(in CAMetalLayer obj) => obj.NativePtr;
 
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass("CAMetalLayer");
         private static readonly Selector sel_layer = "layer";
         private static readonly Selector sel_device = "device";
         private static readonly Selector sel_setDevice = "setDevice:";
