@@ -316,7 +316,7 @@ namespace SharpMetal.Metal
 
         public ulong MaximumConcurrentCompilationTaskCount => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_maximumConcurrentCompilationTaskCount);
 
-        [LibraryImport(ObjectiveC.MetalFramework)]
+        [LibraryImport(ObjectiveCLibrary.MetalFrameworkPath)]
         private static partial IntPtr MTLCreateSystemDefaultDevice();
 
         public static MTLDevice CreateSystemDefaultDevice()
@@ -324,7 +324,7 @@ namespace SharpMetal.Metal
             return new MTLDevice(MTLCreateSystemDefaultDevice());
         }
 
-        [LibraryImport(ObjectiveC.MetalFramework)]
+        [LibraryImport(ObjectiveCLibrary.MetalFrameworkPath)]
         private static partial IntPtr MTLCopyAllDevices();
 
         public static NSArray CopyAllDevices()

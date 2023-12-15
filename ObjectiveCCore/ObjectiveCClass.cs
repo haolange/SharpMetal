@@ -29,7 +29,7 @@ namespace SharpMetal.ObjectiveCCore
 
         public ObjectiveCClass(string name)
         {
-            var ptr = ObjectiveC.objc_getClass(name);
+            var ptr = ObjectiveCLibrary.objc_getClass(name);
 
             if (ptr == IntPtr.Zero)
             {
@@ -53,27 +53,27 @@ namespace SharpMetal.ObjectiveCCore
 
         public ObjectiveCClass Alloc()
         {
-            var value = ObjectiveC.IntPtr_objc_msgSend(NativePtr, "alloc");
+            var value = ObjectiveCLibrary.IntPtr_objc_msgSend(NativePtr, sel_alloc);
             return new ObjectiveCClass(value);
         }
 
         public ObjectiveCClass AllocInit()
         {
-            var value = ObjectiveC.IntPtr_objc_msgSend(NativePtr, "alloc");
-            ObjectiveC.objc_msgSend(value, "init");
+            var value = ObjectiveCLibrary.IntPtr_objc_msgSend(NativePtr, sel_alloc);
+            ObjectiveCLibrary.objc_msgSend(value, sel_init);
             return new ObjectiveCClass(value);
         }
 
         public T Alloc<T>() where T : struct
         {
-            IntPtr value = ObjectiveC.IntPtr_objc_msgSend(NativePtr, "alloc");
+            IntPtr value = ObjectiveCLibrary.IntPtr_objc_msgSend(NativePtr, sel_alloc);
             return Unsafe.AsRef<T>(&value);
         }
 
         public T AllocInit<T>() where T : struct
         {
-            IntPtr value = ObjectiveC.IntPtr_objc_msgSend(NativePtr, "alloc");
-            ObjectiveC.objc_msgSend(value, "init");
+            IntPtr value = ObjectiveCLibrary.IntPtr_objc_msgSend(NativePtr, sel_alloc);
+            ObjectiveCLibrary.objc_msgSend(value, sel_init);
             return Unsafe.AsRef<T>(&value);
         }
 
@@ -81,5 +81,8 @@ namespace SharpMetal.ObjectiveCCore
         {
             return ObjectiveCRuntime.class_copyMethodList(this, out count);
         }
+
+        private static readonly Selector sel_alloc = "alloc";
+        private static readonly Selector sel_init = "init";
     }
 }
