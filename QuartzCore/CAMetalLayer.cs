@@ -54,7 +54,7 @@ namespace SharpMetal.QuartzCore
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDisplaySyncEnabled, value);
         }
 
-        public CAMetalDrawable nextDrawable()
+        public CAMetalDrawable NextDrawable()
         {
             return ObjectiveCRuntime.objc_msgSend<CAMetalDrawable>(NativePtr, sel_nextDrawable);
         }

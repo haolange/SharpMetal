@@ -535,40 +535,49 @@ namespace SharpMetal.ObjectiveCCore
         public static extern ObjectiveCMethod* class_copyMethodList(ObjectiveCClass cls, out uint outCount);
 
         [DllImport(ObjectiveC.ObjCRuntime)]
-        public static extern void free(IntPtr receiver);
+        public static extern void Free(IntPtr receiver);
 
-        public static void retain(IntPtr receiver) => objc_msgSend(receiver, sel_retain);
+        public static void Retain(in IntPtr receiver)
+        {
+            objc_msgSend(receiver, sel_retain);
+        }
 
-        public static void release(IntPtr receiver) => objc_msgSend(receiver, sel_release);
+        public static void Release(in IntPtr receiver)
+        {
+            objc_msgSend(receiver, sel_release);
+        }
 
-        public static ulong GetRetainCount(IntPtr receiver) => ulong_objc_msgSend(receiver, sel_retainCount);
+        public static ulong GetRetainCount(in IntPtr receiver)
+        {
+            return ulong_objc_msgSend(receiver, sel_retainCount);
+        }
 
-        public static T objc_msgSend<T>(IntPtr receiver, Selector selector) where T : struct
+        public static T objc_msgSend<T>(in IntPtr receiver, in Selector selector) where T : struct
         {
             IntPtr value = IntPtr_objc_msgSend(receiver, selector);
             return Unsafe.AsRef<T>(&value);
         }
 
-        public static T objc_msgSend<T>(IntPtr receiver, Selector selector, uint a) where T : struct
+        public static T objc_msgSend<T>(in IntPtr receiver, in Selector selector, in uint a) where T : struct
         {
             IntPtr value = IntPtr_objc_msgSend(receiver, selector, a);
             return Unsafe.AsRef<T>(&value);
         }
 
-        public static T objc_msgSend<T>(IntPtr receiver, Selector selector, IntPtr a) where T : struct
+        public static T objc_msgSend<T>(in IntPtr receiver, in Selector selector, in IntPtr a) where T : struct
         {
             IntPtr value = IntPtr_objc_msgSend(receiver, selector, a);
             return Unsafe.AsRef<T>(&value);
         }
 
-        public static T objc_msgSend_stret<T>(IntPtr receiver, Selector selector) where T : struct
+        public static T objc_msgSend_stret<T>(in IntPtr receiver, in Selector selector) where T : struct
         {
             T ret = default(T);
             objc_msgSend_stret(Unsafe.AsPointer(ref ret), receiver, selector);
             return ret;
         }
 
-        public static string string_objc_msgSend(IntPtr receiver, Selector selector)
+        public static string string_objc_msgSend(in IntPtr receiver, in Selector selector)
         {
             return objc_msgSend<NSString>(receiver, selector).ToString();
         }

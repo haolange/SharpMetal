@@ -22,7 +22,7 @@ namespace SharpMetal.Foundation
 
         public void Dispose()
         {
-            ObjectiveCRuntime.release(NativePtr);
+            ObjectiveCRuntime.Release(NativePtr);
         }
 
         public static void ShowPools()

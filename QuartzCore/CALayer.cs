@@ -9,7 +9,7 @@ namespace SharpMetal.QuartzCore
 
         public CALayer(in IntPtr ptr) => NativePtr = ptr;
 
-        public void addSublayer(in IntPtr layer)
+        public void AddSublayer(in IntPtr layer)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addSublayer, layer);
         }
