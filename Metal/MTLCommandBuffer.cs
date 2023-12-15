@@ -147,17 +147,17 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_commit);
         }
 
-        public void PresentDrawable(in CAMetalDrawable drawable)
+        public void PresentDrawable(in MTLDrawable drawable)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_presentDrawable, drawable);
         }
 
-        public void PresentDrawableAtTime(in CAMetalDrawable drawable, in IntPtr presentationTime)
+        public void PresentDrawableAtTime(in MTLDrawable drawable, in IntPtr presentationTime)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_presentDrawableatTime, drawable, presentationTime);
         }
 
-        public void PresentDrawableAfterMinimumDuration(in CAMetalDrawable drawable, in IntPtr duration)
+        public void PresentDrawableAfterMinimumDuration(in MTLDrawable drawable, in IntPtr duration)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_presentDrawableafterMinimumDuration, drawable, duration);
         }

@@ -1,19 +1,13 @@
 using SharpMetal.Metal;
 using SharpMetal.ObjectiveCCore;
 
-namespace SharpMetal.QuartzCore
+namespace SharpMetal.Metal
 {
-    public partial struct CAMetalDrawable
+    public partial struct MTLDrawable
     {
         public IntPtr NativePtr;
 
-        public CAMetalDrawable(in IntPtr ptr) => NativePtr = ptr;
-
-        public bool IsNull => NativePtr == IntPtr.Zero;
-
-        public CAMetalLayer Layer => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_layer));
-
-        public MTLTexture Texture => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_texture));
+        public MTLDrawable(IntPtr ptr) => NativePtr = ptr;
 
         public IntPtr PresentedTime => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_presentedTime));
 
@@ -24,22 +18,18 @@ namespace SharpMetal.QuartzCore
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_present);
         }
 
-        public void PresentAtTime(in IntPtr presentationTime)
+        public void PresentAtTime(IntPtr presentationTime)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_presentAtTime, presentationTime);
         }
 
-        public void PresentAfterMinimumDuration(in IntPtr duration)
+        public void PresentAfterMinimumDuration(IntPtr duration)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_presentAfterMinimumDuration, duration);
         }
 
-        public static implicit operator IntPtr(in CAMetalDrawable obj) => obj.NativePtr;
-        public static implicit operator MTLDrawable(in CAMetalDrawable obj) => new MTLDrawable(obj.NativePtr);
-        public static implicit operator CAMetalDrawable(in MTLDrawable obj) => new CAMetalDrawable(obj.NativePtr);
+        public static implicit operator IntPtr(MTLDrawable obj) => obj.NativePtr;
 
-        private static readonly Selector sel_layer = "layer";
-        private static readonly Selector sel_texture = "texture";
         private static readonly Selector sel_present = "present";
         private static readonly Selector sel_presentAtTime = "presentAtTime:";
         private static readonly Selector sel_presentAfterMinimumDuration = "presentAfterMinimumDuration:";
