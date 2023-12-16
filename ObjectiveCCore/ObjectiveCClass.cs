@@ -53,27 +53,27 @@ namespace SharpMetal.ObjectiveCCore
 
         public ObjectiveCClass Alloc()
         {
-            var value = ObjectiveCLibrary.IntPtr_objc_msgSend(NativePtr, sel_alloc);
+            var value = ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_alloc);
             return new ObjectiveCClass(value);
         }
 
         public ObjectiveCClass AllocInit()
         {
-            var value = ObjectiveCLibrary.IntPtr_objc_msgSend(NativePtr, sel_alloc);
-            ObjectiveCLibrary.objc_msgSend(value, sel_init);
+            var value = ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_alloc);
+            ObjectiveCRuntime.objc_msgSend(value, sel_init);
             return new ObjectiveCClass(value);
         }
 
         public T Alloc<T>() where T : struct
         {
-            IntPtr value = ObjectiveCLibrary.IntPtr_objc_msgSend(NativePtr, sel_alloc);
+            IntPtr value = ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_alloc);
             return Unsafe.AsRef<T>(&value);
         }
 
         public T AllocInit<T>() where T : struct
         {
-            IntPtr value = ObjectiveCLibrary.IntPtr_objc_msgSend(NativePtr, sel_alloc);
-            ObjectiveCLibrary.objc_msgSend(value, sel_init);
+            IntPtr value = ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_alloc);
+            ObjectiveCRuntime.objc_msgSend(value, sel_init);
             return Unsafe.AsRef<T>(&value);
         }
 

@@ -20,7 +20,7 @@ namespace SharpMetal.QuartzCore
 
         public MTLPixelFormat PixelFormat
         {
-            get => (MTLPixelFormat) ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_pixelFormat);
+            get => (MTLPixelFormat)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_pixelFormat);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setPixelFormat, (uint)value);
         }
 
@@ -30,15 +30,15 @@ namespace SharpMetal.QuartzCore
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFramebufferOnly, value);
         }
 
-        public IntPtr DrawableSize
+        public CGSize DrawableSize
         {
-            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_drawableSize));
+            get => ObjectiveCRuntime.CGSize_objc_msgSend(NativePtr, sel_drawableSize);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDrawableSize, value);
         }
 
-        public MTLRegion Frame
+        public CGRect Frame
         {
-            get => ObjectiveCRuntime.MTLRegion_objc_msgSend(NativePtr, sel_frame);
+            get => ObjectiveCRuntime.CGRect_objc_msgSend(NativePtr, sel_frame);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFrame, value);
         }
 
