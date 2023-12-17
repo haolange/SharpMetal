@@ -10,12 +10,14 @@ namespace SharpMetal.Foundation
 
         public UIScreen(in IntPtr ptr) => NativePtr = ptr;
 
-        public float nativeScale => ObjectiveCRuntime.float_objc_msgSend(NativePtr, sel_nativeScale);
+        public float NativeScale => ObjectiveCRuntime.float_objc_msgSend(NativePtr, sel_nativeScale);
 
-        public static UIScreen mainScreen => ObjectiveCRuntime.objc_msgSend<UIScreen>(new ObjectiveCClass("UIScreen"), sel_mainScreen);
+        public static UIScreen MainScreen => ObjectiveCRuntime.objc_msgSend<UIScreen>(s_class, sel_mainScreen);
 
-        private static readonly Selector sel_nativeScale = "nativeScale";
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(UIScreen));
+
         private static readonly Selector sel_mainScreen = "mainScreen";
+        private static readonly Selector sel_nativeScale = "nativeScale";
     }
 
     public struct UIView
@@ -24,9 +26,9 @@ namespace SharpMetal.Foundation
 
         public UIView(in nint ptr) => NativePtr = ptr;
 
-        public CALayer layer => ObjectiveCRuntime.objc_msgSend<CALayer>(NativePtr, sel_layer);
+        public CGRect Frame => ObjectiveCRuntime.CGRect_objc_msgSend(NativePtr, sel_frame);
 
-        public CGRect frame => ObjectiveCRuntime.CGRect_objc_msgSend(NativePtr, sel_frame);
+        public CALayer Layer => ObjectiveCRuntime.objc_msgSend<CALayer>(NativePtr, sel_layer);
 
         private static readonly Selector sel_layer = "layer";
         private static readonly Selector sel_frame = "frame";
@@ -38,7 +40,7 @@ namespace SharpMetal.Foundation
 
         public UIViewController(in nint ptr) => NativePtr = ptr;
 
-        public UIView view => ObjectiveCRuntime.objc_msgSend<UIView>(NativePtr, "view");
+        public UIView View => ObjectiveCRuntime.objc_msgSend<UIView>(NativePtr, "view");
     }
 
     public struct UIWindow
