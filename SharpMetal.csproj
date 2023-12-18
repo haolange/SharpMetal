@@ -5,35 +5,35 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<Platforms>x64;ARM64</Platforms>
-		<AssemblyName>Apple.Metal</AssemblyName>
-		<RootNamespace>Apple.Metal</RootNamespace>
+		<AssemblyName>SharpMetal</AssemblyName>
+		<RootNamespace>SharpMetal</RootNamespace>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<IntermediateOutputPath>../../../../Intermediate/ThirdParty/Apple/Metal/</IntermediateOutputPath>
-		<BaseOutputPath>$(ProjectDir)../../../../Binaries/ThirdParty/Apple/Metal/</BaseOutputPath>
+		<IntermediateOutputPath>../../../../Intermediate/ThirdParty/Apple/SharpMetal/</IntermediateOutputPath>
+		<BaseOutputPath>$(ProjectDir)../../../../Binaries/ThirdParty/Apple/SharpMetal/</BaseOutputPath>
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-		<OutputPath>../../../../Binaries/ThirdParty/Apple/Metal/Win64/Debug/</OutputPath>
+		<OutputPath>../../../../Binaries/ThirdParty/Apple/SharpMetal/Win64/Debug/</OutputPath>
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>full</DebugType>
 		<Optimize>false</Optimize>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-		<OutputPath>../../../../Binaries/ThirdParty/Apple/Metal/Win64/Release/</OutputPath>
+		<OutputPath>../../../../Binaries/ThirdParty/Apple/SharpMetal/Win64/Release/</OutputPath>
 		<Optimize>true</Optimize>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-		<OutputPath>../../../../Binaries/ThirdParty/Apple/Metal/ARM64/Debug/</OutputPath>
+		<OutputPath>../../../../Binaries/ThirdParty/Apple/SharpMetal/ARM64/Debug/</OutputPath>
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>full</DebugType>
 		<Optimize>false</Optimize>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-		<OutputPath>../../../../Binaries/ThirdParty/Apple/Metal/ARM64/Release/</OutputPath>
+		<OutputPath>../../../../Binaries/ThirdParty/Apple/SharpMetal/ARM64/Release/</OutputPath>
 		<Optimize>true</Optimize>
 	</PropertyGroup>
 </Project>

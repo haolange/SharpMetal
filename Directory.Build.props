@@ -1,7 +1,7 @@
 <Project>
   <PropertyGroup>
     <UseHostCompilerIfAvailable>false</UseHostCompilerIfAvailable>
-    <BaseIntermediateOutputPath>$(ProjectDir)../../../../Intermediate/ThirdParty/Apple/Metal/</BaseIntermediateOutputPath>
-    <MSBuildProjectExtensionsPath>$(ProjectDir)../../../../Intermediate/ThirdParty/Apple/Metal/</MSBuildProjectExtensionsPath>
+    <BaseIntermediateOutputPath>$(ProjectDir)../../../../Intermediate/ThirdParty/Apple/SharpMetal/</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>$(ProjectDir)../../../../Intermediate/ThirdParty/Apple/SharpMetal/</MSBuildProjectExtensionsPath>
   </PropertyGroup>
 </Project>
