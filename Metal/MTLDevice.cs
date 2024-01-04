@@ -316,7 +316,7 @@ namespace SharpMetal.Metal
 
         public ulong MaximumConcurrentCompilationTaskCount => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_maximumConcurrentCompilationTaskCount);
 
-        [LibraryImport(ObjectiveCLibrary.MetalFrameworkPath)]
+        [LibraryImport(MetalFrameworkPath)]
         private static partial IntPtr MTLCreateSystemDefaultDevice();
 
         public static MTLDevice CreateSystemDefaultDevice()
@@ -324,7 +324,7 @@ namespace SharpMetal.Metal
             return new MTLDevice(MTLCreateSystemDefaultDevice());
         }
 
-        [LibraryImport(ObjectiveCLibrary.MetalFrameworkPath)]
+        [LibraryImport(MetalFrameworkPath)]
         private static partial IntPtr MTLCopyAllDevices();
 
         public static NSArray CopyAllDevices()
@@ -646,6 +646,8 @@ namespace SharpMetal.Metal
         {
             return ObjectiveCRuntime.MTLSizeAndAlign_objc_msgSend(NativePtr, sel_heapAccelerationStructureSizeAndAlignWithDescriptor, descriptor);
         }
+
+        public const string MetalFrameworkPath = "/System/Library/Frameworks/Metal.framework/Metal";
 
         private static readonly Selector sel_name = "name";
         private static readonly Selector sel_registryID = "registryID";

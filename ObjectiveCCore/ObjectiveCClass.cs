@@ -29,7 +29,7 @@ namespace SharpMetal.ObjectiveCCore
 
         public ObjectiveCClass(string name)
         {
-            var ptr = ObjectiveCLibrary.objc_getClass(name);
+            var ptr = ObjectiveCRuntime.objc_getClass(name);
 
             if (ptr == IntPtr.Zero)
             {

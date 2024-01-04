@@ -133,12 +133,9 @@ namespace SharpMetal.Metal
 
     public enum MTLBindingAccess : ulong
     {
-        ArgumentAccessReadOnly = 0,
         ReadOnly = 0,
-        ArgumentAccessReadWrite = 1,
         ReadWrite = 1,
         WriteOnly = 2,
-        ArgumentAccessWriteOnly = 2,
     }
 
     public partial struct MTLType
