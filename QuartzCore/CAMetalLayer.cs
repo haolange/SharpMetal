@@ -8,6 +8,8 @@ namespace SharpMetal.QuartzCore
     {
         public IntPtr NativePtr;
 
+        public static implicit operator CALayer(in CAMetalLayer obj) => new CALayer(obj.NativePtr);
+
         public CAMetalLayer(in IntPtr ptr) => NativePtr = ptr;
 
         public static CAMetalLayer New() => s_class.AllocInit<CAMetalLayer>();
@@ -54,6 +56,11 @@ namespace SharpMetal.QuartzCore
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDisplaySyncEnabled, value);
         }
 
+        public void AddSublayer(in IntPtr layer)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addSublayer, layer);
+        }
+
         public CAMetalDrawable NextDrawable()
         {
             return ObjectiveCRuntime.objc_msgSend<CAMetalDrawable>(NativePtr, sel_nextDrawable);
@@ -76,6 +83,8 @@ namespace SharpMetal.QuartzCore
         public static implicit operator IntPtr(in CAMetalLayer obj) => obj.NativePtr;
 
         private static readonly ObjectiveCClass s_class = new ObjectiveCClass("CAMetalLayer");
+
+        private static readonly Selector sel_addSublayer = "addSublayer:";
         private static readonly Selector sel_layer = "layer";
         private static readonly Selector sel_device = "device";
         private static readonly Selector sel_setDevice = "setDevice:";

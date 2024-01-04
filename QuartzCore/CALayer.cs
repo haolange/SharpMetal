@@ -5,6 +5,7 @@ namespace SharpMetal.QuartzCore
     public struct CALayer
     {
         public readonly IntPtr NativePtr;
+
         public static implicit operator IntPtr(in CALayer c) => c.NativePtr;
 
         public CALayer(in IntPtr ptr) => NativePtr = ptr;

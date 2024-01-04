@@ -40,7 +40,9 @@ namespace SharpMetal.Foundation
 
         public UIViewController(in nint ptr) => NativePtr = ptr;
 
-        public UIView View => ObjectiveCRuntime.objc_msgSend<UIView>(NativePtr, "view");
+        public UIView View => ObjectiveCRuntime.objc_msgSend<UIView>(NativePtr, sel_view);
+
+        private static readonly Selector sel_view = "view";
     }
 
     public struct UIWindow
@@ -49,6 +51,8 @@ namespace SharpMetal.Foundation
 
         public UIWindow(in nint ptr) => NativePtr = ptr;
 
-        public UIViewController rootViewController => ObjectiveCRuntime.objc_msgSend<UIViewController>(NativePtr, "rootViewController");
+        public UIViewController RootViewController => ObjectiveCRuntime.objc_msgSend<UIViewController>(NativePtr, sel_rootViewController);
+
+        private static readonly Selector sel_rootViewController = "rootViewController";
     }
 }

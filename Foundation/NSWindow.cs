@@ -12,23 +12,23 @@ namespace SharpMetal.Foundation
 
         public NSView(in IntPtr ptr) => NativePtr = ptr;
 
-        public bool wantsLayer
+        public bool WantsLayer
         {
             get => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_wantsLayer);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setWantsLayer, value);
         }
 
-        public IntPtr layer
+        public CALayer Layer
         {
-            get => ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_layer);
+            get => ObjectiveCRuntime.objc_msgSend<CALayer>(NativePtr, sel_layer);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLayer, value);
         }
 
-        public MTLRegion frame
+        public CGRect Frame
         {
             get
             {
-                return RuntimeInformation.ProcessArchitecture == Architecture.Arm64 ? ObjectiveCRuntime.MTLRegion_objc_msgSend(NativePtr, sel_frame) : ObjectiveCRuntime.objc_msgSend_stret<MTLRegion>(NativePtr, sel_setFrame);
+                return RuntimeInformation.ProcessArchitecture == Architecture.Arm64 ? ObjectiveCRuntime.CGRect_objc_msgSend(NativePtr, sel_frame) : ObjectiveCRuntime.objc_msgSend_stret<CGRect>(NativePtr, sel_setFrame);
             }
             set
             {
@@ -50,6 +50,6 @@ namespace SharpMetal.Foundation
 
         public NSWindow(in IntPtr ptr) => NativePtr = ptr;
 
-        public NSView contentView => ObjectiveCRuntime.objc_msgSend<NSView>(NativePtr, "contentView");
+        public NSView ContentView => ObjectiveCRuntime.objc_msgSend<NSView>(NativePtr, "contentView");
     }
 }
