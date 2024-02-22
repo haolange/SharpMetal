@@ -97,9 +97,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useResourceusage, resource, (ulong)usage);
         }
 
-        public void UseResources(MTLResource[] resources, ulong count, MTLResourceUsage usage)
+        public void UseResources(in IntPtr resources, ulong count, MTLResourceUsage usage)
         {
-            throw new NotImplementedException();
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useResourcescountusage, resources, (ulong)usage);
         }
 
         public void UseHeap(MTLHeap heap)
@@ -107,9 +107,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useHeap, heap);
         }
 
-        public void UseHeaps(MTLHeap[] heaps, ulong count)
+        public void UseHeaps(in IntPtr heaps, ulong count)
         {
-            throw new NotImplementedException();
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useHeapscount, heaps, (ulong)count);
         }
 
         public void SampleCountersInBuffer(MTLCounterSampleBuffer sampleBuffer, ulong sampleIndex, bool barrier)

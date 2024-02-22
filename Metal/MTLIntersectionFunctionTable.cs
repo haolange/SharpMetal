@@ -89,9 +89,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBufferoffsetatIndex, buffer, offset, index);
         }
 
-        public void SetBuffers(MTLBuffer[] buffers, ulong[] offsets, in NSRange range)
+        public void SetBuffers(in IntPtr buffers, in IntPtr offsets, in NSRange range)
         {
-            throw new NotImplementedException();
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBuffersoffsetswithRange, buffers, offsets, range);
         }
 
         public void SetFunction(in MTLFunctionHandle function, in ulong index)
@@ -99,9 +99,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFunctionatIndex, function, index);
         }
 
-        public void SetFunctions(MTLFunctionHandle[] functions, in NSRange range)
+        public void SetFunctions(in IntPtr functions, in NSRange range)
         {
-            throw new NotImplementedException();
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFunctionswithRange, functions, range);
         }
 
         public void SetOpaqueTriangleIntersectionFunction(in MTLIntersectionFunctionSignature signature, in ulong index)
@@ -129,9 +129,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVisibleFunctionTableatBufferIndex, functionTable, bufferIndex);
         }
 
-        public void SetVisibleFunctionTables(MTLVisibleFunctionTable[] functionTables, in NSRange bufferRange)
+        public void SetVisibleFunctionTables(in IntPtr functionTables, in NSRange bufferRange)
         {
-            throw new NotImplementedException();
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVisibleFunctionTableswithBufferRange, functionTables, bufferRange);
         }
 
         private static readonly Selector sel_label = "label";

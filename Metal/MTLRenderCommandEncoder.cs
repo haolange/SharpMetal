@@ -185,7 +185,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexBufferOffsetatIndex, offset, index);
         }
 
-        public void SetVertexBuffers(MTLBuffer[] buffers, in ulong[] offsets, in NSRange range)
+        public void SetVertexBuffers(in IntPtr buffers, in IntPtr offsets, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -195,7 +195,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexBufferoffsetattributeStrideatIndex, buffer, offset, stride, index);
         }
 
-        public void SetVertexBuffers(MTLBuffer[] buffers, in ulong offsets, in ulong strides, in NSRange range)
+        public void SetVertexBuffers(in IntPtr buffers, in IntPtr offsets, in IntPtr strides, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -215,7 +215,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexTextureatIndex, texture, index);
         }
 
-        public void SetVertexTextures(MTLTexture[] textures, in NSRange range)
+        public void SetVertexTextures(in IntPtr textures, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -225,7 +225,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexSamplerStateatIndex, sampler, index);
         }
 
-        public void SetVertexSamplerStates(MTLSamplerState[] samplers, in NSRange range)
+        public void SetVertexSamplerStates(in IntPtr samplers, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -235,7 +235,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexSamplerStatelodMinClamplodMaxClampatIndex, sampler, lodMinClamp, lodMaxClamp, index);
         }
 
-        public void SetVertexSamplerStates(MTLSamplerState[] samplers, float[] lodMinClamps, float[] lodMaxClamps, in NSRange range)
+        public void SetVertexSamplerStates(in IntPtr samplers, in IntPtr lodMinClamps, float[] lodMaxClamps, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -245,7 +245,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexVisibleFunctionTableatBufferIndex, functionTable, bufferIndex);
         }
 
-        public void SetVertexVisibleFunctionTables(MTLVisibleFunctionTable[] functionTables, in NSRange range)
+        public void SetVertexVisibleFunctionTables(in IntPtr functionTables, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -255,7 +255,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexIntersectionFunctionTableatBufferIndex, intersectionFunctionTable, bufferIndex);
         }
 
-        public void SetVertexIntersectionFunctionTables(MTLIntersectionFunctionTable[] intersectionFunctionTables, NSRange range)
+        public void SetVertexIntersectionFunctionTables(in IntPtr intersectionFunctionTables, NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -270,7 +270,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setViewport, viewport);
         }
 
-        public void SetViewports(in MTLViewport viewports, in ulong count)
+        public void SetViewports(in IntPtr viewports, in ulong count)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setViewportscount, viewports, count);
         }
@@ -305,7 +305,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setScissorRect, rect);
         }
 
-        public void SetScissorRects(in MTLScissorRect scissorRects, in ulong count)
+        public void SetScissorRects(in IntPtr scissorRects, in ulong count)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setScissorRectscount, scissorRects, count);
         }
@@ -330,7 +330,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentBufferOffsetatIndex, offset, index);
         }
 
-        public void SetFragmentBuffers(MTLBuffer[] buffers, in ulong[] offsets, in NSRange range)
+        public void SetFragmentBuffers(in IntPtr buffers, in IntPtr offsets, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -340,7 +340,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentTextureatIndex, texture, index);
         }
 
-        public void SetFragmentTextures(MTLTexture[] textures, in NSRange range)
+        public void SetFragmentTextures(in IntPtr textures, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -350,7 +350,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentSamplerStateatIndex, sampler, index);
         }
 
-        public void SetFragmentSamplerStates(MTLSamplerState[] samplers, in NSRange range)
+        public void SetFragmentSamplerStates(in IntPtr samplers, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -360,7 +360,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentSamplerStatelodMinClamplodMaxClampatIndex, sampler, lodMinClamp, lodMaxClamp, index);
         }
 
-        public void SetFragmentSamplerStates(MTLSamplerState[] samplers, float[] lodMinClamps, float[] lodMaxClamps, in NSRange range)
+        public void SetFragmentSamplerStates(in IntPtr samplers, in IntPtr lodMinClamps, in IntPtr lodMaxClamps, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -370,7 +370,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentVisibleFunctionTableatBufferIndex, functionTable, bufferIndex);
         }
 
-        public void SetFragmentVisibleFunctionTables(MTLVisibleFunctionTable[] functionTables, in NSRange range)
+        public void SetFragmentVisibleFunctionTables(in IntPtr functionTables, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -380,7 +380,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentIntersectionFunctionTableatBufferIndex, intersectionFunctionTable, bufferIndex);
         }
 
-        public void SetFragmentIntersectionFunctionTables(MTLIntersectionFunctionTable[] intersectionFunctionTables, in NSRange range)
+        public void SetFragmentIntersectionFunctionTables(in IntPtr intersectionFunctionTables, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -460,7 +460,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectBufferOffsetatIndex, offset, index);
         }
 
-        public void SetObjectBuffers(MTLBuffer[] buffers, in ulong offsets, in NSRange range)
+        public void SetObjectBuffers(in IntPtr buffers, in ulong offsets, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -470,7 +470,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectTextureatIndex, texture, index);
         }
 
-        public void SetObjectTextures(MTLTexture[] textures, in NSRange range)
+        public void SetObjectTextures(in IntPtr textures, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -480,7 +480,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectSamplerStateatIndex, sampler, index);
         }
 
-        public void SetObjectSamplerStates(MTLSamplerState[] samplers, in NSRange range)
+        public void SetObjectSamplerStates(in IntPtr samplers, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -490,7 +490,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectSamplerStatelodMinClamplodMaxClampatIndex, sampler, lodMinClamp, lodMaxClamp, index);
         }
 
-        public void SetObjectSamplerStates(MTLSamplerState[] samplers, float lodMinClamps, float lodMaxClamps, in NSRange range)
+        public void SetObjectSamplerStates(in IntPtr samplers, float lodMinClamps, float lodMaxClamps, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -515,7 +515,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMeshBufferOffsetatIndex, offset, index);
         }
 
-        public void SetMeshBuffers(MTLBuffer[] buffers, in ulong offsets, in NSRange range)
+        public void SetMeshBuffers(in IntPtr buffers, in ulong offsets, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -525,7 +525,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMeshTextureatIndex, texture, index);
         }
 
-        public void SetMeshTextures(MTLTexture[] textures, in NSRange range)
+        public void SetMeshTextures(in IntPtr textures, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -535,7 +535,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMeshSamplerStateatIndex, sampler, index);
         }
 
-        public void SetMeshSamplerStates(MTLSamplerState[] samplers, in NSRange range)
+        public void SetMeshSamplerStates(in IntPtr samplers, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -545,7 +545,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMeshSamplerStatelodMinClamplodMaxClampatIndex, sampler, lodMinClamp, lodMaxClamp, index);
         }
 
-        public void SetMeshSamplerStates(MTLSamplerState[] samplers, float lodMinClamps, float lodMaxClamps, in NSRange range)
+        public void SetMeshSamplerStates(in IntPtr samplers, float lodMinClamps, float lodMaxClamps, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -665,7 +665,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTileBufferOffsetatIndex, offset, index);
         }
 
-        public void SetTileBuffers(MTLBuffer[] buffers, in ulong offsets, in NSRange range)
+        public void SetTileBuffers(in IntPtr buffers, in ulong offsets, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -675,7 +675,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTileTextureatIndex, texture, index);
         }
 
-        public void SetTileTextures(MTLTexture[] textures, in NSRange range)
+        public void SetTileTextures(in IntPtr textures, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -685,7 +685,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTileSamplerStateatIndex, sampler, index);
         }
 
-        public void SetTileSamplerStates(MTLSamplerState[] samplers, in NSRange range)
+        public void SetTileSamplerStates(in IntPtr samplers, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -695,7 +695,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTileSamplerStatelodMinClamplodMaxClampatIndex, sampler, lodMinClamp, lodMaxClamp, index);
         }
 
-        public void SetTileSamplerStates(MTLSamplerState[] samplers, float[] lodMinClamps, float[] lodMaxClamps, in NSRange range)
+        public void SetTileSamplerStates(in IntPtr samplers, float[] lodMinClamps, in IntPtr lodMaxClamps, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -705,7 +705,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTileVisibleFunctionTableatBufferIndex, functionTable, bufferIndex);
         }
 
-        public void SetTileVisibleFunctionTables(MTLVisibleFunctionTable[] functionTables, in NSRange range)
+        public void SetTileVisibleFunctionTables(in IntPtr functionTables, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -715,7 +715,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTileIntersectionFunctionTableatBufferIndex, intersectionFunctionTable, bufferIndex);
         }
 
-        public void SetTileIntersectionFunctionTables(MTLIntersectionFunctionTable[] intersectionFunctionTables, in NSRange range)
+        public void SetTileIntersectionFunctionTables(in IntPtr intersectionFunctionTables, in NSRange range)
         {
             throw new NotImplementedException();
         }
@@ -740,9 +740,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useResourceusage, resource, (ulong)usage);
         }
 
-        public void UseResources(MTLResource[] resources, in ulong count, in MTLResourceUsage usage)
+        public void UseResources(in IntPtr resources, in ulong count, in MTLResourceUsage usage)
         {
-            throw new NotImplementedException();
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useResourcescountusage, resources, (ulong)count, (ulong)usage);
         }
 
         public void UseResource(in MTLResource resource, in MTLResourceUsage usage, in MTLRenderStages stages)
@@ -750,9 +750,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useResourceusagestages, resource, (ulong)usage, (ulong)stages);
         }
 
-        public void UseResources(MTLResource[] resources, in ulong count, in MTLResourceUsage usage, in MTLRenderStages stages)
+        public void UseResources(in IntPtr resources, in ulong count, in MTLResourceUsage usage, in MTLRenderStages stages)
         {
-            throw new NotImplementedException();
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useResourcescountusagestages, resources, (ulong)count, (ulong)usage, (ulong)stages);
         }
 
         public void UseHeap(in MTLHeap heap)
@@ -760,9 +760,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useHeap, heap);
         }
 
-        public void UseHeaps(MTLHeap[] heaps, in ulong count)
+        public void UseHeaps(in IntPtr heaps, in ulong count)
         {
-            throw new NotImplementedException();
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useHeapscount, heaps, (ulong)count);
         }
 
         public void UseHeap(in MTLHeap heap, in MTLRenderStages stages)
@@ -770,9 +770,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useHeapstages, heap, (ulong)stages);
         }
 
-        public void UseHeaps(MTLHeap[] heaps, in ulong count, in MTLRenderStages stages)
+        public void UseHeaps(in IntPtr heaps, in ulong count, in MTLRenderStages stages)
         {
-            throw new NotImplementedException();
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useHeapscountstages, heaps, (ulong)count, (ulong)stages);
         }
 
         public void ExecuteCommandsInBuffer(in MTLIndirectCommandBuffer indirectCommandBuffer, in NSRange executionRange)
@@ -790,9 +790,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_memoryBarrierWithScopeafterStagesbeforeStages, (ulong)scope, (ulong)after, (ulong)before);
         }
 
-        public void MemoryBarrier(MTLResource[] resources, in ulong count, in MTLRenderStages after, in MTLRenderStages before)
+        public void MemoryBarrier(in IntPtr resources, in ulong count, in MTLRenderStages after, in MTLRenderStages before)
         {
-            throw new NotImplementedException();
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_memoryBarrierWithResourcescountafterStagesbeforeStages, resources, (ulong)count, (ulong)after, (ulong)before);
         }
 
         public void SampleCountersInBuffer(in MTLCounterSampleBuffer sampleBuffer, in ulong sampleIndex, in bool barrier)

@@ -76,9 +76,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFunctionatIndex, function, index);
         }
 
-        public void SetFunctions(MTLFunctionHandle[] functions, in NSRange range)
+        public void SetFunctions(in IntPtr functions, in NSRange range)
         {
-            throw new NotImplementedException();
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFunctionswithRange, functions, range);
         }
 
         private static readonly Selector sel_label = "label";
