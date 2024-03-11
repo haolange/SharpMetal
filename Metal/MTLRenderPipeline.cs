@@ -894,6 +894,12 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStencilAttachmentPixelFormat, (ulong)value);
         }
 
+        public bool SupportIndirectCommandBuffers
+        {
+            get => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportIndirectCommandBuffers);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setSupportIndirectCommandBuffers, value);
+        }
+
         public MTLLinkedFunctions ObjectLinkedFunctions
         {
             get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectLinkedFunctions));
@@ -970,6 +976,8 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setDepthAttachmentPixelFormat = "setDepthAttachmentPixelFormat:";
         private static readonly Selector sel_stencilAttachmentPixelFormat = "stencilAttachmentPixelFormat";
         private static readonly Selector sel_setStencilAttachmentPixelFormat = "setStencilAttachmentPixelFormat:";
+        private static readonly Selector sel_supportIndirectCommandBuffers = "supportIndirectCommandBuffers";
+        private static readonly Selector sel_setSupportIndirectCommandBuffers = "setSupportIndirectCommandBuffers:";
         private static readonly Selector sel_objectLinkedFunctions = "objectLinkedFunctions";
         private static readonly Selector sel_setObjectLinkedFunctions = "setObjectLinkedFunctions:";
         private static readonly Selector sel_meshLinkedFunctions = "meshLinkedFunctions";

@@ -48,6 +48,41 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawIndexedPrimitivesindexCountindexTypeindexBufferindexBufferOffsetinstanceCountbaseVertexbaseInstance, (ulong)primitiveType, indexCount, (ulong)indexType, indexBuffer, indexBufferOffset, instanceCount, baseVertex, baseInstance);
         }
 
+        public void SetObjectThreadgroupMemoryLength(in ulong length, in ulong index)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectThreadgroupMemoryLengthatIndex, length, index);
+        }
+
+        public void SetObjectBuffer(in MTLBuffer buffer, in ulong offset, in ulong index)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setObjectBufferoffsetatIndex, buffer, offset, index);
+        }
+
+        public void SetMeshBuffer(in MTLBuffer buffer, in ulong offset, in ulong index)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMeshBufferoffsetatIndex, buffer, offset, index);
+        }
+
+        public void DrawMeshThreadgroups(in MTLSize threadgroupsPerGrid, in MTLSize threadsPerObjectThreadgroup, in MTLSize threadsPerMeshThreadgroup)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawMeshThreadgroupsthreadsPerThreadgroup, threadgroupsPerGrid, threadsPerObjectThreadgroup);
+        }
+
+        public void DrawMeshThreads(in MTLSize threadsPerGrid, in MTLSize threadsPerObjectThreadgroup, in MTLSize threadsPerMeshThreadgroup)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_drawMeshThreadsthreadsPerThreadgroup, threadsPerGrid, threadsPerObjectThreadgroup);
+        }
+
+        public void SetBarrier()
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBarrier);
+        }
+
+        public void ClearBarrier()
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_clearBarrier);
+        }
+
         public void Reset()
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_reset);
@@ -61,6 +96,13 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_drawIndexedPatchespatchStartpatchCountpatchIndexBufferpatchIndexBufferOffsetcontrolPointIndexBuffercontrolPointIndexBufferOffsetinstanceCountbaseInstancetessellationFactorBuffertessellationFactorBufferOffsettessellationFactorBufferInstanceStride = "drawIndexedPatches:patchStart:patchCount:patchIndexBuffer:patchIndexBufferOffset:controlPointIndexBuffer:controlPointIndexBufferOffset:instanceCount:baseInstance:tessellationFactorBuffer:tessellationFactorBufferOffset:tessellationFactorBufferInstanceStride:";
         private static readonly Selector sel_drawPrimitivesvertexStartvertexCountinstanceCountbaseInstance = "drawPrimitives:vertexStart:vertexCount:instanceCount:baseInstance:";
         private static readonly Selector sel_drawIndexedPrimitivesindexCountindexTypeindexBufferindexBufferOffsetinstanceCountbaseVertexbaseInstance = "drawIndexedPrimitives:indexCount:indexType:indexBuffer:indexBufferOffset:instanceCount:baseVertex:baseInstance:";
+        private static readonly Selector sel_setObjectThreadgroupMemoryLengthatIndex = "setObjectThreadgroupMemoryLength:atIndex:";
+        private static readonly Selector sel_setObjectBufferoffsetatIndex = "setObjectBuffer:offset:atIndex:";
+        private static readonly Selector sel_setMeshBufferoffsetatIndex = "setMeshBuffer:offset:atIndex:";
+        private static readonly Selector sel_drawMeshThreadgroupsthreadsPerThreadgroup = "drawMeshThreadgroups:threadsPerObjectThreadgroup:threadsPerMeshThreadgroup:";
+        private static readonly Selector sel_drawMeshThreadsthreadsPerThreadgroup = "drawMeshThreads:threadsPerObjectThreadgroup:threadsPerMeshThreadgroup:";
+        private static readonly Selector sel_setBarrier = "setBarrier";
+        private static readonly Selector sel_clearBarrier = "clearBarrier";
         private static readonly Selector sel_reset = "reset";
     }
 

@@ -12,6 +12,8 @@ namespace SharpMetal.Metal
         DrawIndexedPatches = 8,
         ConcurrentDispatch = 32,
         ConcurrentDispatchThreads = 64,
+        DrawMeshThreadgroups = 128,
+        DrawMeshThreads = 256,
     }
     
     [StructLayout(LayoutKind.Sequential)]
@@ -71,6 +73,24 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMaxKernelThreadgroupMemoryBindCount, value);
         }
 
+        public ulong MaxObjectBufferBindCount
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_maxObjectBufferBindCount);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMaxObjectBufferBindCount, value);
+        }
+
+        public ulong MaxMeshBufferBindCount
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_maxMeshBufferBindCount);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMaxMeshBufferBindCount, value);
+        }
+
+        public ulong MaxObjectThreadgroupMemoryBindCount
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_maxObjectThreadgroupMemoryBindCount);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMaxObjectThreadgroupMemoryBindCount, value);
+        }
+
         public bool SupportRayTracing
         {
             get => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportRayTracing);
@@ -100,6 +120,12 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setMaxKernelBufferBindCount = "setMaxKernelBufferBindCount:";
         private static readonly Selector sel_maxKernelThreadgroupMemoryBindCount = "maxKernelThreadgroupMemoryBindCount";
         private static readonly Selector sel_setMaxKernelThreadgroupMemoryBindCount = "setMaxKernelThreadgroupMemoryBindCount:";
+        private static readonly Selector sel_maxObjectBufferBindCount = "maxObjectBufferBindCount";
+        private static readonly Selector sel_setMaxObjectBufferBindCount = "setMaxObjectBufferBindCount:";
+        private static readonly Selector sel_maxMeshBufferBindCount = "maxMeshBufferBindCount";
+        private static readonly Selector sel_setMaxMeshBufferBindCount = "setMaxMeshBufferBindCount:";
+        private static readonly Selector sel_maxObjectThreadgroupMemoryBindCount = "maxObjectThreadgroupMemoryBindCount";
+        private static readonly Selector sel_setMaxObjectThreadgroupMemoryBindCount = "setMaxObjectThreadgroupMemoryBindCount:";
         private static readonly Selector sel_supportRayTracing = "supportRayTracing";
         private static readonly Selector sel_setSupportRayTracing = "setSupportRayTracing:";
         private static readonly Selector sel_supportDynamicAttributeStride = "supportDynamicAttributeStride";
