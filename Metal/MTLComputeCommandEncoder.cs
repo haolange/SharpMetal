@@ -77,9 +77,19 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBufferoffsetatIndex, buffer, offset, index);
         }
 
+        public void SetBuffer(in MTLBuffer buffer, in ulong offset, in ulong stride, in ulong index)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBufferoffsetattributeStrideatIndex, buffer, offset, stride, index);
+        }
+
         public void SetBufferOffset(in ulong offset, in ulong index)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBufferOffsetatIndex, offset, index);
+        }
+        
+        public void SetBufferOffset(in ulong offset, in ulong stride, in ulong index)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBufferOffsetattributeStrideatIndex, offset, stride, index);
         }
 
         public void SetBuffers(in IntPtr buffers, in IntPtr offsets, NSRange range)
@@ -87,19 +97,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBuffersoffsetswithRange, buffers, offsets, range);
         }
 
-        public void SetBuffer(in MTLBuffer buffer, in ulong offset, in ulong stride, in ulong index)
-        {
-            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBufferoffsetattributeStrideatIndex, buffer, offset, stride, index);
-        }
-
         public void SetBuffers(in IntPtr buffers, in IntPtr offsets, in IntPtr strides, in NSRange range)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBuffersoffsetsattributeStrideswithRange, buffers, offsets, strides, range);
-        }
-
-        public void SetBufferOffset(in ulong offset, in ulong stride, in ulong index)
-        {
-            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBufferOffsetattributeStrideatIndex, offset, stride, index);
         }
 
         public void SetVisibleFunctionTable(in MTLVisibleFunctionTable visibleFunctionTable, in ulong bufferIndex)
