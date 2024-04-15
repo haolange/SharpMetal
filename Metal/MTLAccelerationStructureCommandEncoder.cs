@@ -5,8 +5,8 @@ namespace SharpMetal.Metal
 {
     public enum MTLAccelerationStructureRefitOptions : ulong
     {
-        AccelerationStructureRefitOptionVertexData = 1,
-        AccelerationStructureRefitOptionPerPrimitiveData = 2,
+        VertexData = 1,
+        PerPrimitiveData = 2,
     }
 
     public partial struct MTLAccelerationStructureCommandEncoder

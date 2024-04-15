@@ -5,9 +5,9 @@ namespace SharpMetal.Metal
 {
     public enum MTLFunctionOptions : ulong
     {
-        FunctionOptionNone = 0,
-        FunctionOptionCompileToBinary = 1,
-        FunctionOptionStoreFunctionInMetalScript = 2,
+        None = 0,
+        CompileToBinary = 1,
+        StoreFunctionInMetalScript = 2,
     }
 
     public partial struct MTLFunctionDescriptor

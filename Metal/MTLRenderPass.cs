@@ -1,4 +1,3 @@
-using SharpMetal.Foundation;
 using SharpMetal.ObjectiveCCore;
 using System.Runtime.InteropServices;
 
@@ -23,9 +22,9 @@ namespace SharpMetal.Metal
 
     public enum MTLStoreActionOptions : ulong
     {
-        StoreActionOptionNone = 0,
-        StoreActionOptionValidMask = 1,
-        StoreActionOptionCustomSamplePositions = 1,
+        None = 0,
+        ValidMask = 1,
+        CustomSamplePositions = 1,
     }
 
     public enum MTLMultisampleDepthResolveFilter : ulong

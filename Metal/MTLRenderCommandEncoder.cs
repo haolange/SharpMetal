@@ -1,4 +1,3 @@
-using Microsoft.VisualBasic;
 using SharpMetal.Foundation;
 using SharpMetal.ObjectiveCCore;
 using System.Runtime.InteropServices;
