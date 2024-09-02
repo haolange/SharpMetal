@@ -117,20 +117,6 @@ namespace SharpMetal.Metal
         ObjectPayload = 34,
     }
 
-    public enum MTLArgumentType : ulong
-    {
-        Buffer = 0,
-        ThreadgroupMemory = 1,
-        Texture = 2,
-        Sampler = 3,
-        ImageblockData = 16,
-        Imageblock = 17,
-        VisibleFunctionTable = 24,
-        PrimitiveAccelerationStructure = 25,
-        InstanceAccelerationStructure = 26,
-        IntersectionFunctionTable = 27,
-    }
-
     public enum MTLBindingAccess : ulong
     {
         ReadOnly = 0,
@@ -315,7 +301,7 @@ namespace SharpMetal.Metal
 
         public NSString Name => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_name));
 
-        public MTLArgumentType Type => (MTLArgumentType)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_type);
+        public MTLBindingType Type => (MTLBindingType)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_type);
 
         public MTLBindingAccess Access => (MTLBindingAccess)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_access);
 

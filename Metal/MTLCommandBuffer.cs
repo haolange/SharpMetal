@@ -2,6 +2,7 @@ using SharpMetal.Foundation;
 using SharpMetal.QuartzCore;
 using SharpMetal.ObjectiveCCore;
 using System.Runtime.InteropServices;
+using System;
 
 namespace SharpMetal.Metal
 {
@@ -63,13 +64,19 @@ namespace SharpMetal.Metal
 
         public static MTLCommandBufferDescriptor New() => s_class.AllocInit<MTLCommandBufferDescriptor>();
 
-        public bool RetainedReferences
+        public MTLLogState logState
+        {
+            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_logState));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLogState, value);
+        }
+
+        public bool retainedReferences
         {
             get => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_retainedReferences);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setRetainedReferences, value);
         }
         
-        public MTLCommandBufferErrorOption ErrorOptions
+        public MTLCommandBufferErrorOption errorOptions
         {
             get => (MTLCommandBufferErrorOption)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_errorOptions);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setErrorOptions, (ulong)value);
@@ -82,6 +89,8 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setRetainedReferences = "setRetainedReferences:";
         private static readonly Selector sel_errorOptions = "errorOptions";
         private static readonly Selector sel_setErrorOptions = "setErrorOptions:";
+        private static readonly Selector sel_logState = "logState";
+        private static readonly Selector sel_setLogState = "setLogState:";
     }
 
     
@@ -172,12 +181,12 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_waitUntilCompleted);
         }
 
-        public void AddScheduledHandler(in MTLCommandBufferHandler block)
+        public void AddScheduledHandler(MTLCommandBufferHandler block)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addScheduledHandler, block);
         }
 
-        public void AddCompletedHandler(in MTLCommandBufferHandler block)
+        public void AddCompletedHandler(MTLCommandBufferHandler block)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addCompletedHandler, block);
         }
@@ -210,6 +219,16 @@ namespace SharpMetal.Metal
         public MTLComputeCommandEncoder ComputeCommandEncoder(in MTLDispatchType dispatchType)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_computeCommandEncoderWithDispatchType, (ulong)dispatchType));
+        }
+
+        public void useResidencySet(in MTLResidencySet residencySet, in ulong value)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useResidencySet, residencySet, value);
+        }
+
+        public void useResidencySets(in IntPtr residencySets, in ulong count)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useResidencySetscount, residencySets, count);
         }
 
         public void EncodeWait(in MTLEvent mltEvent, in ulong value)
@@ -285,6 +304,8 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_blitCommandEncoderWithDescriptor = "blitCommandEncoderWithDescriptor:";
         private static readonly Selector sel_computeCommandEncoder = "computeCommandEncoder";
         private static readonly Selector sel_computeCommandEncoderWithDispatchType = "computeCommandEncoderWithDispatchType:";
+        private static readonly Selector sel_useResidencySet = "useResidencySet:";
+        private static readonly Selector sel_useResidencySetscount = "useResidencySets:count:";
         private static readonly Selector sel_encodeWaitForEventvalue = "encodeWaitForEvent:value:";
         private static readonly Selector sel_encodeSignalEventvalue = "encodeSignalEvent:value:";
         private static readonly Selector sel_parallelRenderCommandEncoderWithDescriptor = "parallelRenderCommandEncoderWithDescriptor:";

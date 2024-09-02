@@ -6,6 +6,11 @@ namespace SharpMetal.MetalFX
     internal partial class MTLFXSelector
     {
         public static readonly Selector sel_colorProcessingMode = "colorProcessingMode";
+        public static readonly Selector sel_reactiveMaskTexture = "reactiveMaskTexture";
+        public static readonly Selector sel_setReactiveMaskTexture = "setReactiveMaskTexture:";
+        public static readonly Selector sel_reactiveTextureUsage = "reactiveTextureUsage";
+        public static readonly Selector sel_reactiveMaskTextureFormat = "reactiveMaskTextureFormat";
+        public static readonly Selector sel_setReactiveMaskTextureFormat = "setReactiveMaskTextureFormat:";
         public static readonly Selector sel_colorTexture = "colorTexture";
         public static readonly Selector sel_colorTextureFormat = "colorTextureFormat";
         public static readonly Selector sel_colorTextureUsage = "colorTextureUsage";
@@ -23,6 +28,10 @@ namespace SharpMetal.MetalFX
         public static readonly Selector sel_inputWidth = "inputWidth";
         public static readonly Selector sel_isAutoExposureEnabled = "isAutoExposureEnabled";
         public static readonly Selector sel_isDepthReversed = "isDepthReversed";
+        public static readonly Selector sel_isReactiveMaskTextureEnabled = "isReactiveMaskTextureEnabled";
+        public static readonly Selector sel_setReactiveMaskTextureEnabled = "setReactiveMaskTextureEnabled:";
+        public static readonly Selector sel_requiresSynchronousInitialization = "requiresSynchronousInitialization";
+        public static readonly Selector sel_setRequiresSynchronousInitialization = "setRequiresSynchronousInitialization:";
         public static readonly Selector sel_isInputContentPropertiesEnabled = "isInputContentPropertiesEnabled";
         public static readonly Selector sel_jitterOffsetX = "jitterOffsetX";
         public static readonly Selector sel_jitterOffsetY = "jitterOffsetY";

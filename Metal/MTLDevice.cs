@@ -13,47 +13,6 @@ namespace SharpMetal.Metal
         LZBitmap = 4,
     }
 
-    public enum MTLFeatureSet : ulong
-    {
-        iOSGPUFamily1v1 = 0,
-        iOSGPUFamily2v1 = 1,
-        iOSGPUFamily1v2 = 2,
-        iOSGPUFamily2v2 = 3,
-        iOSGPUFamily3v1 = 4,
-        iOSGPUFamily1v3 = 5,
-        iOSGPUFamily2v3 = 6,
-        iOSGPUFamily3v2 = 7,
-        iOSGPUFamily1v4 = 8,
-        iOSGPUFamily2v4 = 9,
-        iOSGPUFamily3v3 = 10,
-        iOSGPUFamily4v1 = 11,
-        iOSGPUFamily1v5 = 12,
-        iOSGPUFamily2v5 = 13,
-        iOSGPUFamily3v4 = 14,
-        iOSGPUFamily4v2 = 15,
-        iOSGPUFamily5v1 = 16,
-        macOSGPUFamily1v1 = 10000,
-        OSXGPUFamily1v1 = 10000,
-        macOSGPUFamily1v2 = 10001,
-        OSXGPUFamily1v2 = 10001,
-        OSXReadWriteTextureTier2 = 10002,
-        macOSReadWriteTextureTier2 = 10002,
-        macOSGPUFamily1v3 = 10003,
-        macOSGPUFamily1v4 = 10004,
-        macOSGPUFamily2v1 = 10005,
-        watchOSGPUFamily1v1 = 20000,
-        WatchOSGPUFamily1v1 = 20000,
-        watchOSGPUFamily2v1 = 20001,
-        WatchOSGPUFamily2v1 = 20001,
-        tvOSGPUFamily1v1 = 30000,
-        TVOSGPUFamily1v1 = 30000,
-        tvOSGPUFamily1v2 = 30001,
-        tvOSGPUFamily1v3 = 30002,
-        tvOSGPUFamily2v1 = 30003,
-        tvOSGPUFamily1v4 = 30004,
-        tvOSGPUFamily2v2 = 30005,
-    }
-
     public enum MTLGPUFamily : long
     {
         Apple1 = 1001,
@@ -65,13 +24,10 @@ namespace SharpMetal.Metal
         Apple7 = 1007,
         Apple8 = 1008,
         Apple9 = 1009,
-        Mac1 = 2001,
         Mac2 = 2002,
         Common1 = 3001,
         Common2 = 3002,
         Common3 = 3003,
-        MacCatalyst1 = 4001,
-        MacCatalyst2 = 4002,
         Metal3 = 5001,
     }
 
@@ -268,8 +224,6 @@ namespace SharpMetal.Metal
 
         public bool SupportsPullModelInterpolation => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportsPullModelInterpolation);
 
-        public bool BarycentricCoordsSupported => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_areBarycentricCoordsSupported);
-
         public bool SupportsShaderBarycentricCoordinates => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportsShaderBarycentricCoordinates);
 
         public ulong CurrentAllocatedSize => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_currentAllocatedSize);
@@ -335,6 +289,11 @@ namespace SharpMetal.Metal
         public MTLCommandQueue NewCommandQueue()
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newCommandQueue));
+        }
+
+        public MTLCommandQueue NewCommandQueue(in MTLCommandQueueDescriptor descriptor)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newCommandQueueWithDescriptor, descriptor));
         }
 
         public MTLCommandQueue NewCommandQueue(in ulong maxCommandBufferCount)
@@ -407,11 +366,6 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newDefaultLibraryWithBundleerror));
         }
 
-        public MTLLibrary NewLibrary(in NSString filepath, ref NSError error)
-        {
-            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newLibraryWithFileerror, filepath, ref error.NativePtr));
-        }
-
         public MTLLibrary NewLibrary(in NSURL url, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newLibraryWithURLerror, url, ref error.NativePtr));
@@ -455,11 +409,6 @@ namespace SharpMetal.Metal
         public MTLComputePipelineState NewComputePipelineState(in MTLComputePipelineDescriptor descriptor, in MTLPipelineOption options, in IntPtr reflection, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newComputePipelineStateWithDescriptoroptionsreflectionerror, descriptor, (ulong)options, reflection, ref error.NativePtr));
-        }
-
-        public bool SupportsFeatureSet(in MTLFeatureSet featureSet)
-        {
-            return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportsFeatureSet, (ulong)featureSet);
         }
 
         public bool SupportsFamily(in MTLGPUFamily gpuFamily)
@@ -527,19 +476,14 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newSharedEventWithHandle));
         }
 
-        public IntPtr NewIOHandle(in NSURL url, ref NSError error)
-        {
-            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newIOHandleWithURLerror, url, ref error.NativePtr));
-        }
-
         public IntPtr NewIOCommandQueue(in IntPtr descriptor, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newIOCommandQueueWithDescriptorerror, descriptor, ref error.NativePtr));
         }
 
-        public IntPtr NewIOHandle(in NSURL url, in MTLIOCompressionMethod compressionMethod, ref NSError error)
+        public IntPtr newResidencySetWithDescriptor(in MTLResidencySetDescriptor descriptor, ref NSError error)
         {
-            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newIOHandleWithURLcompressionMethoderror, url, (long)compressionMethod, ref error.NativePtr));
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newResidencySetWithDescriptor, descriptor, ref error.NativePtr));
         }
 
         public IntPtr NewIOFileHandle(in NSURL url, ref NSError error)
@@ -670,10 +614,10 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_supportsQueryTextureLOD = "supportsQueryTextureLOD";
         private static readonly Selector sel_supportsBCTextureCompression = "supportsBCTextureCompression";
         private static readonly Selector sel_supportsPullModelInterpolation = "supportsPullModelInterpolation";
-        private static readonly Selector sel_areBarycentricCoordsSupported = "areBarycentricCoordsSupported";
         private static readonly Selector sel_supportsShaderBarycentricCoordinates = "supportsShaderBarycentricCoordinates";
         private static readonly Selector sel_currentAllocatedSize = "currentAllocatedSize";
         private static readonly Selector sel_newCommandQueue = "newCommandQueue";
+        private static readonly Selector sel_newCommandQueueWithDescriptor = "newCommandQueueWithDescriptor:";
         private static readonly Selector sel_newCommandQueueWithMaxCommandBufferCount = "newCommandQueueWithMaxCommandBufferCount:";
         private static readonly Selector sel_heapTextureSizeAndAlignWithDescriptor = "heapTextureSizeAndAlignWithDescriptor:";
         private static readonly Selector sel_heapBufferSizeAndAlignWithLengthoptions = "heapBufferSizeAndAlignWithLength:options:";
@@ -689,7 +633,6 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_newSamplerStateWithDescriptor = "newSamplerStateWithDescriptor:";
         private static readonly Selector sel_newDefaultLibrary = "newDefaultLibrary";
         private static readonly Selector sel_newDefaultLibraryWithBundleerror = "newDefaultLibraryWithBundle:error:";
-        private static readonly Selector sel_newLibraryWithFileerror = "newLibraryWithFile:error:";
         private static readonly Selector sel_newLibraryWithURLerror = "newLibraryWithURL:error:";
         private static readonly Selector sel_newLibraryWithDataerror = "newLibraryWithData:error:";
         private static readonly Selector sel_newLibraryWithSourceoptionserror = "newLibraryWithSource:options:error:";
@@ -700,7 +643,6 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_newComputePipelineStateWithFunctionoptionsreflectionerror = "newComputePipelineStateWithFunction:options:reflection:error:";
         private static readonly Selector sel_newComputePipelineStateWithDescriptoroptionsreflectionerror = "newComputePipelineStateWithDescriptor:options:reflection:error:";
         private static readonly Selector sel_newFence = "newFence";
-        private static readonly Selector sel_supportsFeatureSet = "supportsFeatureSet:";
         private static readonly Selector sel_supportsFamily = "supportsFamily:";
         private static readonly Selector sel_supportsTextureSampleCount = "supportsTextureSampleCount:";
         private static readonly Selector sel_minimumLinearTextureAlignmentForPixelFormat = "minimumLinearTextureAlignmentForPixelFormat:";
@@ -721,9 +663,8 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_peerGroupID = "peerGroupID";
         private static readonly Selector sel_peerIndex = "peerIndex";
         private static readonly Selector sel_peerCount = "peerCount";
-        private static readonly Selector sel_newIOHandleWithURLerror = "newIOHandleWithURL:error:";
         private static readonly Selector sel_newIOCommandQueueWithDescriptorerror = "newIOCommandQueueWithDescriptor:error:";
-        private static readonly Selector sel_newIOHandleWithURLcompressionMethoderror = "newIOHandleWithURL:compressionMethod:error:";
+        private static readonly Selector sel_newResidencySetWithDescriptor = "newResidencySetWithDescriptor:error:";
         private static readonly Selector sel_newIOFileHandleWithURLerror = "newIOFileHandleWithURL:error:";
         private static readonly Selector sel_newIOFileHandleWithURLcompressionMethoderror = "newIOFileHandleWithURL:compressionMethod:error:";
         private static readonly Selector sel_sparseTileSizeWithTextureTypepixelFormatsampleCount = "sparseTileSizeWithTextureType:pixelFormat:sampleCount:";

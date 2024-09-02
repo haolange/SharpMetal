@@ -3,7 +3,28 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
-    
+    public partial struct MTLCommandQueueDescriptor
+    {
+        public IntPtr NativePtr;
+        public static implicit operator IntPtr(in MTLCommandQueueDescriptor obj) => obj.NativePtr;
+        public MTLCommandQueueDescriptor(in IntPtr ptr) => NativePtr = ptr;
+
+        public NSString Label
+        {
+            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_label));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLabel, value);
+        }
+
+        public MTLLogState logState => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_logState));
+
+        public ulong maxCommandBufferCount => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_maxCommandBufferCount);
+
+        private static readonly Selector sel_label = "label";
+        private static readonly Selector sel_setLabel = "setLabel:";
+        private static readonly Selector sel_logState = "logState";
+        private static readonly Selector sel_maxCommandBufferCount = "maxCommandBufferCount";
+    }
+
     public partial struct MTLCommandQueue
     {
         public IntPtr NativePtr;
