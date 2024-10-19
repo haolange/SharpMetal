@@ -47,72 +47,72 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_popDebugGroup);
         }
 
-        public void BuildAccelerationStructure(MTLAccelerationStructure accelerationStructure, MTLAccelerationStructureDescriptor descriptor, MTLBuffer scratchBuffer, ulong scratchBufferOffset)
+        public void BuildAccelerationStructure(in MTLAccelerationStructure accelerationStructure, in MTLAccelerationStructureDescriptor descriptor, in MTLBuffer scratchBuffer, in ulong scratchBufferOffset)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_buildAccelerationStructuredescriptorscratchBufferscratchBufferOffset, accelerationStructure, descriptor, scratchBuffer, scratchBufferOffset);
         }
 
-        public void RefitAccelerationStructure(MTLAccelerationStructure sourceAccelerationStructure, MTLAccelerationStructureDescriptor descriptor, MTLAccelerationStructure destinationAccelerationStructure, MTLBuffer scratchBuffer, ulong scratchBufferOffset)
+        public void RefitAccelerationStructure(in MTLAccelerationStructure sourceAccelerationStructure, in MTLAccelerationStructureDescriptor descriptor, in MTLAccelerationStructure destinationAccelerationStructure, in MTLBuffer scratchBuffer, in ulong scratchBufferOffset)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_refitAccelerationStructuredescriptordestinationscratchBufferscratchBufferOffset, sourceAccelerationStructure, descriptor, destinationAccelerationStructure, scratchBuffer, scratchBufferOffset);
         }
 
-        public void RefitAccelerationStructure(MTLAccelerationStructure sourceAccelerationStructure, MTLAccelerationStructureDescriptor descriptor, MTLAccelerationStructure destinationAccelerationStructure, MTLBuffer scratchBuffer, ulong scratchBufferOffset, MTLAccelerationStructureRefitOptions options)
+        public void RefitAccelerationStructure(in MTLAccelerationStructure sourceAccelerationStructure, in MTLAccelerationStructureDescriptor descriptor, in MTLAccelerationStructure destinationAccelerationStructure, in MTLBuffer scratchBuffer, in ulong scratchBufferOffset, in MTLAccelerationStructureRefitOptions options)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_refitAccelerationStructuredescriptordestinationscratchBufferscratchBufferOffsetoptions, sourceAccelerationStructure, descriptor, destinationAccelerationStructure, scratchBuffer, scratchBufferOffset, (ulong)options);
         }
 
-        public void CopyAccelerationStructure(MTLAccelerationStructure sourceAccelerationStructure, MTLAccelerationStructure destinationAccelerationStructure)
+        public void CopyAccelerationStructure(in MTLAccelerationStructure sourceAccelerationStructure, in MTLAccelerationStructure destinationAccelerationStructure)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_copyAccelerationStructuretoAccelerationStructure, sourceAccelerationStructure, destinationAccelerationStructure);
         }
 
-        public void WriteCompactedAccelerationStructureSize(MTLAccelerationStructure accelerationStructure, MTLBuffer buffer, ulong offset)
+        public void WriteCompactedAccelerationStructureSize(in MTLAccelerationStructure accelerationStructure, in MTLBuffer buffer, in ulong offset)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_writeCompactedAccelerationStructureSizetoBufferoffset, accelerationStructure, buffer, offset);
         }
 
-        public void WriteCompactedAccelerationStructureSize(MTLAccelerationStructure accelerationStructure, MTLBuffer buffer, ulong offset, MTLDataType sizeDataType)
+        public void WriteCompactedAccelerationStructureSize(in MTLAccelerationStructure accelerationStructure, in MTLBuffer buffer, in ulong offset, in MTLDataType sizeDataType)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_writeCompactedAccelerationStructureSizetoBufferoffsetsizeDataType, accelerationStructure, buffer, offset, (ulong)sizeDataType);
         }
 
-        public void CopyAndCompactAccelerationStructure(MTLAccelerationStructure sourceAccelerationStructure, MTLAccelerationStructure destinationAccelerationStructure)
+        public void CopyAndCompactAccelerationStructure(in MTLAccelerationStructure sourceAccelerationStructure, in MTLAccelerationStructure destinationAccelerationStructure)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_copyAndCompactAccelerationStructuretoAccelerationStructure, sourceAccelerationStructure, destinationAccelerationStructure);
         }
 
-        public void UpdateFence(MTLFence fence)
+        public void UpdateFence(in MTLFence fence)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_updateFence, fence);
         }
 
-        public void WaitForFence(MTLFence fence)
+        public void WaitForFence(in MTLFence fence)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_waitForFence, fence);
         }
 
-        public void UseResource(MTLResource resource, MTLResourceUsage usage)
+        public void UseResource(in MTLResource resource, in MTLResourceUsage usage)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useResourceusage, resource, (ulong)usage);
         }
 
-        public void UseResources(in IntPtr resources, ulong count, MTLResourceUsage usage)
+        public void UseResources(in IntPtr resources, in ulong count, in MTLResourceUsage usage)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useResourcescountusage, resources, (ulong)usage);
         }
 
-        public void UseHeap(MTLHeap heap)
+        public void UseHeap(in MTLHeap heap)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useHeap, heap);
         }
 
-        public void UseHeaps(in IntPtr heaps, ulong count)
+        public void UseHeaps(in IntPtr heaps, in ulong count)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useHeapscount, heaps, (ulong)count);
         }
 
-        public void SampleCountersInBuffer(MTLCounterSampleBuffer sampleBuffer, ulong sampleIndex, bool barrier)
+        public void SampleCountersInBuffer(in MTLCounterSampleBuffer sampleBuffer, in ulong sampleIndex, in bool barrier)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_sampleCountersInBufferatSampleIndexwithBarrier, sampleBuffer, sampleIndex, barrier);
         }

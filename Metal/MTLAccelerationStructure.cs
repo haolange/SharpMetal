@@ -21,6 +21,12 @@ namespace SharpMetal.Metal
         NonOpaque = 8,
     }
 
+    public enum MTLMatrixLayout : ulong
+    {
+        ColumnMajor = 0,
+        RowMajor = 1,
+    }
+
     public enum MTLMotionBorderMode : uint
     {
         Clamp = 0,
@@ -55,6 +61,12 @@ namespace SharpMetal.Metal
         Motion = 2,
         Indirect = 3,
         IndirectMotion = 4,
+    }
+
+    public enum MTLTransformType : long
+    {
+        PackedFloat4x3 = 0,
+        Component = 1,
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -348,6 +360,12 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTransformationMatrixBufferOffset, value);
         }
 
+        public MTLMatrixLayout TransformationMatrixLayout
+        {
+            get => (MTLMatrixLayout)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_transformationMatrixLayout);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTransformationMatrixLayout, (ulong)value);
+        }
+
         private static readonly Selector sel_intersectionFunctionTableOffset = "intersectionFunctionTableOffset";
         private static readonly Selector sel_setIntersectionFunctionTableOffset = "setIntersectionFunctionTableOffset:";
         private static readonly Selector sel_opaque = "opaque";
@@ -384,6 +402,8 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setTransformationMatrixBuffer = "setTransformationMatrixBuffer:";
         private static readonly Selector sel_transformationMatrixBufferOffset = "transformationMatrixBufferOffset";
         private static readonly Selector sel_setTransformationMatrixBufferOffset = "setTransformationMatrixBufferOffset:";
+        private static readonly Selector sel_transformationMatrixLayout = "transformationMatrixLayout";
+        private static readonly Selector sel_setTransformationMatrixLayout = "setTransformationMatrixLayout:";
         private static readonly Selector sel_descriptor = "descriptor";
     }
 
@@ -616,6 +636,12 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTransformationMatrixBufferOffset, value);
         }
 
+        public MTLMatrixLayout TransformationMatrixLayout
+        {
+            get => (MTLMatrixLayout)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_transformationMatrixLayout);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTransformationMatrixLayout, (ulong)value);
+        }
+
         private static readonly Selector sel_intersectionFunctionTableOffset = "intersectionFunctionTableOffset";
         private static readonly Selector sel_setIntersectionFunctionTableOffset = "setIntersectionFunctionTableOffset:";
         private static readonly Selector sel_opaque = "opaque";
@@ -650,6 +676,8 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setTransformationMatrixBuffer = "setTransformationMatrixBuffer:";
         private static readonly Selector sel_transformationMatrixBufferOffset = "transformationMatrixBufferOffset";
         private static readonly Selector sel_setTransformationMatrixBufferOffset = "setTransformationMatrixBufferOffset:";
+        private static readonly Selector sel_transformationMatrixLayout = "transformationMatrixLayout";
+        private static readonly Selector sel_setTransformationMatrixLayout = "setTransformationMatrixLayout:";
         private static readonly Selector sel_descriptor = "descriptor";
     }
 
@@ -1264,6 +1292,24 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMotionTransformCount, value);
         }
 
+        public MTLMatrixLayout InstanceTransformationMatrixLayout
+        {
+            get => (MTLMatrixLayout)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_instanceTransformationMatrixLayout);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setInstanceTransformationMatrixLayout, (ulong)value);
+        }
+
+        public MTLTransformType MotionTransformType
+        {
+            get => (MTLTransformType)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_motionTransformType);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMotionTransformType, (ulong)value);
+        }
+
+        public ulong MotionTransformStride
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_motionTransformStride);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMotionTransformStride, value);
+        }
+
         public MTLAccelerationStructureUsage Usage
         {
             get => (MTLAccelerationStructureUsage)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_usage);
@@ -1290,6 +1336,12 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setMotionTransformBufferOffset = "setMotionTransformBufferOffset:";
         private static readonly Selector sel_motionTransformCount = "motionTransformCount";
         private static readonly Selector sel_setMotionTransformCount = "setMotionTransformCount:";
+        private static readonly Selector sel_instanceTransformationMatrixLayout = "instanceTransformationMatrixLayout";
+        private static readonly Selector sel_setInstanceTransformationMatrixLayout = "setInstanceTransformationMatrixLayout:";
+        private static readonly Selector sel_motionTransformType = "motionTransformType";
+        private static readonly Selector sel_setMotionTransformType = "setMotionTransformType:";
+        private static readonly Selector sel_motionTransformStride = "motionTransformStride";
+        private static readonly Selector sel_setMotionTransformStride = "setMotionTransformStride:";
         private static readonly Selector sel_descriptor = "descriptor";
     }
 
@@ -1379,6 +1431,24 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMotionTransformCountBufferOffset, value);
         }
 
+        public MTLMatrixLayout InstanceTransformationMatrixLayout
+        {
+            get => (MTLMatrixLayout)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_instanceTransformationMatrixLayout);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setInstanceTransformationMatrixLayout, (ulong)value);
+        }
+
+        public MTLTransformType MotionTransformType
+        {
+            get => (MTLTransformType)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_motionTransformType);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMotionTransformType, (ulong)value);
+        }
+
+        public ulong MotionTransformStride
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_motionTransformStride);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMotionTransformStride, value);
+        }
+
         public MTLAccelerationStructureUsage Usage
         {
             get => (MTLAccelerationStructureUsage)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_usage);
@@ -1412,6 +1482,12 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setMotionTransformCountBuffer = "setMotionTransformCountBuffer:";
         private static readonly Selector sel_motionTransformCountBufferOffset = "motionTransformCountBufferOffset";
         private static readonly Selector sel_setMotionTransformCountBufferOffset = "setMotionTransformCountBufferOffset:";
+        private static readonly Selector sel_instanceTransformationMatrixLayout = "instanceTransformationMatrixLayout";
+        private static readonly Selector sel_setInstanceTransformationMatrixLayout = "setInstanceTransformationMatrixLayout:";
+        private static readonly Selector sel_motionTransformType = "motionTransformType";
+        private static readonly Selector sel_setMotionTransformType = "setMotionTransformType:";
+        private static readonly Selector sel_motionTransformStride = "motionTransformStride";
+        private static readonly Selector sel_setMotionTransformStride = "setMotionTransformStride:";
     }
 
     public partial struct MTLPrimitiveAccelerationStructureDescriptor
