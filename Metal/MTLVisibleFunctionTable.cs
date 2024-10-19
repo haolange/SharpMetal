@@ -32,6 +32,8 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLVisibleFunctionTable obj) => obj.NativePtr;
         public static implicit operator MTLResource(in MTLVisibleFunctionTable obj) => new MTLResource(obj.NativePtr);
         public static implicit operator MTLVisibleFunctionTable(in MTLResource obj) => new MTLVisibleFunctionTable(obj.NativePtr);
+        public static implicit operator MTLAllocation(in MTLVisibleFunctionTable obj) => new MTLAllocation(obj.NativePtr);
+        public static implicit operator MTLVisibleFunctionTable(in MTLAllocation obj) => new MTLVisibleFunctionTable(obj.NativePtr);
 
         public MTLVisibleFunctionTable(in IntPtr ptr) => NativePtr = ptr;
 

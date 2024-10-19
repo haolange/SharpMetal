@@ -1570,7 +1570,8 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLAccelerationStructure obj) => obj.NativePtr;
         public static implicit operator MTLResource(in MTLAccelerationStructure obj) => new MTLResource(obj.NativePtr);
         public static implicit operator MTLAccelerationStructure(in MTLResource obj) => new MTLAccelerationStructure(obj.NativePtr);
-
+        public static implicit operator MTLAllocation(in MTLAccelerationStructure obj) => new MTLAllocation(obj.NativePtr);
+        public static implicit operator MTLAccelerationStructure(in MTLAllocation obj) => new MTLAccelerationStructure(obj.NativePtr);
         public MTLAccelerationStructure(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label

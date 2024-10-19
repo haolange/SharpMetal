@@ -9,7 +9,6 @@ namespace SharpMetal.Metal
         Placement = 1,
         Sparse = 2,
     }
-
     
     public partial struct MTLHeapDescriptor
     {

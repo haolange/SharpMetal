@@ -45,6 +45,8 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLIntersectionFunctionTable obj) => obj.NativePtr;
         public static implicit operator MTLResource(in MTLIntersectionFunctionTable obj) => new MTLResource(obj.NativePtr);
         public static implicit operator MTLIntersectionFunctionTable(in MTLResource obj) => new MTLIntersectionFunctionTable(obj.NativePtr);
+        public static implicit operator MTLAllocation(in MTLIntersectionFunctionTable obj) => new MTLAllocation(obj.NativePtr);
+        public static implicit operator MTLIntersectionFunctionTable(in MTLAllocation obj) => new MTLIntersectionFunctionTable(obj.NativePtr);
 
         public MTLIntersectionFunctionTable(in IntPtr ptr) => NativePtr = ptr;
 

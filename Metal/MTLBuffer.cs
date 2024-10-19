@@ -10,6 +10,8 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLBuffer obj) => obj.NativePtr;
         public static implicit operator MTLResource(in MTLBuffer obj) => new MTLResource(obj.NativePtr);
         public static implicit operator MTLBuffer(in MTLResource obj) => new MTLBuffer(obj.NativePtr);
+        public static implicit operator MTLAllocation(in MTLBuffer obj) => new MTLAllocation(obj.NativePtr);
+        public static implicit operator MTLBuffer(in MTLAllocation obj) => new MTLBuffer(obj.NativePtr);
 
         public MTLBuffer(in IntPtr ptr) => NativePtr = ptr;
 

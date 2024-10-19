@@ -238,7 +238,8 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLTexture obj) => obj.NativePtr;
         public static implicit operator MTLResource(in MTLTexture obj) => new MTLResource(obj.NativePtr);
         public static implicit operator MTLTexture(in MTLResource obj) => new MTLTexture(obj.NativePtr);
-
+        public static implicit operator MTLAllocation(in MTLTexture obj) => new MTLAllocation(obj.NativePtr);
+        public static implicit operator MTLTexture(in MTLAllocation obj) => new MTLTexture(obj.NativePtr);
         public MTLTexture(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label

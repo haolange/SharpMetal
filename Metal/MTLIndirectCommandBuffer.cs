@@ -139,6 +139,8 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLIndirectCommandBuffer obj) => obj.NativePtr;
         public static implicit operator MTLResource(in MTLIndirectCommandBuffer obj) => new MTLResource(obj.NativePtr);
         public static implicit operator MTLIndirectCommandBuffer(in MTLResource obj) => new MTLIndirectCommandBuffer(obj.NativePtr);
+        public static implicit operator MTLAllocation(in MTLIndirectCommandBuffer obj) => new MTLAllocation(obj.NativePtr);
+        public static implicit operator MTLIndirectCommandBuffer(in MTLAllocation obj) => new MTLIndirectCommandBuffer(obj.NativePtr);
 
         public MTLIndirectCommandBuffer(in IntPtr ptr) => NativePtr = ptr;
 
