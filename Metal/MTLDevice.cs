@@ -43,6 +43,7 @@ namespace SharpMetal.Metal
     {
         None = 0,
         ArgumentInfo = 1,
+        BindingInfo = 1,
         BufferTypeInfo = 2,
         FailOnBinaryArchiveMiss = 4,
     }
@@ -193,7 +194,6 @@ namespace SharpMetal.Metal
 
         public bool LowPower => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isLowPower);
 
-
         public bool Removable => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isRemovable);
 
         public bool HasUnifiedMemory => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_hasUnifiedMemory);
@@ -284,6 +284,11 @@ namespace SharpMetal.Metal
         public static NSArray CopyAllDevices()
         {
             return new NSArray(MTLCopyAllDevices());
+        }
+
+        public MTLLogState NewLogState(in MTLLogStateDescriptor descriptor, ref NSError error)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newLogStateWithDescriptor, descriptor, ref error.NativePtr));
         }
 
         public MTLCommandQueue NewCommandQueue()
@@ -481,7 +486,7 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newIOCommandQueueWithDescriptorerror, descriptor, ref error.NativePtr));
         }
 
-        public IntPtr newResidencySetWithDescriptor(in MTLResidencySetDescriptor descriptor, ref NSError error)
+        public IntPtr NewResidencySetWithDescriptor(in MTLResidencySetDescriptor descriptor, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newResidencySetWithDescriptor, descriptor, ref error.NativePtr));
         }
@@ -616,11 +621,13 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_supportsPullModelInterpolation = "supportsPullModelInterpolation";
         private static readonly Selector sel_supportsShaderBarycentricCoordinates = "supportsShaderBarycentricCoordinates";
         private static readonly Selector sel_currentAllocatedSize = "currentAllocatedSize";
+        private static readonly Selector sel_newLogStateWithDescriptor = "newLogStateWithDescriptor:error:";
         private static readonly Selector sel_newCommandQueue = "newCommandQueue";
         private static readonly Selector sel_newCommandQueueWithDescriptor = "newCommandQueueWithDescriptor:";
         private static readonly Selector sel_newCommandQueueWithMaxCommandBufferCount = "newCommandQueueWithMaxCommandBufferCount:";
         private static readonly Selector sel_heapTextureSizeAndAlignWithDescriptor = "heapTextureSizeAndAlignWithDescriptor:";
         private static readonly Selector sel_heapBufferSizeAndAlignWithLengthoptions = "heapBufferSizeAndAlignWithLength:options:";
+        private static readonly Selector sel_newResidencySetWithDescriptor = "newResidencySetWithDescriptor:error:";
         private static readonly Selector sel_newHeapWithDescriptor = "newHeapWithDescriptor:";
         private static readonly Selector sel_newBufferWithLengthoptions = "newBufferWithLength:options:";
         private static readonly Selector sel_newBufferWithByteslengthoptions = "newBufferWithBytes:length:options:";
@@ -664,7 +671,6 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_peerIndex = "peerIndex";
         private static readonly Selector sel_peerCount = "peerCount";
         private static readonly Selector sel_newIOCommandQueueWithDescriptorerror = "newIOCommandQueueWithDescriptor:error:";
-        private static readonly Selector sel_newResidencySetWithDescriptor = "newResidencySetWithDescriptor:error:";
         private static readonly Selector sel_newIOFileHandleWithURLerror = "newIOFileHandleWithURL:error:";
         private static readonly Selector sel_newIOFileHandleWithURLcompressionMethoderror = "newIOFileHandleWithURL:compressionMethod:error:";
         private static readonly Selector sel_sparseTileSizeWithTextureTypepixelFormatsampleCount = "sparseTileSizeWithTextureType:pixelFormat:sampleCount:";

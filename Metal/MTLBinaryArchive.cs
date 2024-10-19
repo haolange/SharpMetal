@@ -62,6 +62,16 @@ namespace SharpMetal.Metal
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_addTileRenderPipelineFunctionsWithDescriptorerror, descriptor, ref error.NativePtr);
         }
 
+        public bool AddMeshRenderPipelineFunctions(in MTLMeshRenderPipelineDescriptor descriptor, ref NSError error)
+        {
+            return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_addMeshRenderPipelineFunctionsWithDescriptorerror, descriptor, ref error.NativePtr);
+        }
+
+        public bool AddLibrary(in MTLStitchedLibraryDescriptor descriptor, ref NSError error)
+        {
+            return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_addLibraryWithDescriptor, descriptor, ref error.NativePtr);
+        }
+
         public bool SerializeToURL(in NSURL url, ref NSError error)
         {
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_serializeToURLerror, url, ref error.NativePtr);
@@ -78,6 +88,8 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_addComputePipelineFunctionsWithDescriptorerror = "addComputePipelineFunctionsWithDescriptor:error:";
         private static readonly Selector sel_addRenderPipelineFunctionsWithDescriptorerror = "addRenderPipelineFunctionsWithDescriptor:error:";
         private static readonly Selector sel_addTileRenderPipelineFunctionsWithDescriptorerror = "addTileRenderPipelineFunctionsWithDescriptor:error:";
+        private static readonly Selector sel_addMeshRenderPipelineFunctionsWithDescriptorerror = "addMeshRenderPipelineFunctionsWithDescriptor:error:";
+        private static readonly Selector sel_addLibraryWithDescriptor = "addLibraryWithDescriptor:error:";
         private static readonly Selector sel_serializeToURLerror = "serializeToURL:error:";
         private static readonly Selector sel_addFunctionWithDescriptorlibraryerror = "addFunctionWithDescriptor:library:error:";
     }

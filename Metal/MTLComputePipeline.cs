@@ -104,6 +104,12 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMaxCallStackDepth, value);
         }
 
+        public MTLShaderValidation ShaderValidation
+        {
+            get => (MTLShaderValidation)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_shaderValidation);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setShaderValidation, (ulong)value);
+        }
+
         public void Reset()
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_reset);
@@ -138,6 +144,8 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setSupportAddingBinaryFunctions = "setSupportAddingBinaryFunctions:";
         private static readonly Selector sel_maxCallStackDepth = "maxCallStackDepth";
         private static readonly Selector sel_setMaxCallStackDepth = "setMaxCallStackDepth:";
+        private static readonly Selector sel_shaderValidation = "shaderValidation";
+        private static readonly Selector sel_setShaderValidation = "setShaderValidation:";
     }
 
     public partial struct MTLComputePipelineState
@@ -159,6 +167,11 @@ namespace SharpMetal.Metal
         public bool SupportIndirectCommandBuffers => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportIndirectCommandBuffers);
 
         public MTLResourceID GpuResourceID => ObjectiveCRuntime.MTLResourceID_objc_msgSend(NativePtr, sel_gpuResourceID);
+
+        public ulong ShaderValidation
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_shaderValidation);
+        }
 
         public ulong ImageblockMemoryLength(in MTLSize imageblockDimensions)
         {
@@ -193,6 +206,7 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_imageblockMemoryLengthForDimensions = "imageblockMemoryLengthForDimensions:";
         private static readonly Selector sel_supportIndirectCommandBuffers = "supportIndirectCommandBuffers";
         private static readonly Selector sel_gpuResourceID = "gpuResourceID";
+        private static readonly Selector sel_shaderValidation = "shaderValidation";
         private static readonly Selector sel_functionHandleWithFunction = "functionHandleWithFunction:";
         private static readonly Selector sel_newComputePipelineStateWithAdditionalBinaryFunctionserror = "newComputePipelineStateWithAdditionalBinaryFunctions:error:";
         private static readonly Selector sel_newVisibleFunctionTableWithDescriptor = "newVisibleFunctionTableWithDescriptor:";

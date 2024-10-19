@@ -645,6 +645,9 @@ namespace SharpMetal.ObjectiveCCore
         [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
         public static partial void objc_msgSend(IntPtr receiver, Selector selector, MTLCommandBufferHandler a);
 
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, Selector selector, MTLLogHandler a);
+
         public static void Retain(in IntPtr receiver)
         {
             objc_msgSend(receiver, sel_retain);

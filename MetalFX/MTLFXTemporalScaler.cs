@@ -35,7 +35,7 @@ namespace SharpMetal.MetalFX
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, MTLFXSelector.sel_setOutputTextureFormat, (ulong)value);
         }
 
-        public MTLPixelFormat reactiveMaskTextureFormat
+        public MTLPixelFormat ReactiveMaskTextureFormat
         {
             get => (MTLPixelFormat)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, MTLFXSelector.sel_reactiveMaskTextureFormat);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, MTLFXSelector.sel_setReactiveMaskTextureFormat, (ulong)value);
@@ -77,13 +77,13 @@ namespace SharpMetal.MetalFX
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, MTLFXSelector.sel_setInputContentPropertiesEnabled, value);
         }
 
-        public bool requiresSynchronousInitialization
+        public bool RequiresSynchronousInitialization
         {
             get => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, MTLFXSelector.sel_requiresSynchronousInitialization);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, MTLFXSelector.sel_setRequiresSynchronousInitialization, value);
         }
 
-        public bool reactiveMaskTextureEnabled
+        public bool ReactiveMaskTextureEnabled
         {
             get => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, MTLFXSelector.sel_isReactiveMaskTextureEnabled);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, MTLFXSelector.sel_setReactiveMaskTextureEnabled, value);
@@ -111,12 +111,12 @@ namespace SharpMetal.MetalFX
             return ObjectiveCRuntime.bool_objc_msgSend(s_class, MTLFXSelector.sel_supportsDevice, device);
         }
 
-        public static float SupportedInputContentMinScaleForDevice(in MTLDevice device)
+        public static float SupportedInputContentMinScale(in MTLDevice device)
         {
             return ObjectiveCRuntime.float_objc_msgSend(s_class, MTLFXSelector.sel_supportedInputContentMinScaleForDevice, device);
         }
 
-        public static float SupportedInputContentMaxScaleForDevice(in MTLDevice device)
+        public static float SupportedInputContentMaxScale(in MTLDevice device)
         {
             return ObjectiveCRuntime.float_objc_msgSend(s_class, MTLFXSelector.sel_supportedInputContentMaxScaleForDevice, device);
         }
@@ -147,7 +147,7 @@ namespace SharpMetal.MetalFX
             get => (MTLTextureUsage)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, MTLFXSelector.sel_motionTextureUsage);
         }
 
-        public MTLTextureUsage reactiveTextureUsage
+        public MTLTextureUsage ReactiveTextureUsage
         {
             get => (MTLTextureUsage)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, MTLFXSelector.sel_reactiveTextureUsage);
         }
@@ -187,7 +187,7 @@ namespace SharpMetal.MetalFX
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, MTLFXSelector.sel_setMotionTexture, value);
         }
 
-        public MTLTexture reactiveMaskTexture
+        public MTLTexture ReactiveMaskTexture
         {
             get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, MTLFXSelector.sel_reactiveMaskTexture));
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, MTLFXSelector.sel_setReactiveMaskTexture, value);

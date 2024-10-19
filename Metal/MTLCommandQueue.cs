@@ -6,8 +6,14 @@ namespace SharpMetal.Metal
     public partial struct MTLCommandQueueDescriptor
     {
         public IntPtr NativePtr;
+
         public static implicit operator IntPtr(in MTLCommandQueueDescriptor obj) => obj.NativePtr;
+
         public MTLCommandQueueDescriptor(in IntPtr ptr) => NativePtr = ptr;
+
+        public static MTLCommandQueueDescriptor New() => s_class.AllocInit<MTLCommandQueueDescriptor>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLCommandQueueDescriptor));
 
         public NSString Label
         {
@@ -15,14 +21,24 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLabel, value);
         }
 
-        public MTLLogState logState => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_logState));
+        public MTLLogState LogState
+        {
+            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_logState));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLogState, value);
+        }
 
-        public ulong maxCommandBufferCount => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_maxCommandBufferCount);
+        public ulong MaxCommandBufferCount
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_maxCommandBufferCount);
+            set => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_setMaxCommandBufferCount, value);
+        }
 
         private static readonly Selector sel_label = "label";
         private static readonly Selector sel_setLabel = "setLabel:";
         private static readonly Selector sel_logState = "logState";
+        private static readonly Selector sel_setLogState = "setLogState:";
         private static readonly Selector sel_maxCommandBufferCount = "maxCommandBufferCount";
+        private static readonly Selector sel_setMaxCommandBufferCount = "setMaxCommandBufferCount:";
     }
 
     public partial struct MTLCommandQueue
@@ -56,6 +72,26 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_insertDebugCaptureBoundary);
         }
 
+        public void AddResidencySet(in MTLResidencySet residencySet)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addResidencySet, residencySet);
+        }
+
+        public void AddResidencySets(in IntPtr residencySets, in ulong count)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addResidencySets, residencySets, (ulong)count);
+        }
+
+        public void RemoveResidencySet(in MTLResidencySet residencySet)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_removeResidencySet, residencySet);
+        }
+
+        public void RemoveResidencySets(in IntPtr residencySets, in ulong count)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_removeResidencySets, residencySets, (ulong)count);
+        }
+
         private static readonly Selector sel_label = "label";
         private static readonly Selector sel_setLabel = "setLabel:";
         private static readonly Selector sel_device = "device";
@@ -63,5 +99,10 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_commandBufferWithDescriptor = "commandBufferWithDescriptor:";
         private static readonly Selector sel_commandBufferWithUnretainedReferences = "commandBufferWithUnretainedReferences";
         private static readonly Selector sel_insertDebugCaptureBoundary = "insertDebugCaptureBoundary";
+
+        private static readonly Selector sel_addResidencySet = "addResidencySet";
+        private static readonly Selector sel_addResidencySets = "addResidencySets:count:";
+        private static readonly Selector sel_removeResidencySet = "removeResidencySet";
+        private static readonly Selector sel_removeResidencySets = "removeResidencySets:count:";
     }
 }

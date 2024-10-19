@@ -8,6 +8,7 @@ namespace SharpMetal.Metal
         None = 0,
         CompileToBinary = 1,
         StoreFunctionInMetalScript = 2,
+        FunctionOptionFailOnBinaryArchiveMiss = 4,
     }
 
     public partial struct MTLFunctionDescriptor

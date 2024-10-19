@@ -9,7 +9,14 @@ namespace SharpMetal.Metal
         Mutable = 1,
         Immutable = 2,
     }
-    
+
+    public enum MTLShaderValidation : ulong
+    {
+        ShaderValidationDefault = 0,
+        ShaderValidationEnabled = 1,
+        ShaderValidationDisabled = 2,
+    }
+
     public partial struct MTLPipelineBufferDescriptor
     {
         public IntPtr NativePtr;

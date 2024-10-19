@@ -53,6 +53,19 @@ namespace SharpMetal.Metal
         Hidden = 1,
     }
 
+    public enum MTLMathMode : long
+    {
+        Safe = 0,
+        Relaxed = 1,
+        Fast = 2,
+    }
+
+    public enum MTLMathFloatingPointFunctions : long
+    {
+        Fast = 0,
+        Precise = 1,
+    }
+
     public enum MTLLibraryError : ulong
     {
         Unsupported = 1,
@@ -209,9 +222,13 @@ namespace SharpMetal.Metal
     {
         public IntPtr NativePtr;
 
+        public static implicit operator IntPtr(in MTLCompileOptions obj) => obj.NativePtr;
+
         public MTLCompileOptions(in IntPtr ptr) => NativePtr = ptr;
 
         public static MTLCompileOptions New() => s_class.AllocInit<MTLCompileOptions>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLCompileOptions));
 
         public NSDictionary PreprocessorMacros
         {
@@ -229,6 +246,18 @@ namespace SharpMetal.Metal
         {
             get => (MTLLanguageVersion)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_languageVersion);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLanguageVersion, (ulong)value);
+        }
+
+        public MTLMathMode MathMode
+        {
+            get => (MTLMathMode)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_mathMode);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMathMode, (ulong)value);
+        }
+
+        public MTLMathFloatingPointFunctions MathFloatingPointFunctions
+        {
+            get => (MTLMathFloatingPointFunctions)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_mathFloatingPointFunctions);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMathFloatingPointFunctions, (ulong)value);
         }
 
         public MTLLibraryType LibraryType
@@ -279,15 +308,22 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMaxTotalThreadsPerThreadgroup, value);
         }
 
-        public static implicit operator IntPtr(in MTLCompileOptions obj) => obj.NativePtr;
+        public bool Logging
+        {
+            get => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_enableLogging);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setEnableLogging, value);
+        }
 
-        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLCompileOptions));
         private static readonly Selector sel_preprocessorMacros = "preprocessorMacros";
         private static readonly Selector sel_setPreprocessorMacros = "setPreprocessorMacros:";
         private static readonly Selector sel_fastMathEnabled = "fastMathEnabled";
         private static readonly Selector sel_setFastMathEnabled = "setFastMathEnabled:";
         private static readonly Selector sel_languageVersion = "languageVersion";
         private static readonly Selector sel_setLanguageVersion = "setLanguageVersion:";
+        private static readonly Selector sel_mathMode = "mathMode";
+        private static readonly Selector sel_setMathMode = "setMathMode:";
+        private static readonly Selector sel_mathFloatingPointFunctions = "mathFloatingPointFunctions";
+        private static readonly Selector sel_setMathFloatingPointFunctions = "setMathFloatingPointFunctions:";
         private static readonly Selector sel_libraryType = "libraryType";
         private static readonly Selector sel_setLibraryType = "setLibraryType:";
         private static readonly Selector sel_installName = "installName";
@@ -304,6 +340,8 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setAllowReferencingUndefinedSymbols = "setAllowReferencingUndefinedSymbols:";
         private static readonly Selector sel_maxTotalThreadsPerThreadgroup = "maxTotalThreadsPerThreadgroup";
         private static readonly Selector sel_setMaxTotalThreadsPerThreadgroup = "setMaxTotalThreadsPerThreadgroup:";
+        private static readonly Selector sel_enableLogging = "enableLogging";
+        private static readonly Selector sel_setEnableLogging = "setEnableLogging:";
     }
 
     public partial struct MTLLibrary

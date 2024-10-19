@@ -3,6 +3,13 @@ using SharpMetal.ObjectiveCCore;
 
 namespace SharpMetal.Metal
 {
+    public enum MTLStitchedLibraryOptions : long
+    {
+        None = 0,
+        FailOnBinaryArchiveMiss = 1,
+        StoreLibraryInMetalScript = 2,
+    }
+
     public partial struct MTLFunctionStitchingAttribute
     {
         public IntPtr NativePtr;
@@ -178,6 +185,18 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFunctions, value);
         }
 
+        public NSArray BinaryArchives
+        {
+            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_binaryArchives));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setbinaryArchives, value);
+        }
+
+        public MTLStitchedLibraryOptions Options
+        {
+            get => (MTLStitchedLibraryOptions)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_Options);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setOptions, (ulong)value);
+        }
+
         public static implicit operator IntPtr(in MTLStitchedLibraryDescriptor obj) => obj.NativePtr;
 
         private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLStitchedLibraryDescriptor));
@@ -185,5 +204,9 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setFunctionGraphs = "setFunctionGraphs:";
         private static readonly Selector sel_functions = "functions";
         private static readonly Selector sel_setFunctions = "setFunctions:";
+        private static readonly Selector sel_binaryArchives = "binaryArchives";
+        private static readonly Selector sel_setbinaryArchives = "setbinaryArchives:";
+        private static readonly Selector sel_Options = "Options";
+        private static readonly Selector sel_setOptions = "setOptions:";
     }
 }

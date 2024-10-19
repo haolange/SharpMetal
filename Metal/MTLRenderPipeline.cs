@@ -38,10 +38,10 @@ namespace SharpMetal.Metal
     public enum MTLColorWriteMask : ulong
     {
         None = 0,
-        Alpha = 1,
-        Blue = 2,
-        Green = 4,
         Red = 8,
+        Green = 4,
+        Blue = 2,
+        Alpha = 1,
         All = 15,
     }
 
@@ -386,6 +386,12 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMaxFragmentCallStackDepth, value);
         }
 
+        public MTLShaderValidation ShaderValidation
+        {
+            get => (MTLShaderValidation)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_shaderValidation);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setShaderValidation, (ulong)value);
+        }
+
         public void SetAlphaToCoverageEnabled(in bool alphaToCoverageEnabled)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setAlphaToCoverageEnabled, alphaToCoverageEnabled);
@@ -477,6 +483,8 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setMaxVertexCallStackDepth = "setMaxVertexCallStackDepth:";
         private static readonly Selector sel_maxFragmentCallStackDepth = "maxFragmentCallStackDepth";
         private static readonly Selector sel_setMaxFragmentCallStackDepth = "setMaxFragmentCallStackDepth:";
+        private static readonly Selector sel_shaderValidation = "shaderValidation";
+        private static readonly Selector sel_setShaderValidation = "setShaderValidation:";
         private static readonly Selector sel_reset = "reset";
     }
 
@@ -546,6 +554,11 @@ namespace SharpMetal.Metal
 
         public MTLResourceID GpuResourceID => ObjectiveCRuntime.MTLResourceID_objc_msgSend(NativePtr, sel_gpuResourceID);
 
+        public ulong ShaderValidation
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_shaderValidation);
+        }
+
         public ulong ImageblockMemoryLength(in MTLSize imageblockDimensions)
         {
             return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_imageblockMemoryLengthForDimensions, imageblockDimensions);
@@ -588,6 +601,7 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_newVisibleFunctionTableWithDescriptorstage = "newVisibleFunctionTableWithDescriptor:stage:";
         private static readonly Selector sel_newIntersectionFunctionTableWithDescriptorstage = "newIntersectionFunctionTableWithDescriptor:stage:";
         private static readonly Selector sel_newRenderPipelineStateWithAdditionalBinaryFunctionserror = "newRenderPipelineStateWithAdditionalBinaryFunctions:error:";
+        private static readonly Selector sel_shaderValidation = "shaderValidation";
     }
 
     public partial struct MTLRenderPipelineColorAttachmentDescriptorArray
@@ -756,6 +770,12 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMaxCallStackDepth, value);
         }
 
+        public MTLShaderValidation ShaderValidation
+        {
+            get => (MTLShaderValidation)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_shaderValidation);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setShaderValidation, (ulong)value);
+        }
+
         public void Reset()
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_reset);
@@ -783,6 +803,8 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setSupportAddingBinaryFunctions = "setSupportAddingBinaryFunctions:";
         private static readonly Selector sel_maxCallStackDepth = "maxCallStackDepth";
         private static readonly Selector sel_setMaxCallStackDepth = "setMaxCallStackDepth:";
+        private static readonly Selector sel_shaderValidation = "shaderValidation";
+        private static readonly Selector sel_setShaderValidation = "setShaderValidation:";
         private static readonly Selector sel_reset = "reset";
     }
 
@@ -900,6 +922,12 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setSupportIndirectCommandBuffers, value);
         }
 
+        public NSArray BinaryArchives
+        {
+            get => new NSArray(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_binaryArchives));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBinaryArchives, value);
+        }
+
         public MTLLinkedFunctions ObjectLinkedFunctions
         {
             get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_objectLinkedFunctions));
@@ -916,6 +944,12 @@ namespace SharpMetal.Metal
         {
             get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_fragmentLinkedFunctions));
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentLinkedFunctions, value);
+        }
+
+        public MTLShaderValidation ShaderValidation
+        {
+            get => (MTLShaderValidation)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_shaderValidation);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setShaderValidation, (ulong)value);
         }
 
         public void SetAlphaToCoverageEnabled(in bool alphaToCoverageEnabled)
@@ -978,12 +1012,16 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setStencilAttachmentPixelFormat = "setStencilAttachmentPixelFormat:";
         private static readonly Selector sel_supportIndirectCommandBuffers = "supportIndirectCommandBuffers";
         private static readonly Selector sel_setSupportIndirectCommandBuffers = "setSupportIndirectCommandBuffers:";
+        private static readonly Selector sel_binaryArchives = "binaryArchives";
+        private static readonly Selector sel_setBinaryArchives = "setBinaryArchives:";
         private static readonly Selector sel_objectLinkedFunctions = "objectLinkedFunctions";
         private static readonly Selector sel_setObjectLinkedFunctions = "setObjectLinkedFunctions:";
         private static readonly Selector sel_meshLinkedFunctions = "meshLinkedFunctions";
         private static readonly Selector sel_setMeshLinkedFunctions = "setMeshLinkedFunctions:";
         private static readonly Selector sel_fragmentLinkedFunctions = "fragmentLinkedFunctions";
         private static readonly Selector sel_setFragmentLinkedFunctions = "setFragmentLinkedFunctions:";
+        private static readonly Selector sel_shaderValidation = "shaderValidation";
+        private static readonly Selector sel_setShaderValidation = "setShaderValidation:";
         private static readonly Selector sel_reset = "reset";
     }
 }

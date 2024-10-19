@@ -22,8 +22,8 @@ namespace SharpMetal.Metal
         Internal = 1,
         Timeout = 2,
         PageFault = 3,
-        AccessRevoked = 4,
         Blacklisted = 4,
+        AccessRevoked = 4,
         NotPermitted = 7,
         OutOfMemory = 8,
         InvalidResource = 9,
@@ -64,23 +64,24 @@ namespace SharpMetal.Metal
 
         public static MTLCommandBufferDescriptor New() => s_class.AllocInit<MTLCommandBufferDescriptor>();
 
-        public MTLLogState logState
-        {
-            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_logState));
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLogState, value);
-        }
-
-        public bool retainedReferences
+        public bool RetainedReferences
         {
             get => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_retainedReferences);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setRetainedReferences, value);
         }
         
-        public MTLCommandBufferErrorOption errorOptions
+        public MTLCommandBufferErrorOption ErrorOptions
         {
             get => (MTLCommandBufferErrorOption)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_errorOptions);
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setErrorOptions, (ulong)value);
         }
+
+        public MTLLogState LogState
+        {
+            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_logState));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLogState, value);
+        }
+
 
         public static implicit operator IntPtr(in MTLCommandBufferDescriptor obj) => obj.NativePtr;
 
@@ -221,9 +222,9 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_computeCommandEncoderWithDispatchType, (ulong)dispatchType));
         }
 
-        public void useResidencySet(in MTLResidencySet residencySet, in ulong value)
+        public void useResidencySet(in MTLResidencySet residencySet)
         {
-            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useResidencySet, residencySet, value);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_useResidencySet, residencySet);
         }
 
         public void useResidencySets(in IntPtr residencySets, in ulong count)
@@ -304,7 +305,7 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_blitCommandEncoderWithDescriptor = "blitCommandEncoderWithDescriptor:";
         private static readonly Selector sel_computeCommandEncoder = "computeCommandEncoder";
         private static readonly Selector sel_computeCommandEncoderWithDispatchType = "computeCommandEncoderWithDispatchType:";
-        private static readonly Selector sel_useResidencySet = "useResidencySet:";
+        private static readonly Selector sel_useResidencySet = "useResidencySet";
         private static readonly Selector sel_useResidencySetscount = "useResidencySets:count:";
         private static readonly Selector sel_encodeWaitForEventvalue = "encodeWaitForEvent:value:";
         private static readonly Selector sel_encodeSignalEventvalue = "encodeSignalEvent:value:";

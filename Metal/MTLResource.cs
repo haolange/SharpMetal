@@ -34,23 +34,26 @@ namespace SharpMetal.Metal
 
     public enum MTLResourceOptions : ulong
     {
-        ResourceStorageModeShared = 0,
-        ResourceHazardTrackingModeDefault = 0,
         ResourceCPUCacheModeDefaultCache = 0,
-        CPUCacheModeDefault = 0,
         ResourceCPUCacheModeWriteCombined = 1,
-        CPUCacheModeWriteCombined = 1,
+        ResourceStorageModeShared = 0,
         ResourceStorageModeManaged = 16,
         ResourceStorageModePrivate = 32,
         ResourceStorageModeMemoryless = 48,
+        ResourceHazardTrackingModeDefault = 0,
         ResourceHazardTrackingModeUntracked = 256,
         ResourceHazardTrackingModeTracked = 512,
+        CPUCacheModeDefault = 0,
+        CPUCacheModeWriteCombined = 1,
     }
 
     public partial struct MTLResource
     {
         public IntPtr NativePtr;
         public static implicit operator IntPtr(in MTLResource obj) => obj.NativePtr;
+        public static implicit operator MTLAllocation(in MTLResource obj) => new MTLAllocation(obj.NativePtr);
+        public static implicit operator MTLResource(in MTLAllocation obj) => new MTLResource(obj.NativePtr);
+
         public MTLResource(in IntPtr ptr) => NativePtr = ptr;
 
         public NSString Label
