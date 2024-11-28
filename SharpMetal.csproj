@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net9.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<Platforms>x64;ARM64</Platforms>
@@ -36,4 +36,8 @@
 		<OutputPath>../../../../Binaries/ThirdParty/Apple/SharpMetal/ARM64/Release/</OutputPath>
 		<Optimize>true</Optimize>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+	</ItemGroup>
 </Project>
