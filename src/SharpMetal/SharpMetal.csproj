@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>Library</OutputType>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Platforms>x64;ARM64</Platforms>
+		<AssemblyName>SharpMetal</AssemblyName>
+		<RootNamespace>SharpMetal</RootNamespace>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<IntermediateOutputPath>../../../../Intermediate/ThirdParty/Apple/SharpMetal/</IntermediateOutputPath>
+		<BaseOutputPath>$(ProjectDir)../../../../Binaries/ThirdParty/Apple/SharpMetal/</BaseOutputPath>
+	</PropertyGroup>
+	
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+		<OutputPath>../../../../Binaries/ThirdParty/Apple/SharpMetal/Win64/Debug/</OutputPath>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+		<OutputPath>../../../../Binaries/ThirdParty/Apple/SharpMetal/Win64/Release/</OutputPath>
+		<Optimize>true</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
+		<OutputPath>../../../../Binaries/ThirdParty/Apple/SharpMetal/ARM64/Debug/</OutputPath>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<Optimize>false</Optimize>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
+		<OutputPath>../../../../Binaries/ThirdParty/Apple/SharpMetal/ARM64/Release/</OutputPath>
+		<Optimize>true</Optimize>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+	</ItemGroup>
+</Project>
