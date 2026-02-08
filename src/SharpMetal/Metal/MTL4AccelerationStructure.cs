@@ -53,7 +53,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange PrimitiveDataBuffer
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setPrimitiveDataBuffer, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setPrimitiveDataBuffer, value);
         }
 
         public ulong PrimitiveDataStride
@@ -163,7 +163,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange VertexBuffer
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexBuffer, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexBuffer, value);
         }
 
         public ulong VertexFormat
@@ -180,7 +180,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange IndexBuffer
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setIndexBuffer, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setIndexBuffer, value);
         }
 
         public ulong IndexType
@@ -197,7 +197,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange TransformationMatrixBuffer
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTransformationMatrixBuffer, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTransformationMatrixBuffer, value);
         }
 
         public MTLMatrixLayout TransformationMatrixLayout
@@ -237,7 +237,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange BoundingBoxBuffer
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBoundingBoxBuffer, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBoundingBoxBuffer, value);
         }
 
         public ulong BoundingBoxStride
@@ -275,7 +275,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange VertexBuffers
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexBuffers, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexBuffers, value);
         }
 
         public ulong VertexFormat
@@ -292,7 +292,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange IndexBuffer
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setIndexBuffer, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setIndexBuffer, value);
         }
 
         public ulong IndexType
@@ -309,7 +309,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange TransformationMatrixBuffer
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTransformationMatrixBuffer, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setTransformationMatrixBuffer, value);
         }
 
         public MTLMatrixLayout TransformationMatrixLayout
@@ -349,7 +349,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange BoundingBoxBuffers
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBoundingBoxBuffers, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setBoundingBoxBuffers, value);
         }
 
         public ulong BoundingBoxStride
@@ -387,7 +387,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange ControlPointBuffer
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setControlPointBuffer, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setControlPointBuffer, value);
         }
 
         public ulong ControlPointCount
@@ -410,7 +410,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange RadiusBuffer
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setRadiusBuffer, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setRadiusBuffer, value);
         }
 
         public ulong RadiusFormat
@@ -427,7 +427,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange IndexBuffer
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setIndexBuffer, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setIndexBuffer, value);
         }
 
         public ulong IndexType
@@ -509,7 +509,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange ControlPointBuffers
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setControlPointBuffers, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setControlPointBuffers, value);
         }
 
         public ulong ControlPointCount
@@ -532,7 +532,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange RadiusBuffers
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setRadiusBuffers, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setRadiusBuffers, value);
         }
 
         public ulong RadiusFormat
@@ -549,7 +549,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange IndexBuffer
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setIndexBuffer, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setIndexBuffer, value);
         }
 
         public ulong IndexType
@@ -631,7 +631,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange InstanceDescriptorBuffer
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setInstanceDescriptorBuffer, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setInstanceDescriptorBuffer, value);
         }
 
         public ulong InstanceDescriptorStride
@@ -654,7 +654,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange MotionTransformBuffer
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMotionTransformBuffer, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMotionTransformBuffer, value);
         }
 
         public ulong MotionTransformCount
@@ -715,7 +715,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange InstanceDescriptorBuffer
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setInstanceDescriptorBuffer, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setInstanceDescriptorBuffer, value);
         }
 
         public ulong InstanceDescriptorStride
@@ -732,7 +732,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange InstanceCountBuffer
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setInstanceCountBuffer, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setInstanceCountBuffer, value);
         }
 
         public MTLAccelerationStructureInstanceDescriptorType InstanceDescriptorType
@@ -743,7 +743,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange MotionTransformBuffer
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMotionTransformBuffer, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMotionTransformBuffer, value);
         }
 
         public ulong MaxMotionTransformCount
@@ -754,7 +754,7 @@ namespace SharpMetal.Metal
 
         public MTL4BufferRange MotionTransformCountBuffer
         {
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMotionTransformCountBuffer, value.BufferAddress, value.Length);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMotionTransformCountBuffer, value);
         }
 
         public MTLMatrixLayout InstanceTransformationMatrixLayout

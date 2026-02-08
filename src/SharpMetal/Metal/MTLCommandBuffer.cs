@@ -305,7 +305,7 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_blitCommandEncoderWithDescriptor = "blitCommandEncoderWithDescriptor:";
         private static readonly Selector sel_computeCommandEncoder = "computeCommandEncoder";
         private static readonly Selector sel_computeCommandEncoderWithDispatchType = "computeCommandEncoderWithDispatchType:";
-        private static readonly Selector sel_useResidencySet = "useResidencySet";
+        private static readonly Selector sel_useResidencySet = "useResidencySet:";
         private static readonly Selector sel_useResidencySetscount = "useResidencySets:count:";
         private static readonly Selector sel_encodeWaitForEventvalue = "encodeWaitForEvent:value:";
         private static readonly Selector sel_encodeSignalEventvalue = "encodeSignalEvent:value:";

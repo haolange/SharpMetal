@@ -369,7 +369,7 @@ namespace SharpMetal.Metal
 
         public MTLLibrary NewDefaultLibrary()
         {
-            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newDefaultLibraryWithBundleerror));
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newDefaultLibrary));
         }
 
         public MTLLibrary NewLibrary(in NSURL url, ref NSError error)
@@ -479,7 +479,7 @@ namespace SharpMetal.Metal
 
         public MTLSharedEvent NewSharedEvent()
         {
-            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newSharedEventWithHandle));
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newSharedEvent));
         }
 
         public IntPtr NewIOCommandQueue(in IntPtr descriptor, ref NSError error)
@@ -524,7 +524,7 @@ namespace SharpMetal.Metal
 
         public ulong SparseTileSizeInBytes()
         {
-            return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_sparseTileSizeInBytesForSparsePageSize);
+            return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_sparseTileSizeInBytes);
         }
 
         public MTLSize SparseTileSize(in MTLTextureType textureType, in MTLPixelFormat pixelFormat, in ulong sampleCount, in MTLSparsePageSize sparsePageSize)

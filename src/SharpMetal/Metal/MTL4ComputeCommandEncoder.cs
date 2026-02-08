@@ -158,17 +158,17 @@ namespace SharpMetal.Metal
 
         public void BuildAccelerationStructure(in MTLAccelerationStructure accelerationStructure, in IntPtr descriptor, in MTL4BufferRange scratchBuffer)
         {
-            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_buildAccelerationStructuredescriptorscratchBuffer, accelerationStructure, descriptor, scratchBuffer.BufferAddress, scratchBuffer.Length);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_buildAccelerationStructuredescriptorscratchBuffer, accelerationStructure, descriptor, scratchBuffer);
         }
 
         public void RefitAccelerationStructure(in MTLAccelerationStructure sourceAccelerationStructure, in IntPtr descriptor, in MTLAccelerationStructure destinationAccelerationStructure, in MTL4BufferRange scratchBuffer)
         {
-            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_refitAccelerationStructuredescriptordestinationscratchBuffer, sourceAccelerationStructure, descriptor, destinationAccelerationStructure, scratchBuffer.BufferAddress, scratchBuffer.Length);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_refitAccelerationStructuredescriptordestinationscratchBuffer, sourceAccelerationStructure, descriptor, destinationAccelerationStructure, scratchBuffer);
         }
 
         public void RefitAccelerationStructure(in MTLAccelerationStructure sourceAccelerationStructure, in IntPtr descriptor, in MTLAccelerationStructure destinationAccelerationStructure, in MTL4BufferRange scratchBuffer, in ulong options)
         {
-            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_refitAccelerationStructuredescriptordestinationscratchBufferoptions, sourceAccelerationStructure, descriptor, destinationAccelerationStructure, scratchBuffer.BufferAddress, scratchBuffer.Length, options);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_refitAccelerationStructuredescriptordestinationscratchBufferoptions, sourceAccelerationStructure, descriptor, destinationAccelerationStructure, scratchBuffer, options);
         }
 
         public void CopyAccelerationStructure(in MTLAccelerationStructure sourceAccelerationStructure, in MTLAccelerationStructure destinationAccelerationStructure)
@@ -178,7 +178,7 @@ namespace SharpMetal.Metal
 
         public void WriteCompactedAccelerationStructureSize(in MTLAccelerationStructure accelerationStructure, in MTL4BufferRange buffer)
         {
-            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_writeCompactedAccelerationStructureSizetoBuffer, accelerationStructure, buffer.BufferAddress, buffer.Length);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_writeCompactedAccelerationStructureSizetoBuffer, accelerationStructure, buffer);
         }
 
         public void CopyAndCompactAccelerationStructure(in MTLAccelerationStructure sourceAccelerationStructure, in MTLAccelerationStructure destinationAccelerationStructure)

@@ -28,7 +28,7 @@ namespace SharpMetal.Foundation
         {
             get
             {
-                return RuntimeInformation.ProcessArchitecture == Architecture.Arm64 ? ObjectiveCRuntime.CGRect_objc_msgSend(NativePtr, sel_frame) : ObjectiveCRuntime.objc_msgSend_stret<CGRect>(NativePtr, sel_setFrame);
+                return RuntimeInformation.ProcessArchitecture == Architecture.Arm64 ? ObjectiveCRuntime.CGRect_objc_msgSend(NativePtr, sel_frame) : ObjectiveCRuntime.objc_msgSend_stret<CGRect>(NativePtr, sel_frame);
             }
             set
             {

@@ -102,7 +102,7 @@ namespace SharpMetal.Metal
 
         public void ResolveCounterHeap(in MTL4CounterHeap counterHeap, in NSRange range, in MTL4BufferRange bufferRange, in MTLFence fenceToWait, in MTLFence fenceToUpdate)
         {
-            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_resolveCounterHeapwithRangeintoBufferwaitFenceupdateFence, counterHeap, range, bufferRange.BufferAddress, bufferRange.Length, fenceToWait, fenceToUpdate);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_resolveCounterHeapwithRangeintoBufferwaitFenceupdateFence, counterHeap, range, bufferRange, fenceToWait, fenceToUpdate);
         }
 
         private static readonly Selector sel_device = "device";

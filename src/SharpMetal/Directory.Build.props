@@ -4,4 +4,9 @@
     <BaseIntermediateOutputPath>$(ProjectDir)../../../../Intermediate/ThirdParty/Apple/SharpMetal/</BaseIntermediateOutputPath>
     <MSBuildProjectExtensionsPath>$(ProjectDir)../../../../Intermediate/ThirdParty/Apple/SharpMetal/</MSBuildProjectExtensionsPath>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="**/._*.cs" />
+    <None Remove="**/._*" />
+    <Content Remove="**/._*" />
+  </ItemGroup>
 </Project>

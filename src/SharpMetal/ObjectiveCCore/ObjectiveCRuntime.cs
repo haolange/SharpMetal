@@ -397,6 +397,24 @@ namespace SharpMetal.ObjectiveCCore
         public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, NSRange b, IntPtr c, ulong d);
 
         [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, MTL4BufferRange a);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, NSRange b, MTL4BufferRange c, IntPtr d, IntPtr e);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, IntPtr b, MTL4BufferRange c);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, IntPtr b, IntPtr c, MTL4BufferRange d);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, IntPtr b, IntPtr c, MTL4BufferRange d, ulong e);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, MTL4BufferRange b);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
         public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, ulong a, ulong b, ulong c, ulong d);
 
         [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]

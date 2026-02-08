@@ -24,7 +24,7 @@ namespace SharpMetal.Metal
         public ulong InitialCapacity
         {
             get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_initialCapacity);
-            set => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_setInitialCapacity, value);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setInitialCapacity, value);
         }
 
         private static readonly Selector sel_label = "label";
@@ -55,14 +55,14 @@ namespace SharpMetal.Metal
 
         public NSArray allAllocations() => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_allAllocations));
 
-        public void RequestResidency(in MTLResidencySet residencySet)
+        public void RequestResidency()
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_requestResidency);
         }
 
-        public void EndResidency(in MTLResidencySet residencySet)
+        public void EndResidency()
         {
-            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_endResidency, residencySet);
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_endResidency);
         }
 
         public void AddAllocation(in MTLAllocation allocation)

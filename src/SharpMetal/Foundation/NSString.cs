@@ -70,12 +70,13 @@ namespace SharpMetal.Foundation
 
         public NSString(string s)
         {
-            NativePtr = s_class.AllocInit<NSString>();
+            string value = s ?? string.Empty;
+            NativePtr = s_class.Alloc<NSString>();
 
-            fixed (char* utf16Ptr = s)
+            fixed (char* utf16Ptr = value)
             {
-                UIntPtr length = (UIntPtr)s.Length;
-                IntPtr newString = ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithCharacters, (IntPtr)utf16Ptr, length);
+                UIntPtr length = (UIntPtr)value.Length;
+                NativePtr = ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_initWithCharacters, (IntPtr)utf16Ptr, length);
             }
         }
 

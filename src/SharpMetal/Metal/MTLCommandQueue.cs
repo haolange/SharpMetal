@@ -30,7 +30,7 @@ namespace SharpMetal.Metal
         public ulong MaxCommandBufferCount
         {
             get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_maxCommandBufferCount);
-            set => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_setMaxCommandBufferCount, value);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMaxCommandBufferCount, value);
         }
 
         private static readonly Selector sel_label = "label";
@@ -100,9 +100,9 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_commandBufferWithUnretainedReferences = "commandBufferWithUnretainedReferences";
         private static readonly Selector sel_insertDebugCaptureBoundary = "insertDebugCaptureBoundary";
 
-        private static readonly Selector sel_addResidencySet = "addResidencySet";
+        private static readonly Selector sel_addResidencySet = "addResidencySet:";
         private static readonly Selector sel_addResidencySets = "addResidencySets:count:";
-        private static readonly Selector sel_removeResidencySet = "removeResidencySet";
+        private static readonly Selector sel_removeResidencySet = "removeResidencySet:";
         private static readonly Selector sel_removeResidencySets = "removeResidencySets:count:";
     }
 }
