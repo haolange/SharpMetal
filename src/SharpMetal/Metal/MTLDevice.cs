@@ -29,6 +29,7 @@ namespace SharpMetal.Metal
         Common2 = 3002,
         Common3 = 3003,
         Metal3 = 5001,
+        Metal4 = 5002,
     }
 
     public enum MTLDeviceLocation : ulong
@@ -596,6 +597,76 @@ namespace SharpMetal.Metal
             return ObjectiveCRuntime.MTLSizeAndAlign_objc_msgSend(NativePtr, sel_heapAccelerationStructureSizeAndAlignWithDescriptor, descriptor);
         }
 
+        public IntPtr FunctionHandleWithFunction(in MTLFunction function)
+        {
+            return ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_functionHandleWithFunction, function);
+        }
+
+        public MTL4CommandAllocator NewMTL4CommandAllocator()
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newCommandAllocator));
+        }
+
+        public MTL4CommandAllocator NewMTL4CommandAllocator(in MTL4CommandAllocatorDescriptor descriptor, ref NSError error)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newCommandAllocatorWithDescriptorerror, descriptor, ref error.NativePtr));
+        }
+
+        public MTL4CommandQueue NewMTL4CommandQueue()
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newMTL4CommandQueue));
+        }
+
+        public MTL4CommandQueue NewMTL4CommandQueue(in MTL4CommandQueueDescriptor descriptor, ref NSError error)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newMTL4CommandQueueWithDescriptorerror, descriptor, ref error.NativePtr));
+        }
+
+        public MTL4CommandBuffer NewMTL4CommandBuffer()
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newMTL4CommandBuffer));
+        }
+
+        public MTL4ArgumentTable NewArgumentTable(in MTL4ArgumentTableDescriptor descriptor, ref NSError error)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newArgumentTableWithDescriptorerror, descriptor, ref error.NativePtr));
+        }
+
+        public MTL4Compiler NewCompiler(in MTL4CompilerDescriptor descriptor, ref NSError error)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newCompilerWithDescriptorerror, descriptor, ref error.NativePtr));
+        }
+
+        public MTL4Archive NewArchive(in NSURL url, ref NSError error)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newArchiveWithURLerror, url, ref error.NativePtr));
+        }
+
+        public MTL4PipelineDataSetSerializer NewPipelineDataSetSerializer(in MTL4PipelineDataSetSerializerDescriptor descriptor)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newPipelineDataSetSerializerWithDescriptor, descriptor));
+        }
+
+        public MTL4CounterHeap NewCounterHeap(in MTL4CounterHeapDescriptor descriptor, ref NSError error)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newCounterHeapWithDescriptorerror, descriptor, ref error.NativePtr));
+        }
+
+        public ulong SizeOfCounterHeapEntry(in MTL4CounterHeapType type)
+        {
+            return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_sizeOfCounterHeapEntry, (long)type);
+        }
+
+        public ulong QueryTimestampFrequency()
+        {
+            return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_queryTimestampFrequency);
+        }
+
+        public IntPtr FunctionHandleWithBinaryFunction(in MTL4BinaryFunction function)
+        {
+            return ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_functionHandleWithBinaryFunction, function);
+        }
+
         public const string MetalFrameworkPath = "/System/Library/Frameworks/Metal.framework/Metal";
 
         private static readonly Selector sel_name = "name";
@@ -704,5 +775,19 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_shouldMaximizeConcurrentCompilation = "shouldMaximizeConcurrentCompilation";
         private static readonly Selector sel_setShouldMaximizeConcurrentCompilation = "setShouldMaximizeConcurrentCompilation:";
         private static readonly Selector sel_maximumConcurrentCompilationTaskCount = "maximumConcurrentCompilationTaskCount";
+        private static readonly Selector sel_functionHandleWithFunction = "functionHandleWithFunction:";
+        private static readonly Selector sel_newCommandAllocator = "newCommandAllocator";
+        private static readonly Selector sel_newCommandAllocatorWithDescriptorerror = "newCommandAllocatorWithDescriptor:error:";
+        private static readonly Selector sel_newMTL4CommandQueue = "newMTL4CommandQueue";
+        private static readonly Selector sel_newMTL4CommandQueueWithDescriptorerror = "newMTL4CommandQueueWithDescriptor:error:";
+        private static readonly Selector sel_newMTL4CommandBuffer = "newCommandBuffer";
+        private static readonly Selector sel_newArgumentTableWithDescriptorerror = "newArgumentTableWithDescriptor:error:";
+        private static readonly Selector sel_newCompilerWithDescriptorerror = "newCompilerWithDescriptor:error:";
+        private static readonly Selector sel_newArchiveWithURLerror = "newArchiveWithURL:error:";
+        private static readonly Selector sel_newPipelineDataSetSerializerWithDescriptor = "newPipelineDataSetSerializerWithDescriptor:";
+        private static readonly Selector sel_newCounterHeapWithDescriptorerror = "newCounterHeapWithDescriptor:error:";
+        private static readonly Selector sel_sizeOfCounterHeapEntry = "sizeOfCounterHeapEntry:";
+        private static readonly Selector sel_queryTimestampFrequency = "queryTimestampFrequency";
+        private static readonly Selector sel_functionHandleWithBinaryFunction = "functionHandleWithBinaryFunction:";
     }
 }

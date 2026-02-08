@@ -639,6 +639,57 @@ namespace SharpMetal.ObjectiveCCore
         [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
         public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, IntPtr b, IntPtr c, NSRange d);
 
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, NSRange b, ulong c, ulong d, IntPtr e, IntPtr f);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, long a, IntPtr b, ulong c);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, long a, ulong b, IntPtr c, ulong d);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, MTLResourceID a, ulong b);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, ulong a, MTLSize b);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, IntPtr b, IntPtr c, IntPtr d, IntPtr e, IntPtr f);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, IntPtr b, IntPtr c, ulong d, ulong e);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, IntPtr b, IntPtr c, ulong d, ulong e, ulong f);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial ulong ulong_objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, ulong b);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, ulong a, IntPtr b);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, float a, float b);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, ulong a, ulong b, ulong c, ulong d, ulong e, ulong f);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, ulong a, ulong b, ulong c, ulong d, ulong e, ulong f, long g, ulong h);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, ulong a, MTLSize b, MTLSize c);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, long b);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial IntPtr IntPtr_objc_msgSend(IntPtr receiver, IntPtr selector, ref IntPtr a);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial IntPtr IntPtr_objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, IntPtr b, IntPtr c, ref IntPtr d);
+
         [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend_stret")]
         public static partial void objc_msgSend_stret(void* retPtr, IntPtr receiver, Selector selector);
 
