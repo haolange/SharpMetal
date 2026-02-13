@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>Library</OutputType>
 		<TargetFramework>net10.0</TargetFramework>
@@ -9,7 +9,7 @@
 		<RootNamespace>SharpMetal</RootNamespace>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<IntermediateOutputPath>../../../../Intermediate/ThirdParty/Apple/SharpMetal/</IntermediateOutputPath>
+		<IntermediateOutputPath>../../../../Intermediate/ThirdParty/Apple/SharpMetal/$(Platform)/$(Configuration)/</IntermediateOutputPath>
 		<BaseOutputPath>$(ProjectDir)../../../../Binaries/ThirdParty/Apple/SharpMetal/</BaseOutputPath>
 	</PropertyGroup>
 	
