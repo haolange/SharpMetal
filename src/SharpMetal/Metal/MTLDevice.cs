@@ -667,6 +667,11 @@ namespace SharpMetal.Metal
             return ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_functionHandleWithBinaryFunction, function);
         }
 
+        public MTLTensor NewTensor(in MTLTensorDescriptor descriptor)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newTensorWithDescriptor, descriptor));
+        }
+
         public const string MetalFrameworkPath = "/System/Library/Frameworks/Metal.framework/Metal";
 
         private static readonly Selector sel_name = "name";
@@ -789,5 +794,6 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_sizeOfCounterHeapEntry = "sizeOfCounterHeapEntry:";
         private static readonly Selector sel_queryTimestampFrequency = "queryTimestampFrequency";
         private static readonly Selector sel_functionHandleWithBinaryFunction = "functionHandleWithBinaryFunction:";
+        private static readonly Selector sel_newTensorWithDescriptor = "newTensorWithDescriptor:";
     }
 }
