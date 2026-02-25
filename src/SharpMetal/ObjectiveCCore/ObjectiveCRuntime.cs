@@ -266,6 +266,18 @@ namespace SharpMetal.ObjectiveCCore
         public static partial MTLResourceID MTLResourceID_objc_msgSend(IntPtr receiver, IntPtr selector);
 
         [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial MTLResourceID MTLResourceID_objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, ulong b);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial MTLResourceID MTLResourceID_objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, IntPtr b, ulong c);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial MTLResourceID MTLResourceID_objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, IntPtr b, ulong c, ulong d, ulong e);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial MTLResourceID MTLResourceID_objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, NSRange b, ulong c);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
         public static partial MTLRegion MTLRegion_objc_msgSend(IntPtr receiver, IntPtr selector);
 
         [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
@@ -303,6 +315,9 @@ namespace SharpMetal.ObjectiveCCore
 
         [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
         public static partial NSOperatingSystemVersion NSOperatingSystemVersion_objc_msgSend(IntPtr receiver, IntPtr selector);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial NSRange NSRange_objc_msgSend(IntPtr receiver, IntPtr selector);
 
         [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
         public static partial NSRange NSRange_objc_msgSend(IntPtr receiver, IntPtr selector, IntPtr a, ulong b);

@@ -672,6 +672,11 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newTensorWithDescriptor, descriptor));
         }
 
+        public MTLTextureViewPool NewTextureViewPool(in MTLResourceViewPoolDescriptor descriptor, ref NSError error)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newTextureViewPoolWithDescriptorerror, descriptor, ref error.NativePtr));
+        }
+
         public const string MetalFrameworkPath = "/System/Library/Frameworks/Metal.framework/Metal";
 
         private static readonly Selector sel_name = "name";
@@ -725,6 +730,7 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_newComputePipelineStateWithFunctionerror = "newComputePipelineStateWithFunction:error:";
         private static readonly Selector sel_newComputePipelineStateWithFunctionoptionsreflectionerror = "newComputePipelineStateWithFunction:options:reflection:error:";
         private static readonly Selector sel_newComputePipelineStateWithDescriptoroptionsreflectionerror = "newComputePipelineStateWithDescriptor:options:reflection:error:";
+        private static readonly Selector sel_newTextureViewPoolWithDescriptorerror = "newTextureViewPoolWithDescriptor:error:";
         private static readonly Selector sel_newFence = "newFence";
         private static readonly Selector sel_supportsFamily = "supportsFamily:";
         private static readonly Selector sel_supportsTextureSampleCount = "supportsTextureSampleCount:";
