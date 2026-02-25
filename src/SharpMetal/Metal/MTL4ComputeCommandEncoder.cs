@@ -151,6 +151,11 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_optimizeIndirectCommandBufferwithRange, indirectCommandBuffer, range);
         }
 
+        public void SetBytes(in IntPtr bytes, in ulong length, in ulong index)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setByteslengthatIndex, bytes, length, index);
+        }
+
         public void SetArgumentTable(in IntPtr argumentTable)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setArgumentTable, argumentTable);
@@ -219,6 +224,7 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_resetCommandsInBufferwithRange = "resetCommandsInBuffer:withRange:";
         private static readonly Selector sel_copyIndirectCommandBuffersourceRangedestinationdestinationIndex = "copyIndirectCommandBuffer:sourceRange:destination:destinationIndex:";
         private static readonly Selector sel_optimizeIndirectCommandBufferwithRange = "optimizeIndirectCommandBuffer:withRange:";
+        private static readonly Selector sel_setByteslengthatIndex = "setBytes:length:atIndex:";
         private static readonly Selector sel_setArgumentTable = "setArgumentTable:";
         private static readonly Selector sel_buildAccelerationStructuredescriptorscratchBuffer = "buildAccelerationStructure:descriptor:scratchBuffer:";
         private static readonly Selector sel_refitAccelerationStructuredescriptordestinationscratchBuffer = "refitAccelerationStructure:descriptor:destination:scratchBuffer:";

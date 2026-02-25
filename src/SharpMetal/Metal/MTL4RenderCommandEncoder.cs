@@ -204,6 +204,16 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setThreadgroupMemoryLengthoffsetatIndex, length, offset, index);
         }
 
+        public void SetVertexBytes(in IntPtr bytes, in ulong length, in ulong index)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVertexByteslengthatIndex, bytes, length, index);
+        }
+
+        public void SetFragmentBytes(in IntPtr bytes, in ulong length, in ulong index)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setFragmentByteslengthatIndex, bytes, length, index);
+        }
+
         public void SetArgumentTable(in IntPtr argumentTable, in ulong stages)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setArgumentTableatStages, argumentTable, stages);
@@ -257,6 +267,8 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_drawMeshThreadgroupsWithIndirectBufferthreadsPerObjectThreadgroupthreadsPerMeshThreadgroup = "drawMeshThreadgroupsWithIndirectBuffer:threadsPerObjectThreadgroup:threadsPerMeshThreadgroup:";
         private static readonly Selector sel_dispatchThreadsPerTile = "dispatchThreadsPerTile:";
         private static readonly Selector sel_setThreadgroupMemoryLengthoffsetatIndex = "setThreadgroupMemoryLength:offset:atIndex:";
+        private static readonly Selector sel_setVertexByteslengthatIndex = "setVertexBytes:length:atIndex:";
+        private static readonly Selector sel_setFragmentByteslengthatIndex = "setFragmentBytes:length:atIndex:";
         private static readonly Selector sel_setArgumentTableatStages = "setArgumentTable:atStages:";
         private static readonly Selector sel_setFrontFacingWinding = "setFrontFacingWinding:";
         private static readonly Selector sel_writeTimestampWithGranularityafterStageintoHeapatIndex = "writeTimestampWithGranularity:afterStage:intoHeap:atIndex:";
