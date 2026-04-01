@@ -32,6 +32,12 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDimensions, value);
         }
 
+        public NSArray Strides
+        {
+            get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_strides));
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStrides, value);
+        }
+
         public MTLTensorUsage Usage
         {
             get => (MTLTensorUsage)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_usage);
@@ -51,6 +57,8 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setDataType = "setDataType:";
         private static readonly Selector sel_dimensions = "dimensions";
         private static readonly Selector sel_setDimensions = "setDimensions:";
+        private static readonly Selector sel_strides = "strides";
+        private static readonly Selector sel_setStrides = "setStrides:";
         private static readonly Selector sel_usage = "usage";
         private static readonly Selector sel_setUsage = "setUsage:";
         private static readonly Selector sel_resourceOptions = "resourceOptions";
@@ -81,6 +89,8 @@ namespace SharpMetal.Metal
 
         public ulong Length => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_length);
 
+        public MTLResourceID GpuResourceID => ObjectiveCRuntime.MTLResourceID_objc_msgSend(NativePtr, sel_gpuResourceID);
+
         private static readonly Selector sel_device = "device";
         private static readonly Selector sel_label = "label";
         private static readonly Selector sel_setLabel = "setLabel:";
@@ -88,5 +98,6 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_dimensions = "dimensions";
         private static readonly Selector sel_usage = "usage";
         private static readonly Selector sel_length = "length";
+        private static readonly Selector sel_gpuResourceID = "gpuResourceID";
     }
 }

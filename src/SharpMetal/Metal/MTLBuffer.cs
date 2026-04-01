@@ -67,6 +67,11 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newTextureWithDescriptoroffsetbytesPerRow, descriptor, offset, bytesPerRow));
         }
 
+        public MTLTensor NewTensor(in MTLTensorDescriptor descriptor, in ulong offset, ref NSError error)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newTensorWithDescriptoroffseterror, descriptor.NativePtr, (long)offset, ref error.NativePtr));
+        }
+
         public void AddDebugMarker(in NSString marker, in NSRange range)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addDebugMarkerrange, marker, range);
@@ -99,6 +104,7 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_contents = "contents";
         private static readonly Selector sel_didModifyRange = "didModifyRange:";
         private static readonly Selector sel_newTextureWithDescriptoroffsetbytesPerRow = "newTextureWithDescriptor:offset:bytesPerRow:";
+        private static readonly Selector sel_newTensorWithDescriptoroffseterror = "newTensorWithDescriptor:offset:error:";
         private static readonly Selector sel_addDebugMarkerrange = "addDebugMarker:range:";
         private static readonly Selector sel_removeAllDebugMarkers = "removeAllDebugMarkers";
         private static readonly Selector sel_remoteStorageBuffer = "remoteStorageBuffer";
