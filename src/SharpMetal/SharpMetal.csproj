@@ -8,8 +8,7 @@
 		<AssemblyName>SharpMetal</AssemblyName>
 		<RootNamespace>SharpMetal</RootNamespace>
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<IntermediateOutputPath>../../../../Intermediate/ThirdParty/Apple/SharpMetal/$(Platform)/$(Configuration)/</IntermediateOutputPath>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
