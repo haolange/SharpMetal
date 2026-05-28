@@ -1,8 +1,12 @@
 using SharpMetal.Foundation;
 using SharpMetal.ObjectiveCCore;
+using System.Runtime.InteropServices;
 
 namespace SharpMetal.Metal
 {
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void MTL4CommitFeedbackHandler(IntPtr block, MTL4CommitFeedback commitFeedback);
+
     public partial struct MTL4CommitFeedback
     {
         public IntPtr NativePtr;

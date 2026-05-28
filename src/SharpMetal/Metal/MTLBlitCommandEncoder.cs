@@ -109,6 +109,11 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_copyFromBuffersourceOffsettoBufferdestinationOffsetsize, sourceBuffer, sourceOffset, destinationBuffer, destinationOffset, size);
         }
 
+        public void CopyFromTensor(in MTLTensor sourceTensor, in MTLTensorExtents sourceOrigin, in MTLTensorExtents sourceDimensions, in MTLTensor destinationTensor, in MTLTensorExtents destinationOrigin, in MTLTensorExtents destinationDimensions)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_copyFromTensorsourceOriginsourceDimensionstoTensordestinationOrigindestinationDimensions, sourceTensor, sourceOrigin, sourceDimensions, destinationTensor, destinationOrigin, destinationDimensions);
+        }
+
         public void UpdateFence(in MTLFence fence)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_updateFence, fence);
@@ -193,6 +198,7 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_copyFromTexturesourceSlicesourceLeveltoTexturedestinationSlicedestinationLevelsliceCountlevelCount = "copyFromTexture:sourceSlice:sourceLevel:toTexture:destinationSlice:destinationLevel:sliceCount:levelCount:";
         private static readonly Selector sel_copyFromTexturetoTexture = "copyFromTexture:toTexture:";
         private static readonly Selector sel_copyFromBuffersourceOffsettoBufferdestinationOffsetsize = "copyFromBuffer:sourceOffset:toBuffer:destinationOffset:size:";
+        private static readonly Selector sel_copyFromTensorsourceOriginsourceDimensionstoTensordestinationOrigindestinationDimensions = "copyFromTensor:sourceOrigin:sourceDimensions:toTensor:destinationOrigin:destinationDimensions:";
         private static readonly Selector sel_updateFence = "updateFence:";
         private static readonly Selector sel_waitForFence = "waitForFence:";
         private static readonly Selector sel_getTextureAccessCountersregionmipLevelsliceresetCounterscountersBuffercountersBufferOffset = "getTextureAccessCounters:region:mipLevel:slice:resetCounters:countersBuffer:countersBufferOffset:";

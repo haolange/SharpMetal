@@ -101,7 +101,7 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_copyFromBuffersourceOffsetsourceBytesPerRowsourceBytesPerImagesourceSizetoTexturedestinationSlicedestinationLeveldestinationOriginoptions, sourceBuffer, sourceOffset, sourceBytesPerRow, sourceBytesPerImage, sourceSize, destinationTexture, destinationSlice, destinationLevel, destinationOrigin, options);
         }
 
-        public void CopyFromTensor(in IntPtr sourceTensor, in IntPtr sourceOrigin, in IntPtr sourceDimensions, in IntPtr destinationTensor, in IntPtr destinationOrigin, in IntPtr destinationDimensions)
+        public void CopyFromTensor(in MTLTensor sourceTensor, in MTLTensorExtents sourceOrigin, in MTLTensorExtents sourceDimensions, in MTLTensor destinationTensor, in MTLTensorExtents destinationOrigin, in MTLTensorExtents destinationDimensions)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_copyFromTensorsourceOriginsourceDimensionstoTensordestinationOrigindestinationDimensions, sourceTensor, sourceOrigin, sourceDimensions, destinationTensor, destinationOrigin, destinationDimensions);
         }

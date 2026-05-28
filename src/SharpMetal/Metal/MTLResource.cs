@@ -47,6 +47,19 @@ namespace SharpMetal.Metal
         CPUCacheModeWriteCombined = 1,
     }
 
+    public enum MTLBufferSparseTier : long
+    {
+        None = 0,
+        Tier1 = 1,
+    }
+
+    public enum MTLTextureSparseTier : long
+    {
+        None = 0,
+        Tier1 = 1,
+        Tier2 = 2,
+    }
+
     public partial struct MTLResource
     {
         public IntPtr NativePtr;

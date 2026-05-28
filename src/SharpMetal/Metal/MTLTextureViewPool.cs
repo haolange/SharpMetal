@@ -13,6 +13,10 @@ namespace SharpMetal.Metal
 
         public ulong ResourceViewCount => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_resourceViewCount);
 
+        public MTLDevice Device => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_device));
+
+        public NSString Label => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_label));
+
         public MTLResourceID SetTextureView(in IntPtr texture, in ulong index)
         {
             return ObjectiveCRuntime.MTLResourceID_objc_msgSend(NativePtr, sel_setTextureViewatIndex, texture, index);
@@ -37,6 +41,8 @@ namespace SharpMetal.Metal
 
         private static readonly Selector sel_baseResourceID = "baseResourceID";
         private static readonly Selector sel_resourceViewCount = "resourceViewCount";
+        private static readonly Selector sel_device = "device";
+        private static readonly Selector sel_label = "label";
         private static readonly Selector sel_setTextureViewatIndex = "setTextureView:atIndex:";
         private static readonly Selector sel_setTextureViewdescriptoratIndex = "setTextureView:descriptor:atIndex:";
         private static readonly Selector sel_setTextureViewFromBufferdescriptoroffsetbytesPerRowatIndex = "setTextureViewFromBuffer:descriptor:offset:bytesPerRow:atIndex:";

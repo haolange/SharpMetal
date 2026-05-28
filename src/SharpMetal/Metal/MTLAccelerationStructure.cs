@@ -10,6 +10,8 @@ namespace SharpMetal.Metal
         Refit = 1,
         PreferFastBuild = 2,
         ExtendedLimits = 4,
+        PreferFastIntersection = 1 << 4,
+        MinimizeMemory = 1 << 5,
     }
     
     public enum MTLAccelerationStructureInstanceOptions : uint

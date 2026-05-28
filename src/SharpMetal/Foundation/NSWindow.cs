@@ -1,7 +1,7 @@
-﻿using SharpMetal.QuartzCore;
+﻿using SharpMetal.Metal;
+using SharpMetal.QuartzCore;
 using SharpMetal.ObjectiveCCore;
 using System.Runtime.InteropServices;
-using SharpMetal.Metal;
 
 namespace SharpMetal.Foundation
 {

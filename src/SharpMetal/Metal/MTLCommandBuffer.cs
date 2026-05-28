@@ -1,8 +1,8 @@
+using System;
 using SharpMetal.Foundation;
 using SharpMetal.QuartzCore;
 using SharpMetal.ObjectiveCCore;
 using System.Runtime.InteropServices;
-using System;
 
 namespace SharpMetal.Metal
 {
@@ -133,15 +133,15 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setLabel, value);
         }
 
-        public IntPtr KernelStartTime => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_kernelStartTime));
+        public double KernelStartTime => ObjectiveCRuntime.double_objc_msgSend(NativePtr, sel_kernelStartTime);
 
-        public IntPtr KernelEndTime => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_kernelEndTime));
+        public double KernelEndTime => ObjectiveCRuntime.double_objc_msgSend(NativePtr, sel_kernelEndTime);
 
         public MTLLogContainer Logs => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_logs));
 
-        public IntPtr GPUStartTime => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_GPUStartTime));
+        public double GPUStartTime => ObjectiveCRuntime.double_objc_msgSend(NativePtr, sel_GPUStartTime);
 
-        public IntPtr GPUEndTime => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_GPUEndTime));
+        public double GPUEndTime => ObjectiveCRuntime.double_objc_msgSend(NativePtr, sel_GPUEndTime);
 
         public MTLCommandBufferStatus Status => (MTLCommandBufferStatus)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_status);
 
@@ -162,12 +162,12 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_presentDrawable, drawable);
         }
 
-        public void PresentDrawableAtTime(in MTLDrawable drawable, in IntPtr presentationTime)
+        public void PresentDrawableAtTime(in MTLDrawable drawable, in double presentationTime)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_presentDrawableatTime, drawable, presentationTime);
         }
 
-        public void PresentDrawableAfterMinimumDuration(in MTLDrawable drawable, in IntPtr duration)
+        public void PresentDrawableAfterMinimumDuration(in MTLDrawable drawable, in double duration)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_presentDrawableafterMinimumDuration, drawable, duration);
         }

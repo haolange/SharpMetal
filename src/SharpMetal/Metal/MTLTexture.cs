@@ -176,6 +176,12 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setSwizzle, value);
         }
 
+        public MTLSparsePageSize PlacementSparsePageSize
+        {
+            get => (MTLSparsePageSize)ObjectiveCRuntime.long_objc_msgSend(NativePtr, sel_placementSparsePageSize);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setPlacementSparsePageSize, (long)value);
+        }
+
         public static MTLTextureDescriptor Texture2DDescriptor(in MTLPixelFormat pixelFormat, in ulong width, in ulong height, in bool mipmapped)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(new ObjectiveCClass("MTLTextureDescriptor"), sel_texture2DDescriptorWithPixelFormatwidthheightmipmapped, (ulong)pixelFormat, width, height, mipmapped));
@@ -229,6 +235,8 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setCompressionType = "setCompressionType:";
         private static readonly Selector sel_swizzle = "swizzle";
         private static readonly Selector sel_setSwizzle = "setSwizzle:";
+        private static readonly Selector sel_placementSparsePageSize = "placementSparsePageSize";
+        private static readonly Selector sel_setPlacementSparsePageSize = "setPlacementSparsePageSize:";
     }
 
     public partial struct MTLTexture
@@ -311,6 +319,8 @@ namespace SharpMetal.Metal
         public ulong TailSizeInBytes => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_tailSizeInBytes);
 
         public bool IsSparse => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isSparse);
+
+        public MTLTextureSparseTier SparseTextureTier => (MTLTextureSparseTier)ObjectiveCRuntime.long_objc_msgSend(NativePtr, sel_sparseTextureTier);
 
         public bool AllowGPUOptimizedContents => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_allowGPUOptimizedContents);
 
@@ -410,6 +420,7 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_firstMipmapInTail = "firstMipmapInTail";
         private static readonly Selector sel_tailSizeInBytes = "tailSizeInBytes";
         private static readonly Selector sel_isSparse = "isSparse";
+        private static readonly Selector sel_sparseTextureTier = "sparseTextureTier";
         private static readonly Selector sel_allowGPUOptimizedContents = "allowGPUOptimizedContents";
         private static readonly Selector sel_compressionType = "compressionType";
         private static readonly Selector sel_gpuResourceID = "gpuResourceID";

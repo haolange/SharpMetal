@@ -1,8 +1,17 @@
 using SharpMetal.Foundation;
 using SharpMetal.ObjectiveCCore;
+using System.Runtime.InteropServices;
 
 namespace SharpMetal.Metal
 {
+    [StructLayout(LayoutKind.Sequential)]
+    public struct MTLIntersectionFunctionBufferArguments
+    {
+        public ulong intersectionFunctionBuffer;
+        public ulong intersectionFunctionBufferSize;
+        public ulong intersectionFunctionStride;
+    }
+
     public enum MTLIntersectionFunctionSignature : ulong
     {
         None = 0,
@@ -14,6 +23,8 @@ namespace SharpMetal.Metal
         ExtendedLimits = 32,
         MaxLevels = 64,
         CurveData = 128,
+        IntersectionFunctionBuffer = 1 << 8,
+        UserData = 1 << 9,
     }
 
     public partial struct MTLIntersectionFunctionTableDescriptor

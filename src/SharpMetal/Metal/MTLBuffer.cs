@@ -69,7 +69,7 @@ namespace SharpMetal.Metal
 
         public MTLTensor NewTensor(in MTLTensorDescriptor descriptor, in ulong offset, ref NSError error)
         {
-            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newTensorWithDescriptoroffseterror, descriptor.NativePtr, (long)offset, ref error.NativePtr));
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newTensorWithDescriptoroffseterror, descriptor.NativePtr, offset, ref error.NativePtr));
         }
 
         public void AddDebugMarker(in NSString marker, in NSRange range)

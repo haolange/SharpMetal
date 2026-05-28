@@ -56,6 +56,12 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setType, (long)value);
         }
 
+        public MTLSparsePageSize MaxCompatiblePlacementSparsePageSize
+        {
+            get => (MTLSparsePageSize)ObjectiveCRuntime.long_objc_msgSend(NativePtr, sel_maxCompatiblePlacementSparsePageSize);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMaxCompatiblePlacementSparsePageSize, (long)value);
+        }
+
         public static implicit operator IntPtr(in MTLHeapDescriptor obj) => obj.NativePtr;
 
         private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLHeapDescriptor));
@@ -73,6 +79,8 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_setResourceOptions = "setResourceOptions:";
         private static readonly Selector sel_type = "type";
         private static readonly Selector sel_setType = "setType:";
+        private static readonly Selector sel_maxCompatiblePlacementSparsePageSize = "maxCompatiblePlacementSparsePageSize";
+        private static readonly Selector sel_setMaxCompatiblePlacementSparsePageSize = "setMaxCompatiblePlacementSparsePageSize:";
     }
 
     public partial struct MTLHeap

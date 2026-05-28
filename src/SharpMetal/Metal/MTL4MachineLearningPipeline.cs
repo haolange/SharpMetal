@@ -25,7 +25,7 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMachineLearningFunctionDescriptor, value);
         }
 
-        public void SetInputDimensions(in IntPtr dimensions, in long bufferIndex)
+        public void SetInputDimensions(in MTLTensorExtents dimensions, in long bufferIndex)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setInputDimensionsatBufferIndex, dimensions, bufferIndex);
         }
@@ -35,9 +35,9 @@ namespace SharpMetal.Metal
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setInputDimensionswithRange, dimensions, range);
         }
 
-        public IntPtr InputDimensionsAtBufferIndex(in long bufferIndex)
+        public MTLTensorExtents InputDimensionsAtBufferIndex(in long bufferIndex)
         {
-            return ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_inputDimensionsAtBufferIndex, bufferIndex);
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_inputDimensionsAtBufferIndex, bufferIndex));
         }
 
         public void Reset()

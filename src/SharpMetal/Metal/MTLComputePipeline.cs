@@ -168,6 +168,8 @@ namespace SharpMetal.Metal
 
         public MTLResourceID GpuResourceID => ObjectiveCRuntime.MTLResourceID_objc_msgSend(NativePtr, sel_gpuResourceID);
 
+        public MTLComputePipelineReflection Reflection => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_reflection));
+
         public ulong ShaderValidation
         {
             get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_shaderValidation);
@@ -183,9 +185,24 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_functionHandleWithFunction, function));
         }
 
+        public MTLFunctionHandle FunctionHandleWithName(in NSString name)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_functionHandleWithName, name));
+        }
+
+        public MTLFunctionHandle FunctionHandle(in MTL4BinaryFunction function)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_functionHandleWithBinaryFunction, function));
+        }
+
         public MTLComputePipelineState NewComputePipelineState(in NSArray functions, ref NSError error)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newComputePipelineStateWithAdditionalBinaryFunctionserror, functions, ref error.NativePtr));
+        }
+
+        public MTLComputePipelineState NewComputePipelineStateWithBinaryFunctions(in NSArray functions, ref NSError error)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newComputePipelineStateWithBinaryFunctionserror, functions, ref error.NativePtr));
         }
 
         public MTLVisibleFunctionTable NewVisibleFunctionTable(in MTLVisibleFunctionTableDescriptor descriptor)
@@ -206,9 +223,13 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_imageblockMemoryLengthForDimensions = "imageblockMemoryLengthForDimensions:";
         private static readonly Selector sel_supportIndirectCommandBuffers = "supportIndirectCommandBuffers";
         private static readonly Selector sel_gpuResourceID = "gpuResourceID";
+        private static readonly Selector sel_reflection = "reflection";
         private static readonly Selector sel_shaderValidation = "shaderValidation";
         private static readonly Selector sel_functionHandleWithFunction = "functionHandleWithFunction:";
+        private static readonly Selector sel_functionHandleWithName = "functionHandleWithName:";
+        private static readonly Selector sel_functionHandleWithBinaryFunction = "functionHandleWithBinaryFunction:";
         private static readonly Selector sel_newComputePipelineStateWithAdditionalBinaryFunctionserror = "newComputePipelineStateWithAdditionalBinaryFunctions:error:";
+        private static readonly Selector sel_newComputePipelineStateWithBinaryFunctionserror = "newComputePipelineStateWithBinaryFunctions:error:";
         private static readonly Selector sel_newVisibleFunctionTableWithDescriptor = "newVisibleFunctionTableWithDescriptor:";
         private static readonly Selector sel_newIntersectionFunctionTableWithDescriptor = "newIntersectionFunctionTableWithDescriptor:";
     }

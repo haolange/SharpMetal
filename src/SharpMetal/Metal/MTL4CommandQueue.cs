@@ -61,7 +61,13 @@ namespace SharpMetal.Metal
 
         public static MTL4CommitOptions New() => s_class.AllocInit<MTL4CommitOptions>();
 
+        public void AddFeedbackHandler(MTL4CommitFeedbackHandler block)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addFeedbackHandler, block);
+        }
+
         private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTL4CommitOptions));
+        private static readonly Selector sel_addFeedbackHandler = "addFeedbackHandler:";
     }
 
     public partial struct MTL4CommandQueueDescriptor

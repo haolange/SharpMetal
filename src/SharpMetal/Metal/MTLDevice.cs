@@ -24,6 +24,7 @@ namespace SharpMetal.Metal
         Apple7 = 1007,
         Apple8 = 1008,
         Apple9 = 1009,
+        Apple10 = 1010,
         Mac2 = 2002,
         Common1 = 3001,
         Common2 = 3002,
@@ -38,6 +39,12 @@ namespace SharpMetal.Metal
         Slot = 1,
         External = 2,
         Unspecified = UInt64.MaxValue,
+    }
+
+    public enum MTLDeviceError : long
+    {
+        None = 0,
+        NotSupported = 1,
     }
 
     public enum MTLPipelineOption : ulong
@@ -253,6 +260,8 @@ namespace SharpMetal.Metal
 
         public bool SupportsRenderDynamicLibraries => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportsRenderDynamicLibraries);
 
+        public bool SupportsPlacementSparse => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportsPlacementSparse);
+
         public bool SupportsRaytracing => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportsRaytracing);
 
         public bool SupportsFunctionPointers => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportsFunctionPointers);
@@ -325,6 +334,11 @@ namespace SharpMetal.Metal
         public MTLBuffer NewBuffer(in ulong length, in MTLResourceOptions options)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newBufferWithLengthoptions, length, (ulong)options));
+        }
+
+        public MTLBuffer NewBuffer(in ulong length, in MTLResourceOptions options, in MTLSparsePageSize placementSparsePageSize)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newBufferWithLengthoptionsplacementSparsePageSize, length, (ulong)options, (ulong)placementSparsePageSize));
         }
 
         public MTLBuffer NewBuffer(in IntPtr pointer, in ulong length, in MTLResourceOptions options)
@@ -597,9 +611,9 @@ namespace SharpMetal.Metal
             return ObjectiveCRuntime.MTLSizeAndAlign_objc_msgSend(NativePtr, sel_heapAccelerationStructureSizeAndAlignWithDescriptor, descriptor);
         }
 
-        public IntPtr FunctionHandleWithFunction(in MTLFunction function)
+        public MTLFunctionHandle FunctionHandleWithFunction(in MTLFunction function)
         {
-            return ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_functionHandleWithFunction, function);
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_functionHandleWithFunction, function));
         }
 
         public MTL4CommandAllocator NewMTL4CommandAllocator()
@@ -662,14 +676,19 @@ namespace SharpMetal.Metal
             return ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_queryTimestampFrequency);
         }
 
-        public IntPtr FunctionHandleWithBinaryFunction(in MTL4BinaryFunction function)
+        public MTLFunctionHandle FunctionHandleWithBinaryFunction(in MTL4BinaryFunction function)
         {
-            return ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_functionHandleWithBinaryFunction, function);
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_functionHandleWithBinaryFunction, function));
         }
 
-        public MTLTensor NewTensor(in MTLTensorDescriptor descriptor)
+        public MTLSizeAndAlign TensorSizeAndAlign(in MTLTensorDescriptor descriptor)
         {
-            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newTensorWithDescriptor, descriptor));
+            return ObjectiveCRuntime.MTLSizeAndAlign_objc_msgSend(NativePtr, sel_tensorSizeAndAlignWithDescriptor, descriptor);
+        }
+
+        public MTLTensor NewTensor(in MTLTensorDescriptor descriptor, ref NSError error)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newTensorWithDescriptorerror, descriptor.NativePtr, ref error.NativePtr));
         }
 
         public MTLTextureViewPool NewTextureViewPool(in MTLResourceViewPoolDescriptor descriptor, ref NSError error)
@@ -711,6 +730,7 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_newResidencySetWithDescriptor = "newResidencySetWithDescriptor:error:";
         private static readonly Selector sel_newHeapWithDescriptor = "newHeapWithDescriptor:";
         private static readonly Selector sel_newBufferWithLengthoptions = "newBufferWithLength:options:";
+        private static readonly Selector sel_newBufferWithLengthoptionsplacementSparsePageSize = "newBufferWithLength:options:placementSparsePageSize:";
         private static readonly Selector sel_newBufferWithByteslengthoptions = "newBufferWithBytes:length:options:";
         private static readonly Selector sel_newBufferWithBytesNoCopylengthoptionsdeallocator = "newBufferWithBytesNoCopy:length:options:deallocator:";
         private static readonly Selector sel_newDepthStencilStateWithDescriptor = "newDepthStencilStateWithDescriptor:";
@@ -773,6 +793,7 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_newDynamicLibraryerror = "newDynamicLibrary:error:";
         private static readonly Selector sel_newDynamicLibraryWithURLerror = "newDynamicLibraryWithURL:error:";
         private static readonly Selector sel_newBinaryArchiveWithDescriptorerror = "newBinaryArchiveWithDescriptor:error:";
+        private static readonly Selector sel_supportsPlacementSparse = "supportsPlacementSparse";
         private static readonly Selector sel_supportsRaytracing = "supportsRaytracing";
         private static readonly Selector sel_accelerationStructureSizesWithDescriptor = "accelerationStructureSizesWithDescriptor:";
         private static readonly Selector sel_newAccelerationStructureWithSize = "newAccelerationStructureWithSize:";
@@ -800,6 +821,7 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_sizeOfCounterHeapEntry = "sizeOfCounterHeapEntry:";
         private static readonly Selector sel_queryTimestampFrequency = "queryTimestampFrequency";
         private static readonly Selector sel_functionHandleWithBinaryFunction = "functionHandleWithBinaryFunction:";
-        private static readonly Selector sel_newTensorWithDescriptor = "newTensorWithDescriptor:";
+        private static readonly Selector sel_tensorSizeAndAlignWithDescriptor = "tensorSizeAndAlignWithDescriptor:";
+        private static readonly Selector sel_newTensorWithDescriptorerror = "newTensorWithDescriptor:error:";
     }
 }

@@ -100,6 +100,8 @@ namespace SharpMetal.Metal
         BFloat2 = 122,
         BFloat3 = 123,
         BFloat4 = 124,
+        DepthStencilState = 139,
+        Tensor = 140,
     }
 
     public enum MTLBindingType : long
@@ -115,6 +117,7 @@ namespace SharpMetal.Metal
         InstanceAccelerationStructure = 26,
         IntersectionFunctionTable = 27,
         ObjectPayload = 34,
+        Tensor = 37,
     }
 
     public enum MTLBindingAccess : ulong
@@ -163,6 +166,8 @@ namespace SharpMetal.Metal
 
         public MTLPointerType PointerType => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_pointerType));
 
+        public MTLTensorReferenceType TensorReferenceType => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_tensorReferenceType));
+
         public ulong ArgumentIndex => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_argumentIndex);
 
         private static readonly Selector sel_name = "name";
@@ -172,6 +177,7 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_arrayType = "arrayType";
         private static readonly Selector sel_textureReferenceType = "textureReferenceType";
         private static readonly Selector sel_pointerType = "pointerType";
+        private static readonly Selector sel_tensorReferenceType = "tensorReferenceType";
         private static readonly Selector sel_argumentIndex = "argumentIndex";
     }
 
@@ -222,6 +228,8 @@ namespace SharpMetal.Metal
 
         public MTLPointerType ElementPointerType => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_elementPointerType));
 
+        public MTLTensorReferenceType ElementTensorReferenceType => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_elementTensorReferenceType));
+
         private static readonly Selector sel_elementType = "elementType";
         private static readonly Selector sel_arrayLength = "arrayLength";
         private static readonly Selector sel_stride = "stride";
@@ -230,6 +238,7 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_elementArrayType = "elementArrayType";
         private static readonly Selector sel_elementTextureReferenceType = "elementTextureReferenceType";
         private static readonly Selector sel_elementPointerType = "elementPointerType";
+        private static readonly Selector sel_elementTensorReferenceType = "elementTensorReferenceType";
     }
 
     public partial struct MTLPointerType
@@ -287,6 +296,30 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_textureType = "textureType";
         private static readonly Selector sel_access = "access";
         private static readonly Selector sel_isDepthTexture = "isDepthTexture";
+    }
+
+    public partial struct MTLTensorReferenceType
+    {
+        public IntPtr NativePtr;
+        public static implicit operator IntPtr(in MTLTensorReferenceType obj) => obj.NativePtr;
+        public MTLTensorReferenceType(in IntPtr ptr) => NativePtr = ptr;
+
+        public static MTLTensorReferenceType New() => s_class.AllocInit<MTLTensorReferenceType>();
+
+        private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTLTensorReferenceType));
+
+        public MTLTensorDataType TensorDataType => (MTLTensorDataType)ObjectiveCRuntime.long_objc_msgSend(NativePtr, sel_tensorDataType);
+
+        public MTLDataType IndexType => (MTLDataType)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_indexType);
+
+        public MTLTensorExtents Dimensions => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_dimensions));
+
+        public MTLBindingAccess Access => (MTLBindingAccess)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_access);
+
+        private static readonly Selector sel_tensorDataType = "tensorDataType";
+        private static readonly Selector sel_indexType = "indexType";
+        private static readonly Selector sel_dimensions = "dimensions";
+        private static readonly Selector sel_access = "access";
     }
 
     public partial struct MTLArgument
@@ -528,5 +561,44 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_isArgument = "isArgument";
         private static readonly Selector sel_objectPayloadAlignment = "objectPayloadAlignment";
         private static readonly Selector sel_objectPayloadDataSize = "objectPayloadDataSize";
+    }
+
+    public partial struct MTLTensorBinding
+    {
+        public IntPtr NativePtr;
+
+        public static implicit operator IntPtr(in MTLTensorBinding obj) => obj.NativePtr;
+        public static implicit operator MTLBinding(in MTLTensorBinding obj) => new MTLBinding(obj.NativePtr);
+        public static implicit operator MTLTensorBinding(in MTLBinding obj) => new MTLTensorBinding(obj.NativePtr);
+
+        public MTLTensorBinding(in IntPtr ptr) => NativePtr = ptr;
+
+        public NSString Name => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_name));
+
+        public MTLBindingType Type => (MTLBindingType)ObjectiveCRuntime.long_objc_msgSend(NativePtr, sel_type);
+
+        public MTLBindingAccess Access => (MTLBindingAccess)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_access);
+
+        public ulong Index => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_index);
+
+        public bool Used => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isUsed);
+
+        public bool Argument => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isArgument);
+
+        public MTLTensorDataType TensorDataType => (MTLTensorDataType)ObjectiveCRuntime.long_objc_msgSend(NativePtr, sel_tensorDataType);
+
+        public MTLDataType IndexType => (MTLDataType)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_indexType);
+
+        public MTLTensorExtents Dimensions => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_dimensions));
+
+        private static readonly Selector sel_name = "name";
+        private static readonly Selector sel_type = "type";
+        private static readonly Selector sel_access = "access";
+        private static readonly Selector sel_index = "index";
+        private static readonly Selector sel_isUsed = "isUsed";
+        private static readonly Selector sel_isArgument = "isArgument";
+        private static readonly Selector sel_tensorDataType = "tensorDataType";
+        private static readonly Selector sel_indexType = "indexType";
+        private static readonly Selector sel_dimensions = "dimensions";
     }
 }

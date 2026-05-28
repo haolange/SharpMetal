@@ -24,6 +24,7 @@ namespace SharpMetal.Metal
         OneMinusSource1Color = 16,
         Source1Alpha = 17,
         OneMinusSource1Alpha = 18,
+        Unspecialized = 19,
     }
 
     public enum MTLBlendOperation : ulong
@@ -33,6 +34,7 @@ namespace SharpMetal.Metal
         ReverseSubtract = 2,
         Min = 3,
         Max = 4,
+        Unspecialized = 5,
     }
 
     public enum MTLColorWriteMask : ulong
@@ -43,6 +45,7 @@ namespace SharpMetal.Metal
         Blue = 2,
         Alpha = 1,
         All = 15,
+        Unspecialized = 16,
     }
 
     public enum MTLPrimitiveTopologyClass : ulong
@@ -554,6 +557,8 @@ namespace SharpMetal.Metal
 
         public MTLResourceID GpuResourceID => ObjectiveCRuntime.MTLResourceID_objc_msgSend(NativePtr, sel_gpuResourceID);
 
+        public MTLRenderPipelineReflection Reflection => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_reflection));
+
         public ulong ShaderValidation
         {
             get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_shaderValidation);
@@ -567,6 +572,16 @@ namespace SharpMetal.Metal
         public MTLFunctionHandle FunctionHandle(in MTLFunction function, in MTLRenderStages stage)
         {
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_functionHandleWithFunctionstage, function, (ulong)stage));
+        }
+
+        public MTLFunctionHandle FunctionHandleWithName(in NSString name, in MTLRenderStages stage)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_functionHandleWithNamestage, name, (ulong)stage));
+        }
+
+        public MTLFunctionHandle FunctionHandle(in MTL4BinaryFunction function, in MTLRenderStages stage)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_functionHandleWithBinaryFunctionstage, function, (ulong)stage));
         }
 
         public MTLVisibleFunctionTable NewVisibleFunctionTable(in MTLVisibleFunctionTableDescriptor descriptor, in MTLRenderStages stage)
@@ -584,6 +599,11 @@ namespace SharpMetal.Metal
             return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newRenderPipelineStateWithAdditionalBinaryFunctionserror, additionalBinaryFunctions, ref error.NativePtr));
         }
 
+        public MTLRenderPipelineState NewRenderPipelineStateWithBinaryFunctions(in MTL4RenderPipelineBinaryFunctionsDescriptor binaryFunctionsDescriptor, ref NSError error)
+        {
+            return new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_newRenderPipelineStateWithBinaryFunctionserror, binaryFunctionsDescriptor, ref error.NativePtr));
+        }
+
         private static readonly Selector sel_label = "label";
         private static readonly Selector sel_device = "device";
         private static readonly Selector sel_maxTotalThreadsPerThreadgroup = "maxTotalThreadsPerThreadgroup";
@@ -597,10 +617,14 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_meshThreadExecutionWidth = "meshThreadExecutionWidth";
         private static readonly Selector sel_maxTotalThreadgroupsPerMeshGrid = "maxTotalThreadgroupsPerMeshGrid";
         private static readonly Selector sel_gpuResourceID = "gpuResourceID";
+        private static readonly Selector sel_reflection = "reflection";
         private static readonly Selector sel_functionHandleWithFunctionstage = "functionHandleWithFunction:stage:";
+        private static readonly Selector sel_functionHandleWithNamestage = "functionHandleWithName:stage:";
+        private static readonly Selector sel_functionHandleWithBinaryFunctionstage = "functionHandleWithBinaryFunction:stage:";
         private static readonly Selector sel_newVisibleFunctionTableWithDescriptorstage = "newVisibleFunctionTableWithDescriptor:stage:";
         private static readonly Selector sel_newIntersectionFunctionTableWithDescriptorstage = "newIntersectionFunctionTableWithDescriptor:stage:";
         private static readonly Selector sel_newRenderPipelineStateWithAdditionalBinaryFunctionserror = "newRenderPipelineStateWithAdditionalBinaryFunctions:error:";
+        private static readonly Selector sel_newRenderPipelineStateWithBinaryFunctionserror = "newRenderPipelineStateWithBinaryFunctions:error:";
         private static readonly Selector sel_shaderValidation = "shaderValidation";
     }
 

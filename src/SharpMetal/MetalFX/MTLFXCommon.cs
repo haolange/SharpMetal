@@ -1,5 +1,5 @@
-using System.Runtime.Versioning;
 using SharpMetal.ObjectiveCCore;
+using System.Runtime.Versioning;
 
 namespace SharpMetal.MetalFX
 {
