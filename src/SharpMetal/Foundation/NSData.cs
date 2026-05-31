@@ -8,10 +8,13 @@ namespace SharpMetal.Foundation
         public static implicit operator IntPtr(in NSData obj) => obj.NativePtr;
         public NSData(in IntPtr ptr) => NativePtr = ptr;
 
+        public IntPtr Bytes => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_bytes));
+
         public IntPtr MutableBytes => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_mutableBytes));
 
         public ulong Length => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_length);
 
+        private static readonly Selector sel_bytes = "bytes";
         private static readonly Selector sel_mutableBytes = "mutableBytes";
         private static readonly Selector sel_length = "length";
     }
