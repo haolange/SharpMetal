@@ -1,5 +1,6 @@
 using SharpMetal.Metal;
 using SharpMetal.Foundation;
+using SharpMetal.QuartzCore;
 using System.Runtime.InteropServices;
 using System.Runtime.CompilerServices;
 
@@ -764,6 +765,9 @@ namespace SharpMetal.ObjectiveCCore
 
         [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
         public static partial void objc_msgSend(IntPtr receiver, Selector selector, MTL4CommitFeedbackHandler a);
+
+        [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
+        public static partial void objc_msgSend(IntPtr receiver, Selector selector, CAMetalDrawablePresentedHandler a);
 
         [LibraryImport(ObjcLibraryPath, EntryPoint = "objc_msgSend")]
         public static partial void objc_msgSend(IntPtr receiver, Selector selector, MTLLogHandler a);

@@ -56,6 +56,18 @@ namespace SharpMetal.QuartzCore
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDisplaySyncEnabled, value);
         }
 
+        public ulong MaximumDrawableCount
+        {
+            get => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_maximumDrawableCount);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setMaximumDrawableCount, value);
+        }
+
+        public bool AllowsNextDrawableTimeout
+        {
+            get => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_allowsNextDrawableTimeout);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setAllowsNextDrawableTimeout, value);
+        }
+
         public void AddSublayer(in IntPtr layer)
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addSublayer, layer);
@@ -64,6 +76,11 @@ namespace SharpMetal.QuartzCore
         public CAMetalDrawable NextDrawable()
         {
             return ObjectiveCRuntime.objc_msgSend<CAMetalDrawable>(NativePtr, sel_nextDrawable);
+        }
+
+        public void RemoveFromSuperlayer()
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_removeFromSuperlayer);
         }
 
         public static bool TryCast(in IntPtr layerPointer, out CAMetalLayer metalLayer)
@@ -101,5 +118,10 @@ namespace SharpMetal.QuartzCore
         private static readonly Selector sel_nextDrawable = "nextDrawable";
         private static readonly Selector sel_displaySyncEnabled = "displaySyncEnabled";
         private static readonly Selector sel_setDisplaySyncEnabled = "setDisplaySyncEnabled:";
+        private static readonly Selector sel_maximumDrawableCount = "maximumDrawableCount";
+        private static readonly Selector sel_setMaximumDrawableCount = "setMaximumDrawableCount:";
+        private static readonly Selector sel_allowsNextDrawableTimeout = "allowsNextDrawableTimeout";
+        private static readonly Selector sel_setAllowsNextDrawableTimeout = "setAllowsNextDrawableTimeout:";
+        private static readonly Selector sel_removeFromSuperlayer = "removeFromSuperlayer";
     }
 }

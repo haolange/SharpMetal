@@ -1,8 +1,13 @@
 using SharpMetal.Metal;
 using SharpMetal.ObjectiveCCore;
+using System.Runtime.InteropServices;
 
 namespace SharpMetal.QuartzCore
 {
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    public delegate void CAMetalDrawablePresentedHandler(
+        IntPtr block, CAMetalDrawable drawable);
+
     public partial struct CAMetalDrawable
     {
         public IntPtr NativePtr;
@@ -34,6 +39,11 @@ namespace SharpMetal.QuartzCore
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_presentAfterMinimumDuration, duration);
         }
 
+        public void AddPresentedHandler(CAMetalDrawablePresentedHandler handler)
+        {
+            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addPresentedHandler, handler);
+        }
+
         public static implicit operator IntPtr(in CAMetalDrawable obj) => obj.NativePtr;
         public static implicit operator MTLDrawable(in CAMetalDrawable obj) => new MTLDrawable(obj.NativePtr);
         public static implicit operator CAMetalDrawable(in MTLDrawable obj) => new CAMetalDrawable(obj.NativePtr);
@@ -45,5 +55,6 @@ namespace SharpMetal.QuartzCore
         private static readonly Selector sel_presentAfterMinimumDuration = "presentAfterMinimumDuration:";
         private static readonly Selector sel_presentedTime = "presentedTime";
         private static readonly Selector sel_drawableID = "drawableID";
+        private static readonly Selector sel_addPresentedHandler = "addPresentedHandler:";
     }
 }

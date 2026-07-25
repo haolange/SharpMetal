@@ -67,6 +67,17 @@ namespace SharpMetal.Foundation
             return ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isKindOfClass, pObject);
         }
 
+        public bool RespondsToSelector(in Selector selector)
+        {
+            if (NativePtr == IntPtr.Zero ||
+                selector.SelPtr == IntPtr.Zero)
+            {
+                return false;
+            }
+            return ObjectiveCRuntime.bool_objc_msgSend(
+                NativePtr, sel_respondsToSelector, selector);
+        }
+
         private static readonly Selector sel_methodSignatureForSelector = "methodSignatureForSelector:";
         private static readonly Selector sel_respondsToSelector = "respondsToSelector:";
         private static readonly Selector sel_alloc = "alloc";
