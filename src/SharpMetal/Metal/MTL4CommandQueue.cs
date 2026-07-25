@@ -61,9 +61,19 @@ namespace SharpMetal.Metal
 
         public static MTL4CommitOptions New() => s_class.AllocInit<MTL4CommitOptions>();
 
-        public void AddFeedbackHandler(MTL4CommitFeedbackHandler block)
+        public void AddFeedbackHandler(MTL4CommitFeedbackHandler handler)
         {
-            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addFeedbackHandler, block);
+            ArgumentNullException.ThrowIfNull(handler);
+            IntPtr block = ObjectiveCBlock.CopyObjectHandler(
+                (blockPtr, feedbackPtr) => handler(blockPtr, new MTL4CommitFeedback(feedbackPtr)));
+            try
+            {
+                ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addFeedbackHandler, block);
+            }
+            finally
+            {
+                ObjectiveCBlock.Release(block);
+            }
         }
 
         private static readonly ObjectiveCClass s_class = new ObjectiveCClass(nameof(MTL4CommitOptions));

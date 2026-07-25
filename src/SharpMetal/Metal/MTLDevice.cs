@@ -190,7 +190,12 @@ namespace SharpMetal.Metal
         public static implicit operator IntPtr(in MTLDevice device) => device.NativePtr;
         public MTLDevice(in IntPtr ptr) => NativePtr = ptr;
 
-        public bool IsHeadless => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isHeadless);
+        // isHeadless / isLowPower / isRemovable are macOS MTLDevice APIs.
+        // iOS GPU classes (e.g. AGXG18PDevice) do not implement them — unguarded
+        // msgSend aborts with unrecognized selector.
+        public bool IsHeadless =>
+            RespondsToSelector(sel_isHeadless) &&
+            ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isHeadless);
 
         public NSString Name => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_name));
 
@@ -200,9 +205,26 @@ namespace SharpMetal.Metal
 
         public MTLSize MaxThreadsPerThreadgroup => ObjectiveCRuntime.MTLSize_objc_msgSend(NativePtr, sel_maxThreadsPerThreadgroup);
 
-        public bool LowPower => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isLowPower);
+        public bool LowPower =>
+            RespondsToSelector(sel_isLowPower) &&
+            ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isLowPower);
 
-        public bool Removable => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isRemovable);
+        public bool Removable =>
+            RespondsToSelector(sel_isRemovable) &&
+            ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_isRemovable);
+
+        private bool RespondsToSelector(in Selector selector)
+        {
+            if (NativePtr == IntPtr.Zero || selector.SelPtr == IntPtr.Zero)
+            {
+                return false;
+            }
+
+            return ObjectiveCRuntime.bool_objc_msgSend(
+                NativePtr,
+                sel_respondsToSelector,
+                selector.SelPtr);
+        }
 
         public bool HasUnifiedMemory => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_hasUnifiedMemory);
 
@@ -705,6 +727,7 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_isLowPower = "isLowPower";
         private static readonly Selector sel_isHeadless = "isHeadless";
         private static readonly Selector sel_isRemovable = "isRemovable";
+        private static readonly Selector sel_respondsToSelector = "respondsToSelector:";
         private static readonly Selector sel_hasUnifiedMemory = "hasUnifiedMemory";
         private static readonly Selector sel_recommendedMaxWorkingSetSize = "recommendedMaxWorkingSetSize";
         private static readonly Selector sel_location = "location";

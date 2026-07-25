@@ -78,6 +78,13 @@ namespace SharpMetal.QuartzCore
             return ObjectiveCRuntime.objc_msgSend<CAMetalDrawable>(NativePtr, sel_nextDrawable);
         }
 
+        /// <summary>
+        /// Metal 26+ residency set that tracks drawable textures for this layer.
+        /// Must be added to the MTL4 command queue before rendering/presenting.
+        /// </summary>
+        public MTLResidencySet ResidencySet =>
+            new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_residencySet));
+
         public void RemoveFromSuperlayer()
         {
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_removeFromSuperlayer);
@@ -122,6 +129,7 @@ namespace SharpMetal.QuartzCore
         private static readonly Selector sel_setMaximumDrawableCount = "setMaximumDrawableCount:";
         private static readonly Selector sel_allowsNextDrawableTimeout = "allowsNextDrawableTimeout";
         private static readonly Selector sel_setAllowsNextDrawableTimeout = "setAllowsNextDrawableTimeout:";
+        private static readonly Selector sel_residencySet = "residencySet";
         private static readonly Selector sel_removeFromSuperlayer = "removeFromSuperlayer";
     }
 }

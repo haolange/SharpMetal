@@ -41,7 +41,17 @@ namespace SharpMetal.QuartzCore
 
         public void AddPresentedHandler(CAMetalDrawablePresentedHandler handler)
         {
-            ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addPresentedHandler, handler);
+            ArgumentNullException.ThrowIfNull(handler);
+            IntPtr block = ObjectiveCBlock.CopyObjectHandler(
+                (blockPtr, drawablePtr) => handler(blockPtr, new CAMetalDrawable(drawablePtr)));
+            try
+            {
+                ObjectiveCRuntime.objc_msgSend(NativePtr, sel_addPresentedHandler, block);
+            }
+            finally
+            {
+                ObjectiveCBlock.Release(block);
+            }
         }
 
         public static implicit operator IntPtr(in CAMetalDrawable obj) => obj.NativePtr;
