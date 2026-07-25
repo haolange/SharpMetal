@@ -256,6 +256,18 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setInputPrimitiveTopology, (ulong)value);
         }
 
+        public MTLPixelFormat DepthAttachmentPixelFormat
+        {
+            get => (MTLPixelFormat)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_depthAttachmentPixelFormat);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setDepthAttachmentPixelFormat, (ulong)value);
+        }
+
+        public MTLPixelFormat StencilAttachmentPixelFormat
+        {
+            get => (MTLPixelFormat)ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_stencilAttachmentPixelFormat);
+            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setStencilAttachmentPixelFormat, (ulong)value);
+        }
+
         public MTL4StaticLinkingDescriptor VertexStaticLinkingDescriptor
         {
             get => new(ObjectiveCRuntime.IntPtr_objc_msgSend(NativePtr, sel_vertexStaticLinkingDescriptor));
@@ -317,6 +329,10 @@ namespace SharpMetal.Metal
         private static readonly Selector sel_colorAttachments = "colorAttachments";
         private static readonly Selector sel_inputPrimitiveTopology = "inputPrimitiveTopology";
         private static readonly Selector sel_setInputPrimitiveTopology = "setInputPrimitiveTopology:";
+        private static readonly Selector sel_depthAttachmentPixelFormat = "depthAttachmentPixelFormat";
+        private static readonly Selector sel_setDepthAttachmentPixelFormat = "setDepthAttachmentPixelFormat:";
+        private static readonly Selector sel_stencilAttachmentPixelFormat = "stencilAttachmentPixelFormat";
+        private static readonly Selector sel_setStencilAttachmentPixelFormat = "setStencilAttachmentPixelFormat:";
         private static readonly Selector sel_vertexStaticLinkingDescriptor = "vertexStaticLinkingDescriptor";
         private static readonly Selector sel_setVertexStaticLinkingDescriptor = "setVertexStaticLinkingDescriptor:";
         private static readonly Selector sel_fragmentStaticLinkingDescriptor = "fragmentStaticLinkingDescriptor";

@@ -91,10 +91,26 @@ namespace SharpMetal.Metal
             set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setVisibilityResultType, (ulong)value);
         }
 
+        public bool SupportsColorAttachmentMapping =>
+            new NSObject(NativePtr).RespondsToSelector(
+                sel_setSupportColorAttachmentMapping);
+
         public bool SupportColorAttachmentMapping
         {
             get => ObjectiveCRuntime.bool_objc_msgSend(NativePtr, sel_supportColorAttachmentMapping);
-            set => ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setSupportColorAttachmentMapping, value);
+            set
+            {
+                if (!SupportsColorAttachmentMapping)
+                {
+                    throw new MissingMethodException(
+                        "MTL4RenderPassDescriptor does not respond to " +
+                        "setSupportColorAttachmentMapping:.");
+                }
+                ObjectiveCRuntime.objc_msgSend(
+                    NativePtr,
+                    sel_setSupportColorAttachmentMapping,
+                    value);
+            }
         }
 
         public void SetSamplePositions(in IntPtr positions, in ulong count)

@@ -24,8 +24,24 @@ namespace SharpMetal.Metal
 
         public ulong TileHeight => ObjectiveCRuntime.ulong_objc_msgSend(NativePtr, sel_tileHeight);
 
+        public bool SupportsColorAttachmentMapping =>
+            new NSObject(NativePtr).RespondsToSelector(
+                sel_setColorAttachmentMap);
+
         public void SetColorAttachmentMap(in IntPtr mapping)
         {
+            if (mapping == IntPtr.Zero)
+            {
+                throw new ArgumentException(
+                    "Color attachment map pointer is null.",
+                    nameof(mapping));
+            }
+            if (!SupportsColorAttachmentMapping)
+            {
+                throw new MissingMethodException(
+                    "MTL4RenderCommandEncoder does not respond to " +
+                    "setColorAttachmentMap:.");
+            }
             ObjectiveCRuntime.objc_msgSend(NativePtr, sel_setColorAttachmentMap, mapping);
         }
 
