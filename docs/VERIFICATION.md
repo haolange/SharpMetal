@@ -24,7 +24,7 @@ dotnet pack src/SharpMetal/SharpMetal.csproj -c Release -p:Platform=x64 -o artif
 The Windows x64 source builds complete with zero warnings and errors. The
 Release sample reports `Managed ABI passed` and explicitly returns
 `BLOCKED_PLATFORM (Apple host required)` for its native workload. The package
-is `artifacts/verification-r12/packages/SharpMetal.0.4.0-preview.1.nupkg`.
+is `artifacts/verification-r12/packages-release-final/SharpMetal.0.4.0-preview.1.nupkg`.
 
 The package sample uses the isolated
 `D:/Projects/InfinityStack/.verification/package-cache-math-metal-final` cache
@@ -41,12 +41,12 @@ $packageProps = @(
     "-p:RestoreUseStaticGraphEvaluation=false", "-p:NuGetAudit=false",
     "-p:RestoreIgnoreFailedSources=true", "-p:RestoreForceEvaluate=true"
 )
-dotnet run --project samples/SharpMetal.Sample/SharpMetal.Sample.csproj @packageProps --source artifacts/verification-r12/packages
+dotnet run --project samples/SharpMetal.Sample/SharpMetal.Sample.csproj @packageProps --source artifacts/verification-r12/packages-release-final
 ```
 
 The isolated package sample produces the same managed ABI result and the same
 explicit Apple-host boundary. The evidence is
-`artifacts/verification-r12/sample-package-final.log`.
+`artifacts/verification-r12/sample-package-final-r2.log`.
 
 On macOS ARM64, run the Release source and package samples on a machine with
 Metal system frameworks, then verify device creation, shared-buffer mapping,
