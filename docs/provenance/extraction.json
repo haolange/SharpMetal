@@ -1,0 +1,28 @@
+{
+  "sourceRepository": "https://github.com/haolange/InfinityBrowser.git",
+  "sourceCommit": "7689191334cf562bd34d4a420149bde12e8b66b6",
+  "extractedCommit": "4604453a219ebeef1532b94c5018144309f64376",
+  "routes": [
+    {
+      "source": "Source/ThirdParty/Apple/Metal/",
+      "destination": "src/SharpMetal/"
+    },
+    {
+      "source": "Source/ThirdParty/Apple/SharpMetal/",
+      "destination": "src/SharpMetal/"
+    },
+    {
+      "source": "Engine/Source/ThirdParty/Apple/Metal/",
+      "destination": "src/SharpMetal/"
+    },
+    {
+      "source": "Engine/Source/ThirdParty/Apple/SharpMetal/",
+      "destination": "src/SharpMetal/"
+    }
+  ],
+  "verifiedCurrentFiles": 116,
+  "reachableCommits": 35,
+  "previousRemoteMain": "6ba945833e12df955bb2f8b129c28f4a47a27610",
+  "adoptedCommit": "159368386a6e02e549f35c49dc2ce8eb7baa1736",
+  "targetRepository": "https://github.com/haolange/SharpMetal.git"
+}

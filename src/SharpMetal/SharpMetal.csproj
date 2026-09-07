@@ -30,4 +30,17 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
 		<Optimize>true</Optimize>
 	</PropertyGroup>
+
+  <PropertyGroup><Version>$(StackPackageVersion)</Version><RepositoryUrl>https://github.com/haolange/SharpMetal</RepositoryUrl></PropertyGroup>
+  <PropertyGroup>
+    <PackageId>SharpMetal</PackageId>
+    <Description>Apple Objective-C and Metal bindings with explicit native ownership.</Description>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="../../LICENSE" Pack="true" PackagePath="/" />
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
+    <None Include="../../docs/provenance/InfinityBrowser.LICENSE" Pack="true" PackagePath="licenses/InfinityBrowser.LICENSE" />
+  </ItemGroup>
 </Project>

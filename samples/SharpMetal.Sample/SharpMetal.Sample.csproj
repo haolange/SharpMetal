@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup><TargetFramework>net10.0</TargetFramework><OutputType>Exe</OutputType><AllowUnsafeBlocks>true</AllowUnsafeBlocks></PropertyGroup>
+  <ItemGroup Condition="'$(StackReferenceMode)' == 'Source'"><ProjectReference Include="../../src/SharpMetal/SharpMetal.csproj" /></ItemGroup>
+  <ItemGroup Condition="'$(StackReferenceMode)' == 'Package'"><PackageReference Include="SharpMetal" Version="$(StackPackageVersion)" /></ItemGroup>
+</Project>
