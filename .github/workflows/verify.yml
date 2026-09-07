@@ -1,0 +1,25 @@
+name: Windows managed and package validation
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  managed:
+    runs-on: windows-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        configuration: [Debug, Release]
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+        with:
+          global-json-file: global.json
+      - name: Build, test and consume fresh package
+        shell: pwsh
+        run: ./eng/Verify.ps1 -Configuration '${{ matrix.configuration }}' -OutputRoot '${{ runner.temp }}/validation-${{ matrix.configuration }}'

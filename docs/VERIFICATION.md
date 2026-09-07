@@ -62,3 +62,31 @@ the consuming workspace manifest. IE uses its root stack.lock.json; standalone
 consumers own their manifest and do not need an IE checkout. Package consumers
 use the project dependency versions and NuGet lock files. There is no product-local
 stack.lock.json: the removed copies were not read by any build or setup tool.
+
+## Automated Windows managed gate
+
+`eng/Verify.ps1` is the product-local CI entry point. The workflow runs both
+configurations, uses locked Source restores, builds the library, runs owned
+CPU tests when present, and packs locally. It copies the real sample into an
+isolated consumer with an empty package cache and only the freshly built feed,
+rejects project dependencies, then executes the binary from another directory.
+It refuses an existing evidence directory. Packages are not uploaded or released.
+
+```powershell
+./eng/Verify.ps1 -Configuration Debug -OutputRoot "$env:TEMP/product-debug-validation"
+./eng/Verify.ps1 -Configuration Release -OutputRoot "$env:TEMP/product-release-validation"
+```
+
+This gate is Windows x64 managed/package evidence, not GPU or Apple native
+qualification. GitHub execution remains TODO(UNVERIFIED) until the workflow
+runs remotely. Locked Source restore must remain green after the pending
+Source/Package lock-file migration; CI must not regenerate tracked locks to
+conceal mismatches. Local results and package SHA-256 are in `result.json`,
+with full commands/output in `verification.log` and applicable TRX in `results`.
+
+The current native-output capture implementation was rerun in Debug and Release
+on Windows. Both passed; full sample stdout is present in verification.log.
+Evidence directories: `D:/Projects/InfinityStackVerification/ci-logged-<product>-<configuration>`.
+Math owned tests: 29/29 per configuration; LLM owned tests: 30/30 per configuration;
+Metal has no test project and records only managed ABI/sample qualification.
+These are local working-tree results; remote CI remains TODO(UNVERIFIED).
