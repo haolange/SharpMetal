@@ -2,8 +2,11 @@
   "version": 1,
   "dependencies": {
     "net10.0": {
-      "sharpmetal": {
-        "type": "Project"
+      "SharpMetal": {
+        "type": "Direct",
+        "requested": "[0.4.0-preview.1, )",
+        "resolved": "0.4.0-preview.1",
+        "contentHash": "43xbOntWOpSxTVvFAneMjBKoz2yftAFzV9AsYroPhELYTdcpKV3PHZzZLBMm2kXqyImx830rNRoiMk1DHN5Kwg=="
       }
     }
   }
