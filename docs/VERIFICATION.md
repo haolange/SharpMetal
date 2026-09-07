@@ -54,5 +54,11 @@ resource ownership, and disposal. Until that matching host run is available,
 Apple native qualification remains `BLOCKED_PLATFORM`; Linux, Android, and iOS
 native qualification remains `TODO(UNVERIFIED)`. SharpGPU owns the RHI and
 cross-backend qualification. Before accepting a revision, run `git diff --check`
-and update `stack.lock.json` after the final commit. Any source or package
+and update the consuming workspace revision manifest after the final commit. Any source or package
 change invalidates the corresponding evidence.
+
+Source handoff records this repository HEAD and every mapped dependency HEAD in
+the consuming workspace manifest. IE uses its root stack.lock.json; standalone
+consumers own their manifest and do not need an IE checkout. Package consumers
+use the project dependency versions and NuGet lock files. There is no product-local
+stack.lock.json: the removed copies were not read by any build or setup tool.
