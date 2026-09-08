@@ -90,3 +90,7 @@ Evidence directories: `D:/Projects/InfinityStackVerification/ci-logged-<product>
 Math owned tests: 29/29 per configuration; LLM owned tests: 30/30 per configuration;
 Metal has no test project and records only managed ABI/sample qualification.
 These are local working-tree results; remote CI remains TODO(UNVERIFIED).
+
+## Mode-isolated NuGet locks
+
+After deliberately generating and reviewing packages.<StackReferenceMode>.<RID-or-portable>.lock.json, append -p:RestoreLockedMode=true to the normal restore command. Alternate Source/Package restores and compare lock hashes. New RIDs need separate locks and matching-host qualification.
