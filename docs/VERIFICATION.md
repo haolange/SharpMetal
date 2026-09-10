@@ -1,5 +1,11 @@
 # SharpMetal verification
 
+## Checkout setup and evidence retention
+
+Copy `stack.local.props.example` to `stack.local.props` and adjust dependency paths before Source gates. The template assumes sibling repositories and contains no developer-specific drive paths. Existing local maps are preserved. Use an explicit package feed for Package gates; do not rely on a previously populated isolated cache.
+
+On 2026-09-11, local build outputs, package inspection caches and raw historical run evidence were intentionally deleted. Results below are historical summaries tied to their original inputs; old `artifacts/` and `.verification/` paths are reproducible output locations, not retained deliverables. Build and pack the required dependency versions before running examples that consume a local feed. Do not mark a new checkout or platform verified based on those summaries.
+
 Run these gates from the SharpMetal repository with the .NET 10 SDK. The
 managed bindings are independent of the host platform; native Metal execution
 requires a matching Apple host and system frameworks.
