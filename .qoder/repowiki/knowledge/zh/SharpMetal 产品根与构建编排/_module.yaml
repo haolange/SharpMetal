@@ -1,0 +1,17 @@
+schema_version: 1
+module_path: ""
+title: SharpMetal 产品根与构建编排
+scope:
+    - README.md
+    - DESIGN.md
+    - AGENTS.md
+    - global.json
+    - Directory.Build.props
+    - Directory.Build.targets
+    - SharpMetal.product.props
+    - stack.local.props.example
+    - .gitignore
+    - LICENSE
+source_files: []
+depends_on: []
+related_to: []

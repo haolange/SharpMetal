@@ -1,0 +1,37 @@
+# 知识卡导出索引文件
+schema_version: 1
+locale: zh-CN
+branch: main
+nodes_managed: true
+exported_at: "2026-09-13T10:41:42Z"
+modules:
+    "":
+        dir_name: SharpMetal 产品根与构建编排
+        title: SharpMetal 产品根与构建编排
+        scope:
+            - README.md
+            - DESIGN.md
+            - AGENTS.md
+            - global.json
+            - Directory.Build.props
+            - Directory.Build.targets
+            - SharpMetal.product.props
+            - stack.local.props.example
+            - .gitignore
+            - LICENSE
+        source_files: []
+        children:
+            - docs_and_verification
+        depends_on: []
+        related_to: []
+    docs_and_verification:
+        dir_name: SharpMetal 验证与发布证据
+        title: SharpMetal 验证与发布证据
+        scope:
+            - docs/
+            - eng/
+            - .github/workflows/verify.yml
+        source_files: []
+        children: []
+        depends_on: []
+        related_to: []
